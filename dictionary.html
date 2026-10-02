@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dictionary — ontodb</title>
+<meta name="description" content="How ontodb interns IRIs, literals, and blank nodes to 64-bit ids, in memory and on disk.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">ontodb</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">ontodb</a><input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off"><ul id="results" hidden></ul><a href="index.html">Overview</a><a href="next.html">What to build next</a><a href="sparql.html">SPARQL</a><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html" aria-current="page">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="shell.html">Shell and checks</a>
+</nav>
+<main id="content">
+<p class="kicker">Terms</p>
+<h1>Dictionary</h1>
+<p class="lede">The index never compares strings. It compares ids. The dictionary is the only place a spelling lives.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#one-spelling">One spelling</a></li><li><a href="#memory-dictionary">Memory dictionary</a></li><li><a href="#term-heap">Term heap</a></li><li><a href="#disk-dictionary">Disk dictionary</a></li></ol></nav>
+<p><code>term_id_t</code> is a <code>uint64_t</code>. Ids start at 1. <code>INVALID_TERM_ID</code> is the maximum uint64 and means unbound, not a term. Zero is not a valid id, so a zeroed key does not accidentally name the first term you interned.</p><h2 id="one-spelling">One spelling</h2><p><code>term_codec</code> is the canonical form both the loader and the binder use.</p><ul><li>IRI: <code>&lt;http://example.edu/univ#Alice&gt;</code></li><li>Plain literal: <code>&quot;Alice&quot;</code></li><li>Language-tagged: <code>&quot;Alice&quot;@en</code></li><li>Datatype: <code>&quot;22&quot;^^&lt;http://www.w3.org/2001/XMLSchema#integer&gt;</code></li><li>Blank node: <code>_:b0</code></li></ul><p>Escapes are part of the spelling. Two sources that mean the same IRI must intern once. <code>Insert</code> of an existing spelling returns the original id.</p><p>Numeric datatypes (<code>xsd:integer</code>, <code>xsd:decimal</code>, <code>xsd:double</code>, <code>xsd:float</code>) compare by value in filters and in <code>ORDER BY</code>. Everything else compares by id for equality, and by the canonical spelling for ordered comparisons of the same kind.</p><h2 id="memory-dictionary">Memory dictionary</h2><p><code>MemDictionary</code> is a mutex-guarded map in both directions. It is what the shell uses today. The mutex lets two sessions share the process. It is not isolation. Locks come later.</p><aside class="callout today"><span class="label">Today</span><p>Loading <code>data/tiny.ttl</code> interns every term and stores 53 triples in <code>MemStore</code>. Lookups used to print a result go through this dictionary. Nothing is written to a file.</p></aside><h2 id="term-heap">Term heap</h2><p>On disk, the bytes of a spelling live in a slotted page, not in the B+ tree leaf. A leaf key is three ids, 24 bytes, so the fanout stays high. A leaf that stored the IRIs would be a leaf of strings, and a split would copy those strings.</p><p><code>TermHeap::Insert</code> returns nullopt when the record does not fit on the page you asked. A record larger than an empty page throws <code>StorageException</code>. <code>Get</code> is valid only while the page is pinned. <code>Delete</code> frees the slot. A later insert may reuse it. <code>FreeSpace</code> includes the slot-directory entry, so the test captures free space before the delete and does not compare the page to itself.</p><p>The heap chains pages. Its iterator visits every live record once and holds no pin after <code>operator*</code> returns.</p><h2 id="disk-dictionary">Disk dictionary</h2><p>Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. A hash index from spelling to id, plus the heap from id to bytes, is enough. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.</p><p>The catalog remembers the dictionary root next to the permutation roots. <code>Flush</code> makes that metadata durable.</p><aside class="callout next"><span class="label">Next</span><p>Plan 3.1 is the term heap. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3). The in-memory dictionary stays; the indexed store is what switches.</p></aside><aside class="callout read"><span class="label">Read</span><p>RDF-3X, the dictionary section. Petrov, chapter 3, slotted pages.</p></aside>
+</main>
+</div>
+<footer class="site">ontodb study notes. SPARQL store: dictionary, B+ tree permutations, volcano engine, optimizer, write-ahead log, ARIES.</footer>
+<script src="search.js"></script>
+</body>
+</html>

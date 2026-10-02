@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPARQL — ontodb</title>
+<meta name="description" content="The SPARQL subset ontodb parses, how variables become slots, and which features fail with a line and column.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">ontodb</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">ontodb</a><input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off"><ul id="results" hidden></ul><a href="index.html">Overview</a><a href="next.html">What to build next</a><a href="sparql.html" aria-current="page">SPARQL</a><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="shell.html">Shell and checks</a>
+</nav>
+<main id="content">
+<p class="kicker">Language</p>
+<h1>SPARQL</h1>
+<p class="lede">ontodb speaks SPARQL, not SQL. The supported language is a basic graph pattern plus filters and ground updates.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#what-the-parser-accepts">What the parser accepts</a></li><li><a href="#what-fails-on-purpose">What fails on purpose</a></li><li><a href="#variables-are-slots">Variables are slots</a></li><li><a href="#no-reasoner">No reasoner</a></li></ol></nav>
+<p>A triple is subject, predicate, object. A query names some of those positions with variables and asks for the bindings. There is no table of rows until the engine builds one.</p><pre><code>PREFIX ub: &lt;http://example.edu/univ#&gt;
+SELECT ?name WHERE {
+  ?s a ub:Student ; ub:name ?name ; ub:age ?age .
+  FILTER (?age &gt; &quot;21&quot;^^xsd:integer)
+}</code></pre><p><code>a</code> is <code>rdf:type</code>, and only the lowercase verb. <code>;</code> repeats the subject. <code>,</code> repeats the subject and the predicate. A dot ends a triple. A dot inside <code>http://www.Department0.University0.edu/...</code> stays inside the IRI.</p><h2 id="what-the-parser-accepts">What the parser accepts</h2><ul><li><code>PREFIX</code> declarations. Prefixed names are stored until the binder joins them to the IRI.</li><li><code>SELECT</code> of named variables or <code>*</code>. <code>SELECT *</code> projects every variable in first-appearance order.</li><li>A basic graph pattern in one group. Nested groups are an error.</li><li><code>FILTER</code> comparisons <code>= != &lt; &gt; &lt;= &gt;=</code>, combined with <code>&amp;&amp;</code>.</li><li><code>DISTINCT</code>, <code>LIMIT</code>, <code>OFFSET</code>, <code>ORDER BY</code>. The parser and the planner accept them. Execution of those operators is still plan 4.4 and 4.5.</li><li><code>INSERT DATA</code> and <code>DELETE DATA</code> with ground triples. Constants are interned on insert and only looked up on delete.</li></ul><p>Numbers in the query become <code>xsd:integer</code> or <code>xsd:decimal</code> literals. The one spelling shared by the loader and the binder is: <code>&lt;iri&gt;</code>, <code>&quot;lex&quot;</code>, <code>&quot;lex&quot;@en</code>, <code>&quot;lex&quot;^^&lt;datatype&gt;</code>.</p><h2 id="what-fails-on-purpose">What fails on purpose</h2><p><code>OPTIONAL</code>, <code>UNION</code>, property paths, aggregates, and <code>DELETE/INSERT WHERE</code> raise <code>ParseException</code> with a line and a column. The message names the feature. That boundary stays until you choose to extend the language. Do not half-implement <code>UNION</code> inside the basic-graph-pattern parser.</p><p>Blank nodes, language tags, and datatype IRIs are terms, not syntax errors.</p><h2 id="variables-are-slots">Variables are slots</h2><p>The binder walks the query once and assigns each variable a column in the order it first appears. A row is a <code>vector</code> of <code>term_id_t</code>. The same variable in two triple patterns is the same slot. That is the join key. It is also why a later index nested-loop join can fill the inner pattern from the outer row without inventing a second naming scheme.</p><p><code>INVALID_TERM_ID</code> means unbound. A filter that sees it does not invent a match.</p><h2 id="no-reasoner">No reasoner</h2><p>OWL files load as RDF triples. <code>subClassOf</code> is data, not a rule. LUBM queries 4, 5, 6, and 11–13 ask for a class and the data stores a subclass. Those queries return a subset. That is the store being honest. Materializing <code>subClassOf</code> is an open design in phase 9, not part of the scan.</p><aside class="callout today"><span class="label">Today</span><p><code>data/tiny.ttl</code> is 53 triples. The shell and the query harness run the read subset and the ground updates against <code>MemStore</code>.</p></aside><aside class="callout next"><span class="label">Next</span><p>The language front end is not the next build. The next build is the key those bound ids will be packed into. See <a href="indexes.html">Triple indexes</a>.</p></aside><aside class="callout read"><span class="label">Read</span><p>SPARQL 1.1 Query Language, the sections on basic graph patterns, <code>FILTER</code>, and <code>INSERT DATA</code> / <code>DELETE DATA</code>.</p></aside>
+</main>
+</div>
+<footer class="site">ontodb study notes. SPARQL store: dictionary, B+ tree permutations, volcano engine, optimizer, write-ahead log, ARIES.</footer>
+<script src="search.js"></script>
+</body>
+</html>
