@@ -11,7 +11,7 @@ The shell is autocommit unless you say `\begin`. `\commit` and `\abort` end the 
 
 Isolation is a setting: `\set isolation ru|rc|rr|ser`. The default in `Config` is read committed.
 
-Phase 7 checks run under ThreadSanitizer. `scripts/check 7` builds the `tsan` preset.
+The concurrency feature runs under ThreadSanitizer. `scripts/check concurrency` builds the `tsan` preset.
 
 ## Latches and locks
 
@@ -40,7 +40,7 @@ The specs in `test/isolation/specs/` are the contract. Twelve of them cover dirt
 - Repeatable read holds shared locks until commit. A row you read stays. A row you did not read can appear.
 - Serializable holds shared locks until commit and adds the phantom mechanism from plan 7.6.
 
-The mechanism is locks, not snapshots. MVCC is an open design in phase 9, not a substitute you slip into phase 7.
+The mechanism is locks, not snapshots. MVCC is an open design with no stub. It is not a substitute you slip into the concurrency feature. A versioned reader is described with [snapshots](durability.html#what-a-snapshot-is-here).
 
 ## Deadlock
 

@@ -4,7 +4,7 @@ slug: index
 order: 1
 kicker: Study notes
 description: What ontodb is, which pieces already run, and where the optimizer, B+ tree, WAL, and ARIES fit.
-lede: ontodb is a standalone SPARQL database. These notes are the map of each component and the next piece of work.
+lede: ontodb is a standalone SPARQL database. These notes are the map of each feature, and of how a later comparison becomes a writeup.
 ---
 
 A query is a pipeline. A committed insert is that same pipeline plus a log. The memory path already answers a SPARQL subset. The disk path, the optimizer, and recovery are specified and still to build.
@@ -22,7 +22,8 @@ A query is a pipeline. A committed insert is that same pipeline plus a log. The 
 <a class="card" href="concurrency.html"><strong>Concurrency</strong><span>Strict 2PL, intention locks, isolation, deadlocks, phantoms.</span></a>
 <a class="card" href="recovery.html"><strong>WAL and ARIES</strong><span>Steal/no-force, group commit, analysis, redo, undo.</span></a>
 <a class="card" href="durability.html"><strong>Persistence and snapshots</strong><span>Page files, in-place deletes, checkpoints, and what a scan freezes.</span></a>
-<a class="card" href="shell.html"><strong>Shell and checks</strong><span>Commands, sessions, and how an item becomes done.</span></a>
+<a class="card" href="shell.html"><strong>Shell and checks</strong><span>How to load a file, run a query, and check a feature.</span></a>
+<a class="card" href="research.html"><strong>Benchmarks and writeups</strong><span>One engine, a result table per question, and the writeup that cites it.</span></a>
 </div>
 
 ## Two paths
@@ -36,7 +37,7 @@ A read of `data/tiny.ttl` stays in memory:
 5. Volcano `Init` / `Next` pulls rows of term ids from `MemStore`.
 6. The shell prints spellings looked up in `MemDictionary`.
 
-An insert, once the later phases are filled in, does not stop at the memory store:
+An insert, once the disk features exist, does not stop at the memory store:
 
 1. The dictionary turns three spellings into ids. The bytes live in a term heap.
 2. Those ids are packed into a 24-byte big-endian `TripleKey`.
@@ -65,4 +66,4 @@ The first implementation item is [TripleKey](indexes.html#the-24-byte-key), plan
 
 ## What this site is for
 
-Read a component before you build it. Each page says what the piece is, how ontodb uses it, what works today, and the plan item that comes next. The code repository stays separate. `PLAN.md` in that repository is the contract: files, dependencies, the check command, and the tests.
+Read a feature before you build it. Each page says what the piece is, how ontodb uses it, what works today, and the slice that comes next. [Benchmarks and writeups](research.html) is how a finished comparison is recorded. The code repository stays separate. `PLAN.md` there is the feature list.

@@ -4,7 +4,7 @@ slug: optimizer
 order: 5
 kicker: Planning
 description: The optimizer ontodb will have — statistics, cardinality, join order, join method, and EXPLAIN ANALYZE.
-lede: The planner emits one left-deep nested-loop tree. The optimizer rewrites it. That rewriter is part of the database, and it is the work of phase 5.
+lede: The planner emits one left-deep nested-loop tree. The optimizer rewrites it. That rewriter is part of the database, and it is the optimizer feature.
 ---
 
 A SPARQL join of four patterns has a factorial number of orders and three algorithms at each edge: nested loop, index nested loop, and hash join. The memory planner always picks the textual order and nested loop. That is a correct plan. It is not the plan you want on LUBM.
@@ -16,14 +16,14 @@ A SPARQL join of four patterns has a factorial number of orders and three algori
 - `kIndexNestedLoop` becomes an index nested-loop join.
 - `kAuto` may pick any of the three.
 
-The factory already builds the executor from the node type. Phase 5.4 swaps the node. It does not teach the executor to ignore its own type.
+The factory already builds the executor from the node type. Slice 5.4 swaps the node. It does not teach the executor to ignore its own type.
 
 ::: today
 `Optimize` throws `PLAN 5.3`. `\explain analyze` throws `PLAN 5.5`. Statistics and the cardinality estimator throw their own plan ids. The shell setting `\set join auto|nlj|inlj|hash` is stored either way.
 :::
 
 ::: next
-Plan 5.1, then 5.2, 5.3, 5.4, 5.5, in that order. Join-method selection also depends on the executors from 4.2 and 4.3. You can collect statistics as soon as a store and a dictionary exist.
+`scripts/check optimizer` covers slices 5.1 through 5.5, in that order. Join-method selection also depends on the executors from 4.2 and 4.3. You can collect statistics as soon as a store and a dictionary exist.
 :::
 
 ## Statistics

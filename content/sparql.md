@@ -44,7 +44,7 @@ The binder walks the query once and assigns each variable a column in the order 
 
 ## No reasoner
 
-OWL files load as RDF triples. `subClassOf` is data, not a rule. LUBM queries 4, 5, 6, and 11–13 ask for a class and the data stores a subclass. Those queries return a subset. That is the store being honest. Materializing `subClassOf` is an open design in phase 9, not part of the scan.
+OWL files load as RDF triples. `subClassOf` is data, not a rule. LUBM queries 4, 5, 6, and 11–13 ask for a class and the data stores a subclass. Those queries return a subset. That is the store being honest. Materializing `subClassOf` is an open design with no stub, not part of the scan. The comparison, if you build it, is a [writeup](research.html) after the results exist.
 
 ::: today
 `data/tiny.ttl` is 53 triples. The shell and the query harness run the read subset and the ground updates against `MemStore`.

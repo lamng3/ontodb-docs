@@ -4,10 +4,20 @@ slug: shell
 order: 13
 kicker: Using it
 description: Shell commands, sessions, the check scripts, and the three harnesses.
-lede: The shell is how you poke one component. The scripts are how you know the component is actually done.
+lede: The shell is how you load a file and run a query. The check scripts are how you know a feature is done.
 ---
 
-Commands that start with `\` are one line. A SPARQL query may span lines until braces balance and strings close. A `#` starts a comment, except inside a string or an IRI. That exception matters: `ub:Student` is `<http://example.edu/univ#Student>`, and treating the `#` as a comment swallows the rest of the query.
+Commands that start with `\` are one line. A SPARQL query may span lines. It runs when a `{ }` group has opened and closed and strings are closed, so a `PREFIX` line stays pending until the query that uses it is finished. `\quit` leaves even in the middle of a query. A `#` starts a comment, except inside a string or an IRI. That exception matters: `ub:Student` is `<http://example.edu/univ#Student>`, and treating the `#` as a comment swallows the rest of the query.
+
+```text
+\load data/tiny.ttl
+PREFIX ub: <http://example.edu/univ#>
+SELECT ?name WHERE {
+  ?s a ub:Student ; ub:name ?name .
+}
+```
+
+That load reports 53 triples. The rows are `Alice`, `Bob`, and `Cara`.
 
 `\quit`, `\help`, and `\session` run on the main thread. Everything else runs on a session worker. The worker catches a not-implemented plan id, a parse or bind error, a transaction abort, and any other exception, and prints it.
 
@@ -27,8 +37,8 @@ The prompt is printed only when stdin is a terminal.
 | `\set pool_size N`, `lru_k`, `join`, `isolation` | Stored. `\set` with no arguments prints them |
 | `\bpm`, `\page`, `\trace` | Not built (plan 1.6) |
 | `\tree spo`, `pos`, or `osp` | Not built (plan 2.2) |
-| `\begin`, `\commit`, `\abort`, `\txns`, `\locks` | Not built (phase 7) |
-| `\log`, `\checkpoint`, `\crash` | Not built (phase 8) |
+| `\begin`, `\commit`, `\abort`, `\txns`, `\locks` | Not built (concurrency) |
+| `\log`, `\checkpoint`, `\crash` | Not built (recovery) |
 | `\session N` | Sends later commands to worker N |
 | `\help`, `\quit` | Work |
 
@@ -41,13 +51,13 @@ The prompt is printed only when stdin is a terminal.
 ## Checks
 
 ```text
-scripts/check 0.2
-scripts/check 7
+scripts/check key
+scripts/check concurrency
 scripts/status
 scripts/crashtest --seeds 4
 ```
 
-`scripts/check` configures the preset, builds, runs that item's tests, and prints pass or fail plus the next item. Phase 7 uses TSan. `scripts/status` is the table. Progress starts at 0%.
+`scripts/check` configures the preset, builds, runs that feature or that slice, and prints pass or fail plus the next id. Concurrency uses TSan. `scripts/status` prints the feature groups. Progress starts at 0%. A finished comparison is written up from [benchmarks and writeups](research.html).
 
 Presets are `dev` (Debug, ASan, UBSan), `tsan`, and `release`.
 
@@ -60,9 +70,9 @@ The isolation harness runs a scripted schedule against two sessions and checks `
 The crash harness forks a child, kills it, and compares the reopened store to a memory store that replayed only acknowledged commits. Its self-test uses fake stores that lie in known ways.
 
 ::: today
-`scripts/check 0.1` passes. It loads tiny and pizza and runs the shell smoke query. `scripts/status` shows 0%.
+`scripts/check shell` passes. It loads tiny and pizza and runs the shell smoke query, including a `PREFIX` on its own line. `scripts/status` shows 0%.
 :::
 
 ::: next
-`scripts/check 0.2` after [TripleKey](indexes.html#the-24-byte-key) encodes, compares, and computes prefix bounds.
+`scripts/check key` after [TripleKey](indexes.html#the-24-byte-key) encodes, compares, and computes prefix bounds.
 :::

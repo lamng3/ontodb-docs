@@ -25,7 +25,7 @@ A clean close and a crash are different successes.
 
 A clean close is plan 3.6. Flush every dirty frame, flush the catalog, then `ShutDown` the file. The next process reads the pages and does not need the log. An unflushed dirty frame is a lost triple even when nobody crashed.
 
-A crash is phase 8. The policy is steal / no-force, described in [WAL and ARIES](recovery.html). An uncommitted page may already be on disk. A committed page may not be. Redo installs committed history the pages missed. Undo removes loser triples the pages kept. `\crash` exits without flushing, which is how you test that path on purpose.
+A crash is the recovery feature. The policy is steal / no-force, described in [WAL and ARIES](recovery.html). An uncommitted page may already be on disk. A committed page may not be. Redo installs committed history the pages missed. Undo removes loser triples the pages kept. `\crash` exits without flushing, which is how you test that path on purpose.
 
 What becomes durable, and when:
 
@@ -53,14 +53,14 @@ The term heap is looser. `Delete` on a heap page frees a slot, and a later inser
 
 Bulk load is the other time the tree gets dense. Plan 2.6 builds full leaves from keys that are already sorted. Plan 6.1 does that at `\load` instead of inserting one triple at a time. Random `Insert` leaves a lower fill factor. That is a property of the tree you built, not a debt a compactor will come back to pay.
 
-Phase 9 leaf compression is smaller keys inside a leaf, delta-encoded the RDF-3X way. It changes `Compare` and the prefix bounds. It is a page layout, written when the leaf is written, not a background rewrite of old levels.
+Leaf compression is smaller keys inside a leaf, delta-encoded the RDF-3X way. It has no stub. It changes `Compare` and the prefix bounds. It is a page layout, written when the leaf is written, not a background rewrite of old levels.
 
 The log grows for the life of the process under the plan as written. A checkpoint tells recovery where to start. It does not, by itself, delete bytes in front of that LSN. Truncating the log after a checkpoint, once no active transaction or dirty page still needs the older records, is the natural follow-on of plan 8.5. It is not a separate plan item. Do it only after redo's starting LSN is real, or you will throw away the record that would have repaired a stolen page.
 
 Which permutations exist is the other space decision. Plan 3.5 measures before adding POS or OSP. A permutation you do not build does not need a compaction policy.
 
 ::: next
-The delete path is plan 2.7. The heap slot is plan 3.1. Bulk load is plans 2.6 and 6.1. Leaf compression is phase 9, after you can say what it does to prefix bounds.
+The delete path is slice 2.7. The heap slot is slice 3.1. Bulk load is slices 2.6 and 6.1. Leaf compression comes after you can say what it does to prefix bounds, and the note belongs in a [writeup](research.html).
 :::
 
 ## What a snapshot is here
@@ -71,7 +71,7 @@ The delete path is plan 2.7. The heap slot is plan 3.1. Bulk load is plans 2.6 a
 
 Repeatable read holds shared locks on the keys you read until commit. That keeps those triples from changing. It does not freeze the store. An insert of a triple you did not lock can still appear in a second scan. That is the phantom in plan 7.6. Serializable adds a range lock, a gap lock, or a predicate lock so the insert waits. The frozen set is the lock set, not a timestamp.
 
-A versioned snapshot, where a reader ignores locks and sees the store as of its start timestamp, is the MVCC item in phase 9. It is open design. There is no stub for it. If you build it, old versions have to stay until every reader that might need them has finished, and only then can a delete drop the version. That reclamation is part of the MVCC design you would write in `docs/journal/phase9.md`. It is not a job the B+ tree already runs.
+A versioned snapshot, where a reader ignores locks and sees the store as of its start timestamp, is the MVCC design. It has no stub. If you build it, old versions have to stay until every reader that might need them has finished, and only then can a delete drop the version. That reclamation is part of the design you write down before the code, then measure, then cite from a [writeup](research.html). It is not a job the B+ tree already runs.
 
 ::: read
 Petrov, chapter 3, on a clean close versus a crash, and chapter 4, on merge and fill factor. Mohan et al., ARIES, on checkpoints and how far back redo must read. RDF-3X, on delta-encoded leaves.

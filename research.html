@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmarks and writeups — ontodb</title>
+<meta name="description" content="How a comparison of eviction, indexing, joins, or recovery becomes a result table and a writeup.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">ontodb</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">ontodb</a><input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off"><ul id="results" hidden></ul><a href="index.html">Overview</a><a href="next.html">What to build next</a><a href="sparql.html">SPARQL</a><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Persistence and snapshots</a><a href="shell.html">Shell and checks</a><a href="research.html" aria-current="page">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Research</p>
+<h1>Benchmarks and writeups</h1>
+<p class="lede">One engine, several methods. A method is a knob. The result table is what a writeup is allowed to cite.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#a-question">A question</a></li><li><a href="#a-writeup">A writeup</a></li><li><a href="#the-query-window">The query window</a></li></ol></nav>
+<p>The store stays one codebase. Eviction, which permutations exist, which join runs, and how often a checkpoint is taken are switches. Record the switch in the result table. Do not fork the repository to try a method.</p><p>A comparison waits until the feature it measures exists. The directory is created then, not before.</p><h2 id="a-question">A question</h2><pre><code>benchmarks/&lt;question&gt;/
+  question.md    what is compared, on which data, and which metric decides
+  run.sh         the commands, with the dataset and the knobs
+  results.md     the table a writeup will cite
+  raw/           logs and traces; this directory is not committed</code></pre><table><thead><tr><th>Directory</th><th>Question</th><th>Waits on</th></tr></thead><tbody><tr><td><code>eviction</code></td><td>How do pool size and LRU-K change the hit ratio on one query mix?</td><td><a href="buffer-pool.html">Buffer pool</a></td></tr><tr><td><code>indexing</code></td><td>Which permutations pay for themselves on LUBM?</td><td><a href="indexes.html">Triple indexes</a>, bulk load</td></tr><tr><td><code>joins</code></td><td>Nested loop, index nested loop, hash, and the optimizer&#x27;s own choice</td><td><a href="query-engine.html">Query engine</a>, <a href="optimizer.html">optimizer</a></td></tr><tr><td><code>recovery</code></td><td>Group commit and checkpoint interval against throughput and restart time</td><td><a href="recovery.html">WAL and ARIES</a></td></tr></tbody></table><p><code>scripts/fetch-data lubm</code> builds the LUBM(1) file for the indexing and join questions. It needs Java. <code>data/tiny.ttl</code> is the smoke graph, 53 triples, not a benchmark.</p><p><code>question.md</code> names the metric before the run. Hit ratio, pages read, load time, commit latency, and restart time are the ones these four questions can answer. A second metric can sit in the same table. It does not replace the one that decides.</p><p><code>run.sh</code> prints the knob values it used. A result with no knob is not comparable to the next run.</p><h2 id="a-writeup">A writeup</h2><p>A writeup is one file in <code>writeups/</code>, written after <code>results.md</code> exists. The first paragraph states the method, the data, and the metric. It links the result table. Figures may be drawn from <code>raw/</code>. The logs stay there and are not pasted into the writeup.</p><p>The shape that stays readable later:</p><ol><li>The question, in one sentence.</li><li>The methods, including the knob values.</li><li>The data set and the query mix.</li><li>The table from <code>results.md</code>.</li><li>What the table does not show. A hit-ratio win with a slower load is still a result. Write it down.</li></ol><p>There is nothing to write up yet. The memory shell is the baseline those tables will be compared with, once the indexed store and the log exist.</p><h2 id="the-query-window">The query window</h2><p>The shell is the interface. A later window, desktop or local page, sends the same text and prints the same rows. It does not get a second parser, a second planner, or its own notion of a result. Benchmarks keep using the shell and <code>run.sh</code>, so a UI change cannot move a number.</p><aside class="callout today"><span class="label">Today</span><p><code>benchmarks/README.md</code> and <code>writeups/README.md</code> are the contract. No question directory has a <code>results.md</code> yet.</p></aside><aside class="callout next"><span class="label">Next</span><p>The next code is still the <a href="indexes.html#the-24-byte-key">triple key</a>. The first comparison that can be run after that is eviction, and only once the <a href="buffer-pool.html">buffer pool</a> reports hits and misses.</p></aside>
+</main>
+</div>
+<footer class="site">ontodb study notes. SPARQL store: dictionary, B+ tree permutations, volcano engine, optimizer, write-ahead log, ARIES.</footer>
+<script src="search.js"></script>
+</body>
+</html>
