@@ -1,7 +1,7 @@
 ---
 title: Shell and checks
 slug: shell
-order: 12
+order: 13
 kicker: Using it
 description: Shell commands, sessions, the check scripts, and the three harnesses.
 lede: The shell is how you poke one component. The scripts are how you know the component is actually done.

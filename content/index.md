@@ -21,6 +21,7 @@ A query is a pipeline. A committed insert is that same pipeline plus a log. The 
 <a class="card" href="buffer-pool.html"><strong>Buffer pool</strong><span>4 KiB pages, LRU-K, guards, and a pageLSN on every page.</span></a>
 <a class="card" href="concurrency.html"><strong>Concurrency</strong><span>Strict 2PL, intention locks, isolation, deadlocks, phantoms.</span></a>
 <a class="card" href="recovery.html"><strong>WAL and ARIES</strong><span>Steal/no-force, group commit, analysis, redo, undo.</span></a>
+<a class="card" href="durability.html"><strong>Persistence and snapshots</strong><span>Page files, in-place deletes, checkpoints, and what a scan freezes.</span></a>
 <a class="card" href="shell.html"><strong>Shell and checks</strong><span>Commands, sessions, and how an item becomes done.</span></a>
 </div>
 

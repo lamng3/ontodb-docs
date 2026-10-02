@@ -61,6 +61,8 @@ After abort the triple is gone and the log contains the CLR.
 
 After `Checkpoint` returns, `LastCheckpointLsn` is that record and the record is durable. `\checkpoint` calls this. Until then, `LastCheckpointLsn` returns `INVALID_LSN` and does not throw. Calling `Checkpoint` throws `PLAN 8.5`.
 
+A checkpoint is a bookmark for recovery. It is not a SPARQL snapshot. How pages, the log, deletes, and scans persist is [Persistence, compaction, and snapshots](durability.html).
+
 ## The three passes
 
 Opening a database runs recovery and prints `Summary`, one line per pass: `analysis ...`, `redo ...`, `undo ...`.
