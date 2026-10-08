@@ -3,7 +3,7 @@ title: Persistence and snapshots
 slug: durability
 order: 12
 kicker: Durability
-description: How ontodb persists pages and the log, reclaims space on delete, and what a checkpoint or a scan actually freezes.
+description: How OntoDB persists pages and the log, reclaims space on delete, and what a checkpoint or a scan actually freezes.
 lede: Pages and a write-ahead log are the durable state. Deletes shrink the B+ tree in place. A checkpoint is a recovery bookmark, and a scan freezes only the triples it already copied.
 ---
 

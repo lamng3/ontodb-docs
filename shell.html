@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shell and checks — ontodb</title>
+<title>Shell and checks — OntoDB</title>
 <meta name="description" content="Shell commands, sessions, the check scripts, and the three harnesses.">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="top">
-  <a class="brand" href="index.html">ontodb</a>
+  <a class="brand" href="index.html">OntoDB</a>
   <label class="nav-button" for="nav-toggle">Menu</label>
 </header>
 <input id="nav-toggle" class="nav-toggle" type="checkbox">
 <div class="layout">
 <nav class="nav">
-<a class="brand-desk" href="index.html">ontodb</a><input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off"><ul id="results" hidden></ul><a href="index.html">Overview</a><a href="next.html">What to build next</a><a href="sparql.html">SPARQL</a><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Persistence and snapshots</a><a href="shell.html" aria-current="page">Shell and checks</a><a href="research.html">Benchmarks and writeups</a>
+<a class="brand-desk" href="index.html">OntoDB</a><input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off"><ul id="results" hidden></ul><a href="index.html">Overview</a><a href="next.html">What to build next</a><a href="sparql.html">SPARQL</a><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Persistence and snapshots</a><a href="shell.html" aria-current="page">Shell and checks</a><a href="research.html">Benchmarks and writeups</a>
 </nav>
 <main id="content">
 <p class="kicker">Using it</p>
@@ -33,7 +33,7 @@ scripts/status
 scripts/crashtest --seeds 4</code></pre><p><code>scripts/check</code> configures the preset, builds, runs that feature or that slice, and prints pass or fail plus the next id. Concurrency uses TSan. <code>scripts/status</code> prints the feature groups. Progress starts at 0%. A finished comparison is written up from <a href="research.html">benchmarks and writeups</a>.</p><p>Presets are <code>dev</code> (Debug, ASan, UBSan), <code>tsan</code>, and <code>release</code>.</p><h2 id="harnesses">Harnesses</h2><p>The query harness is a text file of SPARQL plus expected rows in canonical spelling. Comparison is a multiset unless the file says the order matters. <code>ORDER BY</code> queries stay out of the enabled suite until sort exists.</p><p>The isolation harness runs a scripted schedule against two sessions and checks <code>blocked</code>, <code>unblocks</code>, <code>abort</code>, <code>contains</code>, <code>equals</code>, and <code>absent</code>. Its self-test does not need a lock manager.</p><p>The crash harness forks a child, kills it, and compares the reopened store to a memory store that replayed only acknowledged commits. Its self-test uses fake stores that lie in known ways.</p><aside class="callout today"><span class="label">Today</span><p><code>scripts/check shell</code> passes. It loads tiny and pizza and runs the shell smoke query, including a <code>PREFIX</code> on its own line. <code>scripts/status</code> shows 0%.</p></aside><aside class="callout next"><span class="label">Next</span><p><code>scripts/check key</code> after <a href="indexes.html#the-24-byte-key">TripleKey</a> encodes, compares, and computes prefix bounds.</p></aside>
 </main>
 </div>
-<footer class="site">ontodb study notes. SPARQL store: dictionary, B+ tree permutations, volcano engine, optimizer, write-ahead log, ARIES.</footer>
+<footer class="site">OntoDB study notes. A database management system for ontologies: RDF, SPARQL, B+ tree indexes, optimizer, write-ahead log, ARIES.</footer>
 <script src="search.js"></script>
 </body>
 </html>

@@ -157,7 +157,7 @@ def render_body(md):
 
 
 def page_html(meta, body_html, toc, pages):
-    nav = ['<a class="brand-desk" href="index.html">ontodb</a>', '<input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off">', '<ul id="results" hidden></ul>']
+    nav = ['<a class="brand-desk" href="index.html">OntoDB</a>', '<input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off">', '<ul id="results" hidden></ul>']
     for page in pages:
         current = ' aria-current="page"' if page["slug"] == meta["slug"] else ""
         nav.append(f'<a href="{page["slug"]}.html"{current}>{html.escape(page["title"])}</a>')
@@ -171,14 +171,14 @@ def page_html(meta, body_html, toc, pages):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — ontodb</title>
+<title>{title} — OntoDB</title>
 <meta name="description" content="{html.escape(meta.get("description", ""))}">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <a class="skip" href="#content">Skip to content</a>
 <header class="top">
-  <a class="brand" href="index.html">ontodb</a>
+  <a class="brand" href="index.html">OntoDB</a>
   <label class="nav-button" for="nav-toggle">Menu</label>
 </header>
 <input id="nav-toggle" class="nav-toggle" type="checkbox">
@@ -194,7 +194,7 @@ def page_html(meta, body_html, toc, pages):
 {body_html}
 </main>
 </div>
-<footer class="site">ontodb study notes. SPARQL store: dictionary, B+ tree permutations, volcano engine, optimizer, write-ahead log, ARIES.</footer>
+<footer class="site">OntoDB study notes. A database management system for ontologies: RDF, SPARQL, B+ tree indexes, optimizer, write-ahead log, ARIES.</footer>
 <script src="search.js"></script>
 </body>
 </html>

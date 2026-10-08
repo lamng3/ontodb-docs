@@ -3,11 +3,11 @@ title: Overview
 slug: index
 order: 1
 kicker: Study notes
-description: What ontodb is, which pieces already run, and where the optimizer, B+ tree, WAL, and ARIES fit.
-lede: ontodb is a standalone SPARQL database. These notes are the map of each feature, and of how a later comparison becomes a writeup.
+description: OntoDB is a database management system for ontologies. These notes cover SPARQL, the B+ tree, the optimizer, and ARIES.
+lede: OntoDB is a database management system for ontologies. Data is RDF. The query language is SPARQL. These notes are the map of each feature, and of how a later comparison becomes a writeup.
 ---
 
-A query is a pipeline. A committed insert is that same pipeline plus a log. The memory path already answers a SPARQL subset. The disk path, the optimizer, and recovery are specified and still to build.
+A query is a pipeline. A committed insert is that same pipeline plus a log. The memory path already answers a SPARQL subset. The index, the optimizer, and recovery are specified and still to build.
 
 ## The pieces
 
@@ -66,4 +66,4 @@ The first implementation item is [TripleKey](indexes.html#the-24-byte-key), plan
 
 ## What this site is for
 
-Read a feature before you build it. Each page says what the piece is, how ontodb uses it, what works today, and the slice that comes next. [Benchmarks and writeups](research.html) is how a finished comparison is recorded. The code repository stays separate. `PLAN.md` there is the feature list.
+Read a feature before you build it. Each page says what the piece is, how OntoDB uses it, what works today, and the slice that comes next. [Benchmarks and writeups](research.html) is how a finished comparison is recorded. The code repository stays separate. `PLAN.md` there is the feature list.

@@ -3,11 +3,11 @@ title: B+ tree
 slug: b-plus-tree
 order: 8
 kicker: Index
-description: Why ontodb's index is a B+ tree, how pages split and merge, and how a scan holds one leaf.
+description: Why OntoDB's index is a B+ tree, how pages split and merge, and how a scan holds one leaf.
 lede: The triple index is a B+ tree. Keys live in the leaves. Internal pages hold separators and child pointers. Leaves point at their right sibling.
 ---
 
-A B-tree can store keys in internal nodes. A B+ tree does not. ontodb uses the B+ tree shape because a SPARQL range is a walk along sibling leaves, and that walk should not climb back to the root for every key.
+A B-tree can store keys in internal nodes. A B+ tree does not. OntoDB uses the B+ tree shape because a SPARQL range is a walk along sibling leaves, and that walk should not climb back to the root for every key.
 
 The key is a `TripleKey`, 24 bytes. The value in a leaf is the key itself: the triple is the record. There is no separate tuple id.
 

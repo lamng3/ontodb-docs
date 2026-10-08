@@ -3,7 +3,7 @@ title: Optimizer
 slug: optimizer
 order: 5
 kicker: Planning
-description: The optimizer ontodb will have — statistics, cardinality, join order, join method, and EXPLAIN ANALYZE.
+description: The optimizer OntoDB will have — statistics, cardinality, join order, join method, and EXPLAIN ANALYZE.
 lede: The planner emits one left-deep nested-loop tree. The optimizer rewrites it. That rewriter is part of the database, and it is the optimizer feature.
 ---
 
@@ -49,7 +49,7 @@ A fully unbound pattern joined with itself is not `TripleCount` for the join res
 
 Start greedy and left-deep. Enumerate bushy plans only after left-deep works. The test checks rows, not which order you picked. Your own timing experiment is what checks the order.
 
-Selinger's search keeps, for each subset of patterns, the cheapest way to produce it, plus interesting orders if you later add sort. ontodb's first version can ignore interesting orders and keep one winner per subset. `ORDER BY` is an operator above the joins, not a reason to preserve a permutation's order, until you decide that a range scan is already sorted.
+Selinger's search keeps, for each subset of patterns, the cheapest way to produce it, plus interesting orders if you later add sort. OntoDB's first version can ignore interesting orders and keep one winner per subset. `ORDER BY` is an operator above the joins, not a reason to preserve a permutation's order, until you decide that a range scan is already sorted.
 
 ## Join method
 

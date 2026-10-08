@@ -3,8 +3,8 @@ title: SPARQL
 slug: sparql
 order: 3
 kicker: Language
-description: The SPARQL subset ontodb parses, how variables become slots, and which features fail with a line and column.
-lede: ontodb speaks SPARQL, not SQL. The supported language is a basic graph pattern plus filters and ground updates.
+description: The SPARQL subset OntoDB parses, how variables become slots, and which features fail with a line and column.
+lede: OntoDB speaks SPARQL, not SQL. The supported language is a basic graph pattern plus filters and ground updates.
 ---
 
 A triple is subject, predicate, object. A query names some of those positions with variables and asks for the bindings. There is no table of rows until the engine builds one.

@@ -3,7 +3,7 @@ title: Dictionary
 slug: dictionary
 order: 6
 kicker: Terms
-description: How ontodb interns IRIs, literals, and blank nodes to 64-bit ids, in memory and on disk.
+description: How OntoDB interns IRIs, literals, and blank nodes to 64-bit ids, in memory and on disk.
 lede: The index never compares strings. It compares ids. The dictionary is the only place a spelling lives.
 ---
 

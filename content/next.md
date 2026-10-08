@@ -3,7 +3,7 @@ title: What to build next
 slug: next
 order: 2
 kicker: Roadmap
-description: The features ontodb is building, the check command for each, and what is intentionally left open.
+description: The features OntoDB is building, the check command for each, and what is intentionally left open.
 lede: The shell already answers queries. The next code is the 24-byte triple key. After that, each feature is one check command.
 ---
 

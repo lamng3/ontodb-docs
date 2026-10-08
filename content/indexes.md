@@ -3,7 +3,7 @@ title: Triple indexes
 slug: indexes
 order: 7
 kicker: Storage
-description: The 24-byte triple key, prefix bounds, and why ontodb builds SPO, POS, and OSP rather than all six.
+description: The 24-byte triple key, prefix bounds, and why OntoDB builds SPO, POS, and OSP rather than all six.
 lede: A triple index is a B+ tree of 24-byte keys. Each permutation is the same triples in a different order, so a different pattern is a range.
 ---
 

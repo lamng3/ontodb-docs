@@ -3,8 +3,8 @@ title: WAL and ARIES
 slug: recovery
 order: 11
 kicker: Recovery
-description: Write-ahead logging, group commit, compensation records, and the three ARIES passes ontodb will run on open.
-lede: ontodb uses write-ahead logging and ARIES. Redo is page-oriented. Undo of a triple is logical. A B+ tree split is redone, not undone.
+description: Write-ahead logging, group commit, compensation records, and the three ARIES passes OntoDB will run on open.
+lede: OntoDB uses write-ahead logging and ARIES. Redo is page-oriented. Undo of a triple is logical. A B+ tree split is redone, not undone.
 ---
 
 The policy is steal / no-force. Steal means a dirty page of an uncommitted transaction may be written. No-force means a committed transaction's pages need not be written yet. Commit only has to make the commit record durable. Both choices are why a log exists: steal requires undo, no-force requires redo.
