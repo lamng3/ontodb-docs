@@ -46,7 +46,7 @@ Thread-safe from the first version. `NewPage` allocates, pins, and returns a zer
 
 One latch covers the page table, the free list, pins, dirty bits, and the replacer, and it is held across the disk read of a miss or the write-back of a victim. Every read and write goes through the scheduler. When a log manager is installed, write-back flushes the log up to the page's pageLSN, reaches `BufferPoolManager::FlushPage::before_disk_write`, and only then writes the page. `NewPage` and `FetchPage` return null when every frame is pinned. The destructor does not flush; a clean shutdown calls `FlushAllPages`. Plan 1.4 is done; `scripts/check 1.4`.
 
-The replacer only sees unpinned frames. A pin count and a latch are different. The latch arrives with the guards.
+The replacer only sees unpinned frames. A pin count and a latch are different: the pin keeps the frame in memory, the latch protects its bytes.
 
 `FlushPage` writes a dirty frame only. If a log manager is installed, the order is fixed:
 
@@ -62,8 +62,10 @@ The constructor is `(pool_size, DiskManager*, replacer_k, LogManager* = nullptr,
 
 `ReadPageGuard` takes a shared latch and one pin. `WritePageGuard` takes an exclusive latch and one pin. Both unpin exactly once, in `Drop` or the destructor. Move transfers the pin and leaves the source empty. An empty guard is not dereferenceable. Copying is forbidden. Two read guards on one page may coexist. A write guard excludes every other guard on that page.
 
+Each frame carries a reader-writer latch. A guard pins first (through `FetchPage` or `NewPage`), then takes the latch outside the pool's latch, so waiting for a busy page never blocks the pool. `Drop` releases the latch first and the pin second; unpinned first, the frame could be evicted while its latch is still held. A write guard marks the page dirty only if its mutable `GetData` was called, so crabbing can hold an exclusive latch on a page it never changes without causing a write. `FetchPageRead`, `FetchPageWrite`, and `NewPageGuarded` throw `StorageException` when the pool returns null.
+
 ::: today
-Constructing a guard throws `PLAN 1.5`. The scaffold's `Drop` only clears pointers. It does not unpin. Replacing that function is the whole item. Unpinning twice is a bug the pin-count tests catch.
+Plan 1.5 is done. `scripts/check 1.5`. The guard tests pass under ThreadSanitizer.
 :::
 
 The harness asserts zero pinned frames after every query and every destroyed iterator. That assertion is the reason guards exist. A raw `FetchPage` without a matching `UnpinPage` fails it.

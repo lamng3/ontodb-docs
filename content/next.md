@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 14 of 53 slices are done. The triple key and the buffer pool below the guards run (disk manager, I/O scheduler, LRU-K, the pool); the next piece of code is page guards.
+lede: 15 of 53 slices are done. The triple key and the buffer pool with its page guards run; the next piece of code is the shell's `\\bpm`, `\\page`, and `\\trace` commands.
 ---
 
 ## Done
