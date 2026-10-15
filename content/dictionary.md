@@ -8,7 +8,7 @@ description: How OntoDB interns IRIs, literals, and blank nodes to 64-bit ids, i
 lede: The index never compares strings. It compares ids. The dictionary is the only place a spelling lives.
 ---
 
-`term_id_t` is a `uint64_t`. Ids start at 1. `INVALID_TERM_ID` is the maximum uint64 and means unbound, not a term. Zero is not a valid id, so a zeroed key does not accidentally name the first term you interned.
+`term_id_t` is a `uint64_t`. Ids start at 1. `INVALID_TERM_ID` is the maximum uint64 and means unbound, not a term. No dictionary may assign it: `Dictionary::CheckAssignable` throws `StorageException` if the next id would be `INVALID_TERM_ID`. Rows rely on it to mark empty slots, and the triple key's saturated upper bound relies on no stored key containing it. Zero is not a valid id, so a zeroed key does not accidentally name the first term you interned.
 
 ## One spelling
 
@@ -42,7 +42,7 @@ The heap chains pages. Its iterator visits every live record once and holds no p
 
 ## Disk dictionary
 
-Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. A hash index from spelling to id, plus the heap from id to bytes, is enough. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.
+Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. Call `CheckAssignable` before handing out a new id. A hash index from spelling to id, plus the heap from id to bytes, is enough. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.
 
 The catalog remembers the dictionary root next to the permutation roots. `Flush` makes that metadata durable.
 
