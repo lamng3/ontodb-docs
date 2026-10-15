@@ -24,7 +24,7 @@ isolation rc
 | `backend` | `mem`, `indexed` | `mem` | `indexed` moves the triples onto pages and B+ trees in a temporary file; `mem` moves them back. A persistent database stays on `mem` until PLAN 8 |
 | `pool_size` | frames | `64` | Frames in the indexed backend's pool, read when the backend is switched on |
 | `lru_k` | positive integer | `2` | The indexed backend's LRU-K `k`, read when the backend is switched on |
-| `join` | `auto`, `nlj`, `inlj`, `hash` | `nlj` | Join operator. `inlj` and `hash` answer `not built yet` (PLAN 4.2, 4.3) when a query runs |
+| `join` | `auto`, `nlj`, `inlj`, `hash` | `nlj` | Join operator, swapped into the plan before `\explain` and execution. `auto` keeps nested loop until the optimizer chooses (PLAN 5.4) |
 | `isolation` | `ru`, `rc`, `rr`, `ser` | `rc` | Stored for transactions, which are being built |
 
 A setting that is accepted prints `ok`. An unknown knob or value prints an error and changes nothing.

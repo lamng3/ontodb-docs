@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 30 of 53 slices are done. Storage is complete and query execution has begun: the nested loop rebinds its inner scan. Next are index nested-loop and hash joins.
+lede: 32 of 53 slices are done. All three join operators run; next are distinct, limit, sort, and insert and delete as operators.
 ---
 
 ## Done

@@ -41,9 +41,11 @@ The current join full-scans the inner child for every outer row. It does not pus
 Plan 4.1, done: the nested loop reopens its inner side with `InitWith(outer row)`. Every executor has `InitWith`, which by default is `Init`; the triple scan overrides it and turns each variable the outer row binds into a constant in the pattern it hands the store. On the indexed backend that pattern is usually a subject prefix, so each inner scan is a short range instead of a scan of every triple with that predicate. The test watches the pattern passed to `Scan`, not the output rows, because the rows were already right. Files: `triple_scan_executor.cpp` and `nested_loop_join_executor.cpp`.
 :::
 
-Plan 4.2 is the index nested-loop join: the same rebinding, then a prefix probe of a B+ tree instead of a scan. `\set join inlj` selects it. On the memory backend the probe may still be a filtered scan. The rows must match nested loop.
+Plan 4.2, done: the index nested-loop join. Its inner side must be one triple pattern, and it has no inner executor: for each outer row it fills the pattern from that row and asks the store, which picks the index whose order starts with the bound positions. With rebinding the nested loop reads the same triples; the separate operator skips the inner executor and the generic merge, and names the strategy in the plan. `\set join inlj` selects it; a join whose inner side is not a scan stays a nested loop. On the memory backend the probe is a filtered scan.
 
-Plan 4.3 is hash join. Build a table on one side, probe with the other. The key is the shared variables, hashed as `term_id_t`. An unbound slot is not a key. `\set join hash` selects it.
+Plan 4.3, done: hash join. It reads the inner (right) side once into a table keyed by the ids of the variables both sides produce, then streams the outer side through it. A row whose key slot is unbound is not hashed; it is compared with every row of the other side. With no shared variable the key is empty and the join is a cross product. Building on the inner side is a stand-in until the optimizer can pick the smaller side. `\set join hash` selects it.
+
+`\set join` is applied by `Optimizer::ApplyJoinMethod`, which swaps the plan's join nodes before the plan is explained or run, so `\explain` shows the operator that runs. The differential test runs every query file under all three joins.
 
 ## Filter
 
@@ -60,7 +62,7 @@ Projection keeps the slots in the `SELECT` clause. `SELECT *` keeps every slot i
 `ORDER BY` compares the way the filter does. Do not sort raw ids. Ids are assigned in intern order, which is not value order. A small run sorts in memory. A run that does not fit sorts externally through the buffer pool, so a spill is a page with a pageLSN, not a private `fwrite`.
 
 ::: next
-Plans 4.4 and 4.5. The plan nodes already exist in `stub_plans.h`. The factory throws `PLAN 4.4` and `PLAN 4.5` until the executors exist. `\set join inlj` throws 4.2 and `\set join hash` throws 4.3 today, and it does not change the stored setting when the operator is missing.
+Plans 4.4 and 4.5. The plan nodes already exist in `stub_plans.h`. The factory throws `PLAN 4.4` and `PLAN 4.5` until the executors exist. `\set join inlj` and `\set join hash` run (plans 4.2 and 4.3).
 :::
 
 ## Insert and delete executors
