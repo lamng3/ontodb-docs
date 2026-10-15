@@ -44,12 +44,14 @@ The page layout is in `term_heap_page.h`: after the pageLSN, the next page id, t
 
 ## Disk dictionary
 
-Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. Call `CheckAssignable` before handing out a new id. A hash index from spelling to id, plus the heap from id to bytes, is enough. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.
+Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. Call `CheckAssignable` before handing out a new id. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.
+
+OntoDB builds the dictionary from its own parts. Spellings live in a term heap. A B+ tree keyed `(id, heap page, heap slot)` answers id to spelling with a 1-prefix scan. A B+ tree keyed `(hash, id, 0)` answers spelling to id: a 1-prefix scan on the spelling's hash lists candidate ids, and each candidate's spelling is read and compared, so two spellings with the same hash are both found correctly. The hash is 64-bit FNV-1a, written out in the code, because a hash stored on disk must be the same in every build; `std::hash` is not. A header page, which the catalog's dictionary root names, holds the magic `ODIC`, the term count, and the three page ids. One mutex serializes the dictionary. A lookup by spelling costs two tree descents and a heap read; nothing is rebuilt at startup.
 
 The catalog remembers the dictionary root next to the permutation roots. `Flush` makes that metadata durable.
 
 ::: next
-Plan 3.1, the term heap, is done. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3, done). The in-memory dictionary stays; the indexed store is what switches.
+Plans 3.1 (term heap), 3.2 (disk dictionary), and 3.3 (catalog) are done. The in-memory dictionary stays; the indexed store is what switches.
 :::
 
 ::: read
