@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 27 of 53 slices are done. Queries now run on B+ trees on the indexed backend; next is measuring which permutations to keep.
+lede: 29 of 53 slices are done. Pages, the buffer pool, the B+ tree, and RDF storage run, and the permutation set was measured; next is query execution.
 ---
 
 ## Done
@@ -16,6 +16,7 @@ lede: 27 of 53 slices are done. Queries now run on B+ trees on the indexed backe
 | Triple key | `scripts/check key` | Done: the key round-trips and the prefix bounds match |
 | Buffer pool | `scripts/check buffer` | Done: disk file, I/O thread, LRU-K, pool, guards, inspection |
 | B+ tree | `scripts/check index` | Done: layout, invariants, search, insert, iterator, bulk load, delete |
+| RDF storage | `scripts/check storage` | Done: term heap, disk dictionary, catalog, indexed store, SPO/POS/OSP measured, clean restart |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -25,7 +26,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| RDF storage | `scripts/check storage` | A clean restart sees the triples |
 | Query execution | `scripts/check execution` | `\set join` selects a real operator |
 | Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
 | Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |

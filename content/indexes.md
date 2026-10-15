@@ -37,7 +37,7 @@ Plan 0.2 is done. `scripts/check 0.2` runs the round-trip, ordering, prefix-boun
 
 One order cannot serve every pattern. SPO answers a bound subject. It does not answer a bound object with an unbound subject, except by scanning the whole tree and filtering.
 
-The catalog names three roots: `"spo"`, `"pos"`, and `"osp"`. Hexastore would build all six. RDF-3X argues you can stop earlier. Plan 3.5 makes you measure before you choose.
+The default store keeps three: `"spo"`, `"pos"`, and `"osp"`. Hexastore would build all six. RDF-3X argues you can stop earlier. OntoDB measured before choosing (plan 3.5): on LUBM(1), about 100,000 triples, with each pattern shape on a cold 64-frame pool, SPO alone reads all 1,131 pages for any pattern that binds the predicate or the object without the subject; POS and OSP cut that to 128 and 25 pages for twice the space (16 MiB against 8). The other three permutations cost 80% more space and made no pattern cheaper. `benchmarks/indexing/results.md` has the full table, and `benchmarks/indexing/run.sh` reruns it after `scripts/fetch-data lubm`.
 
 | Pattern | A prefix of |
 | --- | --- |
@@ -71,7 +71,7 @@ For an index, the page the catalog names is the tree's header page, not its root
 Page 0 is a reasonable home. Initialize it before the first read. Page 0 is a legal page id, so a zeroed "root" must not be mistaken for an empty tree that lives on page 0. The empty tree stores `INVALID_PAGE_ID`.
 
 ::: next
-Plan 3.4, the indexed store, is done; the differential test runs every query file on it and on the memory store. Plan 3.5 is the measurement that decides POS and OSP. Plan 3.6 is a clean shutdown: flush the pool and the catalog, close the file, open it, and see the triples.
+RDF storage is done. Plan 3.4: the differential test runs every query file on the indexed store and on the memory store. Plan 3.5: the measurement above. Plan 3.6: a clean shutdown (flush the pool and the catalog, close the file) and a reopen see the same triples and terms.
 :::
 
 ::: read
