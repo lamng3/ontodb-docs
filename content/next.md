@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 16 of 53 slices are done. The triple key and the whole buffer pool run; the next piece of code is the B+ tree, starting with its page layout.
+lede: 17 of 53 slices are done. The triple key, the whole buffer pool, and the B+ tree's page layout run; next are the tree's invariants, search, and insert.
 ---
 
 ## Done

@@ -16,7 +16,9 @@ Every page is 4096 bytes. The first 8 bytes are the pageLSN, little-endian. Payl
 
 ## Page layout
 
-You document the byte layout in the header. The contracts that do not depend on your packing:
+The byte layout is written in the page headers. After the 8-byte pageLSN, every index page has a 12-byte header: type, size, and max size, each a 4-byte integer in the machine's byte order. A leaf follows with its right sibling's page id and an array of 24-byte keys: 169 per page. An internal page follows with slots of a 24-byte key and a 4-byte child id: 145 slots, so 144 keys. Keys are stored whole, with no prefix compression. The header page keeps the root id just after the pageLSN.
+
+The contracts:
 
 - An internal page stores `n` keys and `n + 1` children. `KeyAt(0)` is unused. `ValueAt(0)` is the leftmost child.
 - A leaf stores keys in increasing order and a right-sibling page id.
@@ -27,7 +29,7 @@ You document the byte layout in the header. The contracts that do not depend on 
 A zeroed page is not a valid header until the root is initialized to `INVALID_PAGE_ID`.
 
 ::: next
-Plan 2.1. It depends only on the page frame, which already exists. Write `CheckInvariants` (plan 2.2) before insert. A broken split is easier to see as a failed invariant than as a wrong query.
+Plan 2.1 is done; `scripts/check 2.1`. Next is `CheckInvariants` (plan 2.2), before insert. A broken split is easier to see as a failed invariant than as a wrong query.
 :::
 
 ## Order
