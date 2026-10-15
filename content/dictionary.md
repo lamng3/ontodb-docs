@@ -40,6 +40,8 @@ On disk, the bytes of a spelling live in a slotted page, not in the B+ tree leaf
 
 The heap chains pages. Its iterator visits every live record once and holds no pin after `operator*` returns.
 
+The page layout is in `term_heap_page.h`: after the pageLSN, the next page id, the slot count, and the start of the record area, then 4-byte slots (offset and length). Records grow down from the end of the page. `Delete` compacts the page at once, sliding the records below the deleted one up, so free space is always one gap and slot numbers never change. A record is at most 4,076 bytes; a longer term throws `StorageException`. An insert goes to the last page of the chain and chains a new page when it does not fit; space freed on earlier pages is not hunted for, because the dictionary never deletes terms.
+
 ## Disk dictionary
 
 Both directions survive restart: spelling to id, and id to spelling. Ids stay dense from 1. Call `CheckAssignable` before handing out a new id. A hash index from spelling to id, plus the heap from id to bytes, is enough. Do not intern a spelling twice after restart, or one IRI becomes two ids and every join on that IRI breaks.
@@ -47,7 +49,7 @@ Both directions survive restart: spelling to id, and id to spelling. Ids stay de
 The catalog remembers the dictionary root next to the permutation roots. `Flush` makes that metadata durable.
 
 ::: next
-Plan 3.1 is the term heap. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3). The in-memory dictionary stays; the indexed store is what switches.
+Plan 3.1, the term heap, is done. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3). The in-memory dictionary stays; the indexed store is what switches.
 :::
 
 ::: read

@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 23 of 53 slices are done. The triple key, the buffer pool, and the B+ tree run; the next piece of code is RDF storage, starting with the term heap.
+lede: 24 of 53 slices are done. The triple key, the buffer pool, the B+ tree, and the term heap run; next are the catalog and the disk dictionary.
 ---
 
 ## Done
