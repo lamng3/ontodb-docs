@@ -10,6 +10,8 @@ lede: OntoDB is a database management system for ontologies. Data is RDF, the qu
 
 This manual describes how to install OntoDB, load ontologies, query and update them, keep a database on disk, and recover it after a crash. The last parts describe how OntoDB works inside and how the project is developed.
 
+For the theory behind each part (pages, buffer pools, B+ trees, query plans, locking, the write-ahead log, and ARIES), read the companion book, [OntoDB: Database Internals by Example](https://github.com/lamng3/OntoDB/blob/main/book/ontodb-book.pdf).
+
 ## What OntoDB does today
 
 - Loads Turtle, N-Triples, and RDF/XML. OWL files load as RDF triples; there is no reasoner.
