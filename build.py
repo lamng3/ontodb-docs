@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Turn content/*.md into a static site at the repo root."""
+"""Turn content/*.md into the OntoDB manual, a static site at the repo root.
+
+Each page's front matter names its `part`. Parts appear in the navigation in
+PARTS order, and pages within a part in `order`.
+"""
 
 import html
 import json
@@ -9,7 +13,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 CONTENT = ROOT / "content"
 
-NAV = []
+PARTS = ["Getting started", "Using OntoDB", "Reference", "Internals", "Project"]
+
+CALLOUTS = {
+    "today": "Status",
+    "next": "Planned",
+    "read": "Further reading",
+    "note": "Note",
+    "warning": "Warning",
+}
 
 
 def parse_front(text):
@@ -84,7 +96,7 @@ def render_body(md):
             while i < len(lines) and lines[i].strip() != ":::":
                 buf.append(lines[i])
                 i += 1
-            label = {"today": "Today", "next": "Next", "read": "Read"}[kind]
+            label = CALLOUTS[kind]
             inner, _ = render_body("\n".join(buf))
             html_parts.append(
                 f'<aside class="callout {kind}"><span class="label">{label}</span>{inner}</aside>'
@@ -157,10 +169,19 @@ def render_body(md):
 
 
 def page_html(meta, body_html, toc, pages):
-    nav = ['<a class="brand-desk" href="index.html">OntoDB</a>', '<input class="search" id="q" type="search" placeholder="Search notes" autocomplete="off">', '<ul id="results" hidden></ul>']
-    for page in pages:
-        current = ' aria-current="page"' if page["slug"] == meta["slug"] else ""
-        nav.append(f'<a href="{page["slug"]}.html"{current}>{html.escape(page["title"])}</a>')
+    nav = [
+        '<a class="brand-desk" href="index.html">OntoDB Manual</a>',
+        '<input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off">',
+        '<ul id="results" hidden></ul>',
+    ]
+    for part in PARTS:
+        members = [page for page in pages if page["part"] == part]
+        if not members:
+            continue
+        nav.append(f'<p class="nav-part">{html.escape(part)}</p>')
+        for page in members:
+            current = ' aria-current="page"' if page["slug"] == meta["slug"] else ""
+            nav.append(f'<a href="{page["slug"]}.html"{current}>{html.escape(page["title"])}</a>')
     toc_html = ""
     if toc:
         items = "".join(f'<li><a href="#{slug}">{html.escape(title)}</a></li>' for slug, title in toc)
@@ -171,7 +192,7 @@ def page_html(meta, body_html, toc, pages):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{title} — OntoDB</title>
+<title>{title} — OntoDB Manual</title>
 <meta name="description" content="{html.escape(meta.get("description", ""))}">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -194,7 +215,7 @@ def page_html(meta, body_html, toc, pages):
 {body_html}
 </main>
 </div>
-<footer class="site">OntoDB study notes. A database management system for ontologies: RDF, SPARQL, B+ tree indexes, optimizer, write-ahead log, ARIES.</footer>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
 <script src="search.js"></script>
 </body>
 </html>
@@ -207,14 +228,17 @@ def main():
     index = []
     for path in sorted(CONTENT.glob("*.md")):
         meta, body = parse_front(path.read_text())
+        if meta.get("part") not in PARTS:
+            raise SystemExit(f"{path.name}: part must be one of {PARTS}")
         body_html, toc = render_body(body)
         text = re.sub(r"<[^>]+>", " ", body_html)
         text = re.sub(r"\s+", " ", html.unescape(text)).strip()
         pages.append(meta)
         rendered.append((meta, body_html, toc))
         index.append({"title": meta["title"], "url": meta["slug"] + ".html", "text": text[:4000]})
-    pages.sort(key=lambda m: int(m["order"]))
-    rendered.sort(key=lambda item: int(item[0]["order"]))
+    rank = {part: i for i, part in enumerate(PARTS)}
+    pages.sort(key=lambda m: (rank[m["part"]], int(m["order"])))
+    rendered.sort(key=lambda item: (rank[item[0]["part"]], int(item[0]["order"])))
     for meta, body_html, toc in rendered:
         out = ROOT / f"{meta['slug']}.html"
         out.write_text(page_html(meta, body_html, toc, pages))

@@ -1,5 +1,7 @@
-# OntoDB study notes
+# OntoDB Manual
 
-Phone-readable notes for OntoDB, a database management system for ontologies. RDF in, SPARQL queries, a B+ tree, an optimizer, write-ahead logging, ARIES, and how a benchmark becomes a writeup.
+The manual for OntoDB, a database management system for ontologies: installing and running it, the shell and SPARQL reference, persistent databases and recovery, file formats, troubleshooting, internals, and the roadmap.
 
-The site is static HTML. `python3 build.py` regenerates the pages from `content/`. GitHub Pages serves the HTML at the repository root.
+Read it at <https://lamng3.github.io/ontodb-docs/>.
+
+The site is static HTML. `python3 build.py` regenerates the pages from `content/`. Each page's front matter names its `part` (Getting started, Using OntoDB, Reference, Internals, Project) and its `order` within that part. GitHub Pages serves the HTML at the repository root.

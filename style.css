@@ -305,3 +305,14 @@ footer.site {
 @media (max-width: 959px) {
   .nav .brand-desk { display: none; }
 }
+
+.nav-part {
+  margin: 1.1rem 0 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.callout.note { background: var(--read-bg); color: var(--read-ink); }
+.callout.warning { background: var(--next-bg); color: var(--next-ink); }

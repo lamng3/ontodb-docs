@@ -1,8 +1,9 @@
 ---
 title: Query engine
 slug: query-engine
-order: 4
-kicker: Execution
+part: Internals
+order: 1
+kicker: Internals
 description: How a SPARQL plan runs as a volcano tree of scans, joins, filters, and projections over term ids.
 lede: The engine is volcano. Each operator implements Init and Next, and a row is a vector of term ids.
 ---

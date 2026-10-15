@@ -1,8 +1,9 @@
 ---
 title: Benchmarks and writeups
 slug: research
-order: 14
-kicker: Research
+part: Project
+order: 3
+kicker: Project
 description: How a comparison of eviction, indexing, joins, or recovery becomes a result table and a writeup.
 lede: One engine, several methods. A method is a knob. The result table is what a writeup is allowed to cite.
 ---

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Development — OntoDB Manual</title>
+<meta name="description" content="How OntoDB is built, tested, and checked feature by feature, and the harnesses behind the tests.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">OntoDB</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><p class="nav-part">Project</p><a href="development.html" aria-current="page">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Project</p>
+<h1>Development</h1>
+<p class="lede">Work is organized as features made of numbered slices. A slice is done when its tests pass with the DISABLED_ prefix removed.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#the-plan">The plan</a></li><li><a href="#checks">Checks</a></li><li><a href="#continuous-integration">Continuous integration</a></li><li><a href="#test-harnesses">Test harnesses</a></li><li><a href="#code-layout">Code layout</a></li></ol></nav>
+<h2 id="the-plan">The plan</h2><p><code>PLAN.md</code> in the repository is the feature list. Each feature is a group of slices with ids such as <code>1.4</code> or <code>8.6</code>. The ids appear in test names (<code>P8_6_...</code>) and in the shell&#x27;s <code>not built yet (PLAN x.y)</code> messages. A test for an unbuilt slice is disabled; removing <code>DISABLED_</code> is part of finishing the slice.</p><h2 id="checks">Checks</h2><pre><code>scripts/check durable        # one feature: build, run its tests, print the next slice
+scripts/check 0.2            # one slice
+scripts/status               # every slice, grouped by feature, and the progress
+scripts/crashtest --seeds 4  # the crash harness</code></pre><p><code>scripts/check</code> configures and builds the right preset, runs the matching tests (including disabled ones, so you see what is left), and prints pass or fail and the next slice. Concurrency slices run under ThreadSanitizer.</p><h2 id="continuous-integration">Continuous integration</h2><p>Every push builds and runs the whole test suite under AddressSanitizer and UndefinedBehaviorSanitizer, and again under ThreadSanitizer, then checks formatting with clang-format and lints <code>src/</code> and <code>tools/</code> with clang-tidy, warnings as errors.</p><h2 id="test-harnesses">Test harnesses</h2><table><thead><tr><th>Harness</th><th>What it checks</th></tr></thead><tbody><tr><td>Query harness (<code>test/queries/*.test</code>)</td><td>SPARQL text and expected rows in canonical spelling, compared as a multiset unless order is declared</td></tr><tr><td>Isolation harness (<code>test/isolation/specs/</code>)</td><td>A scripted schedule over two sessions, checking <code>blocked</code>, <code>unblocks</code>, <code>abort</code>, <code>contains</code>, <code>equals</code>, <code>absent</code></td></tr><tr><td>Crash harness (<code>scripts/crashtest</code>)</td><td>Kills a child process at random points and compares the reopened store with a store that replayed only acknowledged commits</td></tr><tr><td>Durability scenarios (<code>test/durable/</code>)</td><td>Load, update, crash before commit, crash during checkpoint, torn and corrupt logs, corrupt snapshot, verify, and a full shell session</td></tr></tbody></table><p>Crash points are named <code>Class::Method::point</code> and are armed by tests through <code>CrashPoint::Arm</code>.</p><h2 id="code-layout">Code layout</h2><pre><code>src/include/   headers, one directory per component
+src/           implementations, mirroring the headers
+tools/shell/   the ontodb shell
+test/          GoogleTest suites, mirroring src/
+data/          sample ontologies and LUBM queries
+scripts/       check, status, crashtest, fetch-data
+benchmarks/    one directory per measured question
+writeups/      one file per finding</code></pre>
+</main>
+</div>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
+<script src="search.js"></script>
+</body>
+</html>

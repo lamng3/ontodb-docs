@@ -1,58 +1,25 @@
 ---
-title: Persistence and snapshots
+title: Disk persistence design
 slug: durability
-order: 12
-kicker: Durability
-description: How OntoDB keeps the memory database on disk today, how the page path will persist, how deletes reclaim space, and what a checkpoint or a scan freezes.
-lede: Today a snapshot and a write-ahead log keep the memory database. Later, pages and the log are the durable state. Deletes shrink the B+ tree in place, and a scan freezes only the triples it already copied.
+part: Internals
+order: 9
+kicker: Internals
+description: The design of the page-based disk store: the database file, the log, clean close versus crash, space reuse on delete, and what a checkpoint or a scan freezes.
+lede: The page-based store keeps a database file of 4 KiB pages plus a write-ahead log. Deletes shrink the B+ tree in place, and a scan freezes only the triples it already copied. For the persistent databases that run today, see Persistent databases.
 ---
 
-Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is a snapshot plus the log today, and the database file plus the log once pages exist. Space comes back when a delete merges or reuses a slot. A snapshot is a full image the memory database writes at `\checkpoint`, or, inside a query, a copied scan result or a lock held until commit.
-
-## The durable memory database
-
-This runs today. Give the shell a directory and the memory database lives there:
-
-```text
-./build/dev/ontodb mydb
-\load data/tiny.owl
-INSERT DATA { <http://example.org/materials#Ceramic> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/materials#Material> . }
-\checkpoint
-\verify
-```
-
-The directory holds two files. `snapshot` is a full image at one LSN: every dictionary term in id order, then every triple, with a CRC-32C over the body. `wal` holds every log record after it. Redo is logical: an update record names a triple, not a page, and its `page_id` is `INVALID_PAGE_ID`, because the memory store has no pages.
-
-A statement is a transaction. It runs against a `RecordingStore` that remembers the triples it changed. Then the log gets begin, a term record for each spelling not logged yet, one update per changed triple, and commit, and the commit is forced before the statement returns. A statement that throws is undone in memory. A statement that changed nothing logs nothing. `\load` is one transaction for the whole file.
-
-Opening the directory loads the snapshot and replays the log. Term records replay whatever their transaction did, because the dictionary only grows and a term no committed triple uses is invisible; that keeps ids identical across restarts. Updates replay only for transactions with a commit record, in log order. An uncommitted transaction leaves no trace. The open prints one line: the snapshot LSN, how many records, how many committed and dropped transactions, and the triple count.
-
-`\checkpoint` writes the snapshot to a temporary file, fsyncs it, renames it over the old one, and empties the log. A crash between the rename and the truncate leaves the new snapshot with the old log. Replay skips every record at or below the snapshot's LSN, so nothing applies twice.
-
-| Event | Durable after |
-| --- | --- |
-| An update statement or `\load` returns | its commit record is on the log |
-| A statement throws | nothing; it was undone in memory |
-| `\checkpoint` returns | the renamed snapshot, and an empty log |
-| `\quit` | everything committed; the log is already forced |
-| `\crash` | everything committed; anything still buffered is lost |
-
-::: today
-`scripts/check durable` passes all seven slices. The scenarios: Turtle and RDF/XML loads survive a reopen, inserts and deletes replay in order, a crash before commit leaves no trace, term ids are stable, a crash after the snapshot does not replay twice, a corrupt snapshot refuses to open, a torn or corrupt log keeps the committed prefix, and a tampered log fails `\verify`. How a bad log record is handled is in [WAL and ARIES](recovery.html#torn-and-corrupt-records).
-:::
-
-The memory database scans every triple on insert, so a snapshot of a large graph loads slowly. That is the memory store, not the format. The indexed store is what makes a large graph fast.
+Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is a snapshot plus the log today, and the database file plus the log once pages exist. Space comes back when a delete merges or reuses a slot. On the page path, a snapshot is a copied scan result or a lock held until commit. The persistent databases that run today keep a different, simpler pair of files; see [Persistent databases](persistence.html).
 
 ## Persistence
 
-Two files, once the disk path exists. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7; the memory path above does not use it.
+Two files, once the disk path exists. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7.
 
 The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page ids survive restart. Each page image starts with an 8-byte pageLSN. The catalog page records the root of `spo`, `pos`, `osp`, and the dictionary. Term spellings live in the term heap, which is more pages in that same file. Triple keys live in the B+ tree leaves.
 
 The log is a separate append-only file. `LogManager` is constructed with a `log_path`. `Append` assigns an LSN. `Flush` makes every record up to that LSN durable. Commit forces the commit record. That commit record is the acknowledgement a later open will trust.
 
 ::: today
-The page path does not exist yet. `DiskManager::ShutDown` throws plan 1.1. `FlushAllPages` throws plan 1.4. `CheckpointManager::Checkpoint` throws plan 8.5. The memory database is durable through its own snapshot and log, above.
+The page path does not exist yet. `DiskManager::ShutDown` throws plan 1.1. `FlushAllPages` throws plan 1.4. `CheckpointManager::Checkpoint` throws plan 8.5. The in-memory database is durable through its own snapshot and log; see [Persistent databases](persistence.html).
 :::
 
 A clean close and a crash are different successes.

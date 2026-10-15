@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>File formats — OntoDB Manual</title>
+<meta name="description" content="The byte layout of a log record and the text layout of a snapshot in a persistent OntoDB database.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">OntoDB</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><p class="nav-part">Reference</p><a href="formats.html" aria-current="page">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Reference</p>
+<h1>File formats</h1>
+<p class="lede">A persistent database is two files, a snapshot and a write-ahead log. Both carry a CRC-32C checksum.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#write-ahead-log-wal">Write-ahead log (`wal`)</a></li><li><a href="#snapshot-snapshot">Snapshot (`snapshot`)</a></li></ol></nav>
+<h2 id="write-ahead-log-wal">Write-ahead log (<code>wal</code>)</h2><p>The log is a sequence of records, each self-describing. Fields are in the machine&#x27;s native byte order.</p><pre><code>u32 size       whole record, header included
+u32 crc32c     over every byte after this field
+u8  type
+i64 lsn        log sequence number, from 1
+i64 txn_id
+i64 prev_lsn   previous record of the same transaction
+then, by type:
+  update       i32 page_id, u8 is_insert, u64 subject, u64 predicate, u64 object
+  clr          the update fields, then i64 undo_next
+  checkpoint   u32 n, then n x i64 active transaction ids
+  term         u64 term_id, u32 n, then n bytes of the canonical spelling
+  begin, commit, abort: nothing more</code></pre><table><thead><tr><th>Type</th><th>Written by a persistent database</th><th>Meaning</th></tr></thead><tbody><tr><td>begin</td><td>Yes</td><td>A transaction starts</td></tr><tr><td>term</td><td>Yes</td><td>A dictionary entry: id and spelling. Replayed in order so ids are identical after a restart</td></tr><tr><td>update</td><td>Yes</td><td>One triple inserted or deleted, as three dictionary ids. <code>page_id</code> is <code>-1</code>: the in-memory store has no pages</td></tr><tr><td>commit</td><td>Yes</td><td>The transaction is durable</td></tr><tr><td>abort, clr, checkpoint</td><td>No</td><td>Reserved for the page-based store&#x27;s recovery</td></tr></tbody></table><p>The checksum is CRC-32C (Castagnoli), as in PostgreSQL, RocksDB, and InnoDB log records. A record that is cut short is a torn write; a record whose bytes are all present but whose checksum, type, or size is wrong is corruption. Both stop replay at that record; see <a href="persistence.html#recovery-on-open">Recovery on open</a>.</p><h2 id="snapshot-snapshot">Snapshot (<code>snapshot</code>)</h2><p>A text file: a header, a blank line, then the body.</p><pre><code>ontodb-snapshot 1
+lsn 37
+txn 3
+terms 18
+triples 15
+crc32c 1a2b3c4d
+
+T	&lt;http://example.org/materials#Material&gt;
+T	&quot;Material&quot;
+...
+S 2 9 1
+...</code></pre><table><thead><tr><th>Line</th><th>Meaning</th></tr></thead><tbody><tr><td><code>lsn</code></td><td>The last log record the snapshot includes</td></tr><tr><td><code>txn</code></td><td>The next transaction id</td></tr><tr><td><code>terms</code>, <code>triples</code></td><td>Counts, checked on read</td></tr><tr><td><code>crc32c</code></td><td>Eight hex digits, over the whole body</td></tr><tr><td><code>T&lt;tab&gt;spelling</code></td><td>One dictionary term; the first is id 1, the next id 2, and so on</td></tr><tr><td><code>S s p o</code></td><td>One triple, as three term ids</td></tr></tbody></table><p>A snapshot is written to <code>snapshot.tmp</code>, synced, and renamed over <code>snapshot</code>. A wrong header, count, or checksum refuses to open.</p>
+</main>
+</div>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
+<script src="search.js"></script>
+</body>
+</html>

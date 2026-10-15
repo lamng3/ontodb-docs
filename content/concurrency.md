@@ -1,8 +1,9 @@
 ---
 title: Concurrency
 slug: concurrency
-order: 10
-kicker: Transactions
+part: Internals
+order: 7
+kicker: Internals
 description: Strict 2PL, hierarchical locks, isolation levels, deadlock detection, and phantoms in OntoDB.
 lede: Two shell sessions share one store. Locks decide which triples they may see. Latches decide which pages they may touch.
 ---

@@ -1,8 +1,9 @@
 ---
 title: Buffer pool
 slug: buffer-pool
-order: 9
-kicker: Disk
+part: Internals
+order: 6
+kicker: Internals
 description: Pages, the disk manager, the I/O scheduler, LRU-K, page guards, and the pageLSN that WAL will use.
 lede: The B+ tree never reads a file. It pins a frame. The buffer pool is the only component that talks to the disk.
 ---

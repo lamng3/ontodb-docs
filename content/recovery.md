@@ -1,8 +1,9 @@
 ---
 title: WAL and ARIES
 slug: recovery
-order: 11
-kicker: Recovery
+part: Internals
+order: 8
+kicker: Internals
 description: Write-ahead logging, checksummed log records, group commit, torn and corrupt records, compensation records, and the three ARIES passes OntoDB will run on open.
 lede: OntoDB uses write-ahead logging and ARIES. Redo is page-oriented. Undo of a triple is logical. A B+ tree split is redone, not undone.
 ---
@@ -87,7 +88,7 @@ After abort the triple is gone and the log contains the CLR.
 
 After `Checkpoint` returns, `LastCheckpointLsn` is that record and the record is durable. `\checkpoint` calls this. Until then, `LastCheckpointLsn` returns `INVALID_LSN` and does not throw. Calling `Checkpoint` throws `PLAN 8.5`.
 
-A checkpoint is a bookmark for recovery. It is not a SPARQL snapshot. How pages, the log, deletes, and scans persist is [Persistence, compaction, and snapshots](durability.html).
+A checkpoint is a bookmark for recovery. It is not a SPARQL snapshot. How pages, the log, deletes, and scans persist is [Disk persistence design](durability.html).
 
 ## The three passes
 
@@ -116,7 +117,7 @@ The harness already proves it can see a lie. A fake store that forgets a commit 
 Plan 8.7 points that same oracle at the real store. `scripts/crashtest --seeds 200` is the bar.
 
 ::: today
-8.1 and 8.2 pass. With a directory, `\log`, `\checkpoint`, `\crash`, and `\verify` work on the [durable memory database](durability.html#the-durable-memory-database), which uses these records and this log manager with logical redo. Without one, `\log`, `\checkpoint`, and `\crash` print `not built yet`. The page path, 8.3 to 8.7, is still to build. The harness self-tests pass.
+8.1 and 8.2 pass. With a directory, `\log`, `\checkpoint`, `\crash`, and `\verify` work on the [persistent database](persistence.html), which uses these records and this log manager with logical redo. Without one, `\log`, `\checkpoint`, and `\crash` print `not built yet`. The page path, 8.3 to 8.7, is still to build. The harness self-tests pass.
 :::
 
 ::: read

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial — OntoDB Manual</title>
+<meta name="description" content="A first session: create a persistent database, load an OWL ontology, query it, update it, checkpoint, verify, and reopen.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="top">
+  <a class="brand" href="index.html">OntoDB</a>
+  <label class="nav-button" for="nav-toggle">Menu</label>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav">
+<a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="tutorial.html" aria-current="page">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Getting started</p>
+<h1>Tutorial</h1>
+<p class="lede">This session creates a database, loads a small materials ontology, changes it, and shows that the change survives a restart.</p>
+<nav class="toc"><strong>On this page</strong><ol><li><a href="#create-a-database-and-load-an-ontology">Create a database and load an ontology</a></li><li><a href="#query">Query</a></li><li><a href="#update">Update</a></li><li><a href="#reopen">Reopen</a></li><li><a href="#checkpoint-and-verify">Checkpoint and verify</a></li><li><a href="#next">Next</a></li></ol></nav>
+<h2 id="create-a-database-and-load-an-ontology">Create a database and load an ontology</h2><p>Start the shell with a directory. OntoDB creates it if it does not exist.</p><pre><code>$ ./build/dev/ontodb mydb
+opened mydb: no snapshot; wal 0 records, 0 committed, 0 uncommitted dropped; 0 triples
+OntoDB&gt; \load data/tiny.owl
+loaded 14 triples in 5.2 ms</code></pre><p><code>data/tiny.owl</code> is an OWL ontology in RDF/XML with four classes: Material, Metal, Alloy, and Polymer. The load is one transaction. When the line <code>loaded 14 triples</code> appears, those triples are on disk.</p><h2 id="query">Query</h2><p>A query may span lines. It runs when its braces close.</p><pre><code>OntoDB&gt; PREFIX m: &lt;http://example.org/materials#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+SELECT ?kind WHERE {
+  ?kind rdfs:subClassOf m:Material .
+}
+?kind
+&lt;http://example.org/materials#Metal&gt;
+&lt;http://example.org/materials#Polymer&gt;
+(2 rows)</code></pre><p>Alloy is not listed: it is a subclass of Metal, and OntoDB stores <code>subClassOf</code> as data, not as a rule to reason with.</p><h2 id="update">Update</h2><pre><code>OntoDB&gt; INSERT DATA { &lt;http://example.org/materials#Ceramic&gt; &lt;http://www.w3.org/2000/01/rdf-schema#subClassOf&gt; &lt;http://example.org/materials#Material&gt; . }
+inserted 1 triple
+OntoDB&gt; \log 3
+lsn 35 txn 2 term 18 &lt;http://example.org/materials#Ceramic&gt;
+lsn 36 txn 2 update insert (18 9 4)
+lsn 37 txn 2 commit
+OntoDB&gt; \quit</code></pre><p><code>\log</code> shows the transaction the insert wrote: a dictionary entry for the new IRI, the triple as three ids, and the commit.</p><h2 id="reopen">Reopen</h2><pre><code>$ ./build/dev/ontodb mydb
+opened mydb: no snapshot; wal 37 records, 2 committed, 0 uncommitted dropped; 15 triples
+OntoDB&gt; SELECT ?kind WHERE { ?kind &lt;http://www.w3.org/2000/01/rdf-schema#subClassOf&gt; &lt;http://example.org/materials#Material&gt; . }
+?kind
+&lt;http://example.org/materials#Metal&gt;
+&lt;http://example.org/materials#Polymer&gt;
+&lt;http://example.org/materials#Ceramic&gt;
+(3 rows)</code></pre><p>The open replayed the two committed transactions, the load and the insert.</p><h2 id="checkpoint-and-verify">Checkpoint and verify</h2><pre><code>OntoDB&gt; \checkpoint
+checkpoint at lsn 37: 18 terms, 15 triples; wal reset
+OntoDB&gt; \verify
+snapshot: ok (lsn 37, 18 terms, 15 triples)
+wal: ok (0 records, 0 bytes)
+replay: matches the live database (15 triples)
+invariants: ok (no duplicate triples, every id in the dictionary)
+verify: ok</code></pre><p>The checkpoint wrote a snapshot and emptied the log, so the next open loads the snapshot instead of replaying every record. <code>\verify</code> read both files back, rebuilt the database from them, and found it identical to the one in memory.</p><h2 id="next">Next</h2><ul><li><a href="shell.html">Shell reference</a> for every command.</li><li><a href="sparql.html">SPARQL reference</a> for what queries can say.</li><li><a href="persistence.html">Persistent databases</a> for what happens on a crash.</li></ul>
+</main>
+</div>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
+<script src="search.js"></script>
+</body>
+</html>

@@ -1,32 +1,24 @@
 ---
-title: What to build next
+title: Roadmap
 slug: next
+part: Project
 order: 2
-kicker: Roadmap
-description: The features OntoDB is building, the check command for each, what is done, and what is intentionally left open.
-lede: The shell already answers queries. The next code is the 24-byte triple key. After that, each feature is one check command.
+kicker: Project
+description: What OntoDB can do now, what is being built next, and what is deliberately left open.
+lede: 9 of 53 slices are done. The next piece of code is the 24-byte triple key that the indexes are built on.
 ---
 
-`scripts/status` prints one line per slice, grouped by feature. A slice counts only after its tests pass with the `DISABLED_` prefix removed. The shell smoke test and the explain smoke test already pass and are not part of the percentage. The tree is at 9 of 53: slices 8.1 and 8.2, and the seven slices of the durable memory database.
+## Done
 
-`scripts/check key` builds and runs the triple-key slices, including tests that are still disabled, then prints the next id. `scripts/check 0.2` is the same slice by id. The concurrency feature uses the ThreadSanitizer preset.
+| Feature | Check | Status |
+| --- | --- | --- |
+| SPARQL shell | `scripts/check shell` | Done |
+| Durable memory database | `scripts/check durable` | Done: all seven slices |
+| Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
-## Already in place
+## Being built
 
-Do not rebuild these. They are the baseline the features sit on.
-
-- The shell, multi-session workers, and every command. Unbuilt commands print `not built yet (PLAN x.y)` and do not crash.
-- A query may span lines, including a `PREFIX` before the `{ }` group. It runs when the braces close.
-- `MemDictionary`, `MemStore`, and the raptor2 loader.
-- Lexer, parser, and binder for the supported SPARQL subset.
-- Left-deep planner, triple scan, nested-loop join, filter, and projection.
-- The page frame, including an 8-byte pageLSN at offset 0.
-- `LogRecord` serialization with a CRC-32C per record (8.1), and `LogManager` with a flush thread and group commit (8.2). `CheckpointManager` and `LogRecovery` still throw; they belong to the disk path.
-- The durable memory database (9.1 to 9.7): `ontodb <dir>`, a snapshot and a logical write-ahead log, recovery modes, `\checkpoint`, `\verify`, `\log`, and `\crash`.
-- `Transaction` accessors.
-- Query files, the isolation specs, and the crash harness. The harness self-tests pass. The real lock manager and the real store do not, yet.
-
-## Features
+In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
@@ -37,31 +29,22 @@ Do not rebuild these. They are the baseline the features sit on.
 | Query execution | `scripts/check execution` | `\set join` selects a real operator |
 | Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
 | Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |
-| Concurrency | `scripts/check concurrency` | The feature is green under TSan |
-| Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0. 8.1 and 8.2 pass |
-| Durable memory database | `scripts/check durable` | Done. All seven slices pass |
-
-Slice ids such as `1.4` and `8.6` stay in the test names and in `not built yet (PLAN x.y)`. The feature name is the one you pass to `scripts/check`.
+| Concurrency | `scripts/check concurrency` | The feature is green under ThreadSanitizer |
+| Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
 
 ## Left open
 
-These have no stubs. Write the design next to the code, then a benchmark, then a [writeup](research.html).
+These have no stubs. Each starts as a design written next to its code, then a benchmark, then a [writeup](research.html).
 
-- Another eviction policy beside LRU-K, compared in `benchmarks/eviction/`.
-- A different permutation set, measured in `benchmarks/indexing/`.
+- Another eviction policy beside LRU-K.
+- A different set of index permutations.
 - MVCC beside strict two-phase locking.
 - Leaf compression with delta-encoded keys.
 - RDFS `subClassOf` materialization.
 - A query window that sends the same text the shell sends.
-- Page checksums on the disk store, checked on read and by `\verify`, once pages exist.
+- Page checksums on the disk store, checked on read and by `\verify`.
 - Restore to a chosen LSN: replay the snapshot and the log up to an LSN and stop.
 
-## How to read ahead
-
-The notes follow the feature order. You can read [WAL and ARIES](recovery.html) before the disk exists. You cannot check slice 8.3 until the buffer pool flushes the log before the page write.
-
-When a page says **Next**, that is the slice to point `scripts/check` at. Delete `DISABLED_` only after the test is honest. A disabled test that would have passed does not move `scripts/status`.
-
 ::: next
-Start at [the 24-byte key](indexes.html#the-24-byte-key). `scripts/check key` is the command. The files are `src/include/storage/index/triple_key.h` and `src/storage/index/triple_key.cpp`.
+The 24-byte key: `scripts/check key`. See [Triple indexes](indexes.html#the-24-byte-key).
 :::

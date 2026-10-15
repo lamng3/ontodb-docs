@@ -1,8 +1,9 @@
 ---
 title: B+ tree
 slug: b-plus-tree
-order: 8
-kicker: Index
+part: Internals
+order: 5
+kicker: Internals
 description: Why OntoDB's index is a B+ tree, how pages split and merge, and how a scan holds one leaf.
 lede: The triple index is a B+ tree. Keys live in the leaves. Internal pages hold separators and child pointers. Leaves point at their right sibling.
 ---

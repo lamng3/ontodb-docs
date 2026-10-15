@@ -1,8 +1,9 @@
 ---
 title: Optimizer
 slug: optimizer
-order: 5
-kicker: Planning
+part: Internals
+order: 2
+kicker: Internals
 description: The optimizer OntoDB will have — statistics, cardinality, join order, join method, and EXPLAIN ANALYZE.
 lede: The planner emits one left-deep nested-loop tree. The optimizer rewrites it. That rewriter is part of the database, and it is the optimizer feature.
 ---
