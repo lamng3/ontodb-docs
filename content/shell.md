@@ -20,7 +20,7 @@ ontodb [--strict] [--db] [dir]
 | `ontodb dir` or `ontodb --db dir` | Persistent, in `dir`, created if missing. The first line reports what was recovered |
 | `ontodb --strict dir` | Persistent, but refuses to open if the log is damaged |
 
-The shell reads standard input, so a script can be piped in: `ontodb mydb < script.txt`. The prompt is printed only when input is a terminal.
+The shell reads standard input, so a script can be piped in: `ontodb mydb < script.txt`. The prompt `OntoDB>` is printed before each statement whenever the shell reads standard input, piped or not; with sessions it shows the session number, `OntoDB:2>`.
 
 ## How input is read
 
