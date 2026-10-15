@@ -51,7 +51,7 @@ The shell reads standard input, so a script can be piped in: `ontodb mydb < scri
 
 In an in-memory database, `\checkpoint`, `\log`, and `\crash` answer `not built yet`, and `\verify` says there is nothing on disk to verify.
 
-These commands belong to features still being built and answer `not built yet (PLAN x.y)`: `\bpm`, `\page`, and `\trace` (buffer pool, 1.6), `\tree` (B+ tree, 2.2), and `\begin`, `\commit`, `\abort`, `\txns`, and `\locks` (transactions, 7.2 and 7.3).
+`\bpm` and `\page <id>` inspect the buffer pool; with the default memory backend they answer `no buffer pool`. `\trace on|off` prints component events to stderr. These commands belong to features still being built and answer `not built yet (PLAN x.y)`: `\tree` (B+ tree, 2.2), and `\begin`, `\commit`, `\abort`, `\txns`, and `\locks` (transactions, 7.2 and 7.3).
 
 ## Results and errors
 

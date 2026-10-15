@@ -72,7 +72,9 @@ The harness asserts zero pinned frames after every query and every destroyed ite
 
 ## Inspection
 
-`\bpm` prints frames. `\page <id>` prints one page. `\trace on` and `\trace off` flip `SwitchableTraceSink`. Components call `Event`. They do not print. The scaffold never increments `IoStats`. The call sites are named in `io_stats.h` so the counts start at zero until you add them.
+`\bpm` prints one line for the pool (frames, `lru_k`, in use, free, pinned, dirty, evictable) and one per resident frame (page, pins, dirty or clean, pageLSN). `\page <id>` reads the page through a read guard and prints its pageLSN and the first 64 payload bytes in hex. Reading through the pool shows what the engine sees, dirty changes included; it is also an access, so it can load the page, evict another, and add to the page's LRU-K history. `\trace on` and `\trace off` flip `SwitchableTraceSink`, which prints `component: message` lines to stderr. Components call `Event`. They do not print.
+
+The default memory backend has no pool. There, `\bpm` and `\page` answer `no buffer pool`; they come alive with the indexed backend (plan 3.4). The disk manager counts page reads and writes, and the pool counts hits and misses, so `\stats` reports them once a pool exists. Plan 1.6 is done; the buffer pool is complete.
 
 `\stats` prints the counters. A scan with pool size 4 and pool size 64, and with `lru_k` 1 and 2, is the experiment that tells you whether eviction is doing what you think.
 
