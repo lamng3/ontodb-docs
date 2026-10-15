@@ -19,7 +19,7 @@ Projection
       TripleScan   ?s ub:age ?age
 ```
 
-Patterns join left to right. The filter sits above the joins. `ORDER BY` sits under the projection when it is present. Projection, then distinct, then limit. Insert and delete plans exist so `\explain` can print them. Until plan 4.6 the engine applies `INSERT DATA` and `DELETE DATA` itself, straight to the store.
+Patterns join left to right. The filter sits above the joins. `ORDER BY` sits under the projection when it is present. Projection, then distinct, then limit. `INSERT DATA` and `DELETE DATA` plan to one insert or delete node, which runs as `ModifyExecutor` (plan 4.6): it writes each triple to the store, which writes every index or none, and returns the number changed as its one row. If a later write throws, it takes back the triples the statement already changed, so a statement is atomic on both backends even without a log.
 
 ## Triple scan
 

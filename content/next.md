@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 34 of 53 slices are done. Joins, DISTINCT, LIMIT, OFFSET, and ORDER BY with an external merge sort run; next are insert and delete as operators.
+lede: 35 of 53 slices are done. Storage and query execution are complete; next is the optimizer: statistics, cardinality, join order, and the automatic choice of join.
 ---
 
 ## Done
@@ -17,6 +17,7 @@ lede: 34 of 53 slices are done. Joins, DISTINCT, LIMIT, OFFSET, and ORDER BY wit
 | Buffer pool | `scripts/check buffer` | Done: disk file, I/O thread, LRU-K, pool, guards, inspection |
 | B+ tree | `scripts/check index` | Done: layout, invariants, search, insert, iterator, bulk load, delete |
 | RDF storage | `scripts/check storage` | Done: term heap, disk dictionary, catalog, indexed store, SPO/POS/OSP measured, clean restart |
+| Query execution | `scripts/check execution` | Done: rebinding, index nested loop, hash join, distinct, limit, external sort, insert and delete |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -26,7 +27,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| Query execution | `scripts/check execution` | `\set join` selects a real operator |
 | Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
 | Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |
 | Concurrency | `scripts/check concurrency` | The feature is green under ThreadSanitizer |
