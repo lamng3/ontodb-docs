@@ -49,7 +49,7 @@ Both directions survive restart: spelling to id, and id to spelling. Ids stay de
 The catalog remembers the dictionary root next to the permutation roots. `Flush` makes that metadata durable.
 
 ::: next
-Plan 3.1, the term heap, is done. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3). The in-memory dictionary stays; the indexed store is what switches.
+Plan 3.1, the term heap, is done. Plan 3.2 is the disk dictionary. 3.2 depends on the heap and on the catalog (3.3, done). The in-memory dictionary stays; the indexed store is what switches.
 :::
 
 ::: read

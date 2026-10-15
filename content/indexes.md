@@ -62,7 +62,9 @@ The differential test builds a disk stack per query file. While `DiskManager` th
 
 ## Catalog
 
-The catalog remembers the root page id of each permutation and of the dictionary. A missing name returns `INVALID_PAGE_ID`. `Flush` makes the metadata durable. A later process on the same file sees the values.
+The catalog remembers the page id of each permutation and of the dictionary. A missing name returns `INVALID_PAGE_ID`. `Flush` makes the metadata durable. A later process on the same file sees the values.
+
+For an index, the page the catalog names is the tree's header page, not its root: a root moves when it splits or collapses, and the header page absorbs that, so the catalog changes only when an index is created. The catalog is page 0, with a magic number `OCAT`, the dictionary root, and up to 339 named entries of 8-byte names. On first open it finds page 0 all zeros, initializes it, and writes it to the file at once, so no later allocation can hand out page 0. A non-empty page without the magic number throws `StorageException` instead of being overwritten. Plan 3.3 is done; `scripts/check 3.3`.
 
 Page 0 is a reasonable home. Initialize it before the first read. Page 0 is a legal page id, so a zeroed "root" must not be mistaken for an empty tree that lives on page 0. The empty tree stores `INVALID_PAGE_ID`.
 

@@ -14,7 +14,7 @@ Three words get borrowed from log-structured stores and do not name three backgr
 
 Two files, once the disk path exists. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7.
 
-The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page ids survive restart. Each page image starts with an 8-byte pageLSN. The catalog page records the root of `spo`, `pos`, `osp`, and the dictionary. Term spellings live in the term heap, which is more pages in that same file. Triple keys live in the B+ tree leaves.
+The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page ids survive restart. Each page image starts with an 8-byte pageLSN. The catalog, page 0, records the header page of `spo`, `pos`, and `osp`, and the dictionary's root. Term spellings live in the term heap, which is more pages in that same file. Triple keys live in the B+ tree leaves.
 
 The log is a separate append-only file. `LogManager` is constructed with a `log_path`. `Append` assigns an LSN. `Flush` makes every record up to that LSN durable. Commit forces the commit record. That commit record is the acknowledgement a later open will trust.
 
