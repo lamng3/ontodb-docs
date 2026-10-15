@@ -19,7 +19,7 @@ The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page 
 The log is a separate append-only file. `LogManager` is constructed with a `log_path`. `Append` assigns an LSN. `Flush` makes every record up to that LSN durable. Commit forces the commit record. That commit record is the acknowledgement a later open will trust.
 
 ::: today
-The page path does not exist yet. `DiskManager::ShutDown` throws plan 1.1. `FlushAllPages` throws plan 1.4. `CheckpointManager::Checkpoint` throws plan 8.5. The in-memory database is durable through its own snapshot and log; see [Persistent databases](persistence.html).
+The page path is being built. `DiskManager::ShutDown` (plan 1.1) fsyncs the file, and `FlushAllPages` (plan 1.4) writes every dirty frame; nothing calls them on the shell's path until the indexed store exists. `CheckpointManager::Checkpoint` throws plan 8.5. The in-memory database is durable through its own snapshot and log; see [Persistent databases](persistence.html).
 :::
 
 A clean close and a crash are different successes.

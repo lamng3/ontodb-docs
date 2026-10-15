@@ -44,6 +44,8 @@ Time is a logical clock that ticks on every `RecordAccess`, so eviction is deter
 
 Thread-safe from the first version. `NewPage` allocates, pins, and returns a zeroed frame. `FetchPage` pins, and reads from disk on a miss. `UnpinPage` drops one pin and marks dirty when asked. `DeletePage` fails when the page is pinned. `GetPinnedFrameCount` is safe to call from a test thread while a query runs. `BufferHit` on a memory fetch, `BufferMiss` when a frame is read from disk. Trace component `"bpm"`.
 
+One latch covers the page table, the free list, pins, dirty bits, and the replacer, and it is held across the disk read of a miss or the write-back of a victim. Every read and write goes through the scheduler. When a log manager is installed, write-back flushes the log up to the page's pageLSN, reaches `BufferPoolManager::FlushPage::before_disk_write`, and only then writes the page. `NewPage` and `FetchPage` return null when every frame is pinned. The destructor does not flush; a clean shutdown calls `FlushAllPages`. Plan 1.4 is done; `scripts/check 1.4`.
+
 The replacer only sees unpinned frames. A pin count and a latch are different. The latch arrives with the guards.
 
 `FlushPage` writes a dirty frame only. If a log manager is installed, the order is fixed:
@@ -54,7 +56,7 @@ The replacer only sees unpinned frames. A pin count and a latch are different. T
 
 Step 2 sits between the log and the disk so a crash test can kill the process after the log is durable and before the page is. If the crash point fired before the log flush, a torn crash could leave a new page and no log record, and redo would have nothing to trust. See [the WAL rule](recovery.html#the-wal-rule).
 
-The constructor is `(pool_size, DiskManager*, replacer_k, LogManager* = nullptr, IoStats* = nullptr, TraceSink* = nullptr)`. The scaffold's constructor throws `PLAN 1.4`. `Database::bpm_` stays null until you construct a pool.
+The constructor is `(pool_size, DiskManager*, replacer_k, LogManager* = nullptr, IoStats* = nullptr, TraceSink* = nullptr)`. `Database::bpm_` stays null until the indexed store constructs a pool (plan 3.4).
 
 ## Page guards
 
