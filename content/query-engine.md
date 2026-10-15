@@ -38,7 +38,7 @@ The join merges two rows by slot. Where both sides have a real id, the ids must 
 The current join full-scans the inner child for every outer row. It does not push the outer binding into the inner pattern. The result is still correct, because the merge rejects pairs whose shared slots disagree. The cost is a full inner scan even when the outer row has already named the subject.
 
 ::: next
-Plan 4.1 reopens the inner scan with the outer row filled in. The test watches the pattern passed to `Scan`, not the output rows, because the rows are already right. Files: `triple_scan_executor.cpp` and `nested_loop_join_executor.cpp`.
+Plan 4.1, done: the nested loop reopens its inner side with `InitWith(outer row)`. Every executor has `InitWith`, which by default is `Init`; the triple scan overrides it and turns each variable the outer row binds into a constant in the pattern it hands the store. On the indexed backend that pattern is usually a subject prefix, so each inner scan is a short range instead of a scan of every triple with that predicate. The test watches the pattern passed to `Scan`, not the output rows, because the rows were already right. Files: `triple_scan_executor.cpp` and `nested_loop_join_executor.cpp`.
 :::
 
 Plan 4.2 is the index nested-loop join: the same rebinding, then a prefix probe of a B+ tree instead of a scan. `\set join inlj` selects it. On the memory backend the probe may still be a filtered scan. The rows must match nested loop.

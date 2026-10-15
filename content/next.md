@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 29 of 53 slices are done. Pages, the buffer pool, the B+ tree, and RDF storage run, and the permutation set was measured; next is query execution.
+lede: 30 of 53 slices are done. Storage is complete and query execution has begun: the nested loop rebinds its inner scan. Next are index nested-loop and hash joins.
 ---
 
 ## Done
