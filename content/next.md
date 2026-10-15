@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 27 of 53 slices are done. Queries now run on B+ trees with \\set backend indexed; next is measuring which permutations to keep.
+lede: 27 of 53 slices are done. Queries now run on B+ trees on the indexed backend; next is measuring which permutations to keep.
 ---
 
 ## Done
