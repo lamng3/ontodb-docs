@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 9 of 53 slices are done. The next piece of code is the 24-byte triple key that the indexes are built on.
+lede: 10 of 53 slices are done. The triple key runs; the next piece of code is the buffer pool, starting with the database file.
 ---
 
 ## Done
@@ -13,6 +13,7 @@ lede: 9 of 53 slices are done. The next piece of code is the 24-byte triple key 
 | Feature | Check | Status |
 | --- | --- | --- |
 | SPARQL shell | `scripts/check shell` | Done |
+| Triple key | `scripts/check key` | Done: the key round-trips and the prefix bounds match |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -22,7 +23,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| Triple key | `scripts/check key` | The 24-byte key round-trips and the prefix bounds match |
 | Buffer pool | `scripts/check buffer` | Pinned frames return to zero |
 | B+ tree | `scripts/check index` | Random insert matches a sorted vector |
 | RDF storage | `scripts/check storage` | A clean restart sees the triples |

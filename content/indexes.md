@@ -27,8 +27,10 @@ For the key `(5, 7, 9)`:
 
 `n = 3` is a point lookup. `n = 1` on SPO is "every triple with this subject".
 
+When nothing lies above the prefix, `n = 0` or every bound id at the maximum, the upper bound saturates to the all-`0xFF` key. That is three `INVALID_TERM_ID`s, which the dictionary never assigns, so the scan still covers every stored triple. A prefix length outside 0 to 3 throws `std::invalid_argument`.
+
 ::: next
-This is plan 0.2, and it is the next item to build. `scripts/check 0.2`. The tests are `DISABLED_RoundTripAndBigEndian` and `DISABLED_PrefixBounds`. Encode, decode, compare, and both prefix bounds throw until you fill them in.
+Plan 0.2 is done. `scripts/check 0.2` runs the round-trip, ordering, prefix-bound, carry, and saturation tests. The B+ tree is the key's first user.
 :::
 
 ## Permutations
