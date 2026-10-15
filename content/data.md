@@ -50,5 +50,5 @@ scripts/fetch-data lubm      # runs the LUBM generator (needs Java) for Universi
 `data/downloads/` is not committed.
 
 ::: today
-The in-memory store compares every stored triple on insert, so loading a large file is slow. That is the in-memory store, not the format; the indexed store is what makes large graphs fast (PLAN 3.4 and 6.1).
+The in-memory store compares every stored triple on insert, so loading a large file is slow. That is the in-memory store, not the format; the indexed store (`\set backend indexed`) and its bulk loader (PLAN 6.1) are what make large graphs fast.
 :::

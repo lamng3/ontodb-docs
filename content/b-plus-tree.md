@@ -38,7 +38,7 @@ Plans 2.1 to 2.7 are done; `scripts/check index` runs them all. The tree is sing
 
 `CheckInvariants` also checks the minimum fill (every node but the root at least half its maximum), that every leaf is at the same depth, and that each key lies in the range its ancestors' separators allow. It reads one page at a time, so it runs on a tiny pool.
 
-`ToString` prints one line per level. `ToDot` is a Graphviz digraph, with dashed edges for sibling links. `\tree spo` and `\tree spo dot` call these once the indexed backend exists (plan 3.4); with the memory backend they answer `no index`.
+`ToString` prints one line per level. `ToDot` is a Graphviz digraph, with dashed edges for sibling links. `\tree spo` and `\tree spo dot` call these on the indexed backend; with the memory backend they answer `no index`, and an index the store does not have answers `no index named ...`.
 
 ## Point search
 
@@ -67,7 +67,7 @@ The constructor takes optional maximum node sizes, defaulting to what a page hol
 
 During a scan the pinned-frame count stays at most 1, and it is 0 after the iterator dies. Drop the current leaf before pinning the sibling. Holding the parent as well deadlocks a 3-frame pool on a tall tree.
 
-This iterator is what `IndexedTripleIterator` wraps, and what a triple scan will pull when the backend is indexed.
+This iterator is what `IndexedTripleIterator` wraps, and what a triple scan pulls when the backend is indexed.
 
 ## Bulk load
 

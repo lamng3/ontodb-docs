@@ -21,9 +21,9 @@ isolation rc
 
 | Knob | Values | Default | Effect today |
 | --- | --- | --- | --- |
-| `backend` | `mem`, `indexed` | `mem` | `indexed` answers `not built yet` (PLAN 3.4) and is not stored |
-| `pool_size` | frames | `64` | Stored for the buffer pool the indexed backend builds (PLAN 3.4) |
-| `lru_k` | positive integer | `2` | Stored for the indexed backend's LRU-K eviction (PLAN 3.4) |
+| `backend` | `mem`, `indexed` | `mem` | `indexed` moves the triples onto pages and B+ trees in a temporary file; `mem` moves them back. A persistent database stays on `mem` until PLAN 8 |
+| `pool_size` | frames | `64` | Frames in the indexed backend's pool, read when the backend is switched on |
+| `lru_k` | positive integer | `2` | The indexed backend's LRU-K `k`, read when the backend is switched on |
 | `join` | `auto`, `nlj`, `inlj`, `hash` | `nlj` | Join operator. `inlj` and `hash` answer `not built yet` (PLAN 4.2, 4.3) when a query runs |
 | `isolation` | `ru`, `rc`, `rr`, `ser` | `rc` | Stored for transactions, which are being built |
 

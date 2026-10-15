@@ -56,7 +56,9 @@ All eight bound/unbound patterns must return the right triples even when only SP
 
 `Insert` returns false if the triple is present. `Delete` returns false if it is absent. Either call updates every index the catalog has a root for, or it leaves the store unchanged. A scan returns `IndexedTripleIterator`, which drops its leaf guard when it dies.
 
-With only SPO, a pattern that is not a prefix of SPO is a scan plus a filter. `\set backend indexed` switches the shell to this store. Today that command throws `PLAN 3.4` and does not change the setting.
+With only SPO, a pattern that is not a prefix of SPO is a scan plus a filter. `\set backend indexed` switches the shell to this store.
+
+The store names each permutation by its key order (`spo`, `pos`, ...) and keeps whichever the catalog lists; a fresh catalog gets the default set. `Insert` and `Delete` reach every index or, if one throws, put the earlier ones back before the error propagates. `Scan` uses the index with the longest bound prefix and filters the other bound positions. In the shell, `\set backend indexed` builds a pool (`pool_size`, `lru_k`), the catalog, a disk dictionary, and the store in a temporary file, moves every triple across by spelling, and runs statements one at a time, because the tree is single-threaded until plan 7.1. `\set backend mem` moves the triples back and deletes the file. A persistent database (`ontodb <dir>`) stays on the memory backend until page-level recovery.
 
 The differential test builds a disk stack per query file. While `DiskManager` throws, the test skips and CI stays green. When the stack exists, it runs every query on memory and on the index and diffs the decoded rows, then asserts zero pinned frames.
 
@@ -69,7 +71,7 @@ For an index, the page the catalog names is the tree's header page, not its root
 Page 0 is a reasonable home. Initialize it before the first read. Page 0 is a legal page id, so a zeroed "root" must not be mistaken for an empty tree that lives on page 0. The empty tree stores `INVALID_PAGE_ID`.
 
 ::: next
-After the B+ tree can insert and scan, plan 3.4 is the indexed store with SPO only. Plan 3.5 is the measurement that decides POS and OSP. Plan 3.6 is a clean shutdown: flush the pool and the catalog, close the file, open it, and see the triples.
+Plan 3.4, the indexed store, is done; the differential test runs every query file on it and on the memory store. Plan 3.5 is the measurement that decides POS and OSP. Plan 3.6 is a clean shutdown: flush the pool and the catalog, close the file, open it, and see the triples.
 :::
 
 ::: read

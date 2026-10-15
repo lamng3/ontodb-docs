@@ -56,7 +56,7 @@ The replacer only sees unpinned frames. A pin count and a latch are different: t
 
 Step 2 sits between the log and the disk so a crash test can kill the process after the log is durable and before the page is. If the crash point fired before the log flush, a torn crash could leave a new page and no log record, and redo would have nothing to trust. See [the WAL rule](recovery.html#the-wal-rule).
 
-The constructor is `(pool_size, DiskManager*, replacer_k, LogManager* = nullptr, IoStats* = nullptr, TraceSink* = nullptr)`. `Database::bpm_` stays null until the indexed store constructs a pool (plan 3.4).
+The constructor is `(pool_size, DiskManager*, replacer_k, LogManager* = nullptr, IoStats* = nullptr, TraceSink* = nullptr)`. `Database::bpm_` is null on the memory backend and points at the indexed backend's pool after `\set backend indexed`.
 
 ## Page guards
 
@@ -74,7 +74,7 @@ The harness asserts zero pinned frames after every query and every destroyed ite
 
 `\bpm` prints one line for the pool (frames, `lru_k`, in use, free, pinned, dirty, evictable) and one per resident frame (page, pins, dirty or clean, pageLSN). `\page <id>` reads the page through a read guard and prints its pageLSN and the first 64 payload bytes in hex. Reading through the pool shows what the engine sees, dirty changes included; it is also an access, so it can load the page, evict another, and add to the page's LRU-K history. `\trace on` and `\trace off` flip `SwitchableTraceSink`, which prints `component: message` lines to stderr. Components call `Event`. They do not print.
 
-The default memory backend has no pool. There, `\bpm` and `\page` answer `no buffer pool`; they come alive with the indexed backend (plan 3.4). The disk manager counts page reads and writes, and the pool counts hits and misses, so `\stats` reports them once a pool exists. Plan 1.6 is done; the buffer pool is complete.
+The default memory backend has no pool. There, `\bpm` and `\page` answer `no buffer pool`; they come alive after `\set backend indexed`. The disk manager counts page reads and writes, and the pool counts hits and misses, so `\stats` reports them once a pool exists. Plan 1.6 is done; the buffer pool is complete.
 
 `\stats` prints the counters. A scan with pool size 4 and pool size 64, and with `lru_k` 1 and 2, is the experiment that tells you whether eviction is doing what you think.
 
