@@ -3,11 +3,11 @@ title: What to build next
 slug: next
 order: 2
 kicker: Roadmap
-description: The features OntoDB is building, the check command for each, and what is intentionally left open.
+description: The features OntoDB is building, the check command for each, what is done, and what is intentionally left open.
 lede: The shell already answers queries. The next code is the 24-byte triple key. After that, each feature is one check command.
 ---
 
-`scripts/status` prints one line per slice, grouped by feature. A slice counts only after its tests pass with the `DISABLED_` prefix removed. The shell smoke test and the explain smoke test already pass and are not part of the percentage. A fresh tree is 0 of 46.
+`scripts/status` prints one line per slice, grouped by feature. A slice counts only after its tests pass with the `DISABLED_` prefix removed. The shell smoke test and the explain smoke test already pass and are not part of the percentage. The tree is at 9 of 53: slices 8.1 and 8.2, and the seven slices of the durable memory database.
 
 `scripts/check key` builds and runs the triple-key slices, including tests that are still disabled, then prints the next id. `scripts/check 0.2` is the same slice by id. The concurrency feature uses the ThreadSanitizer preset.
 
@@ -21,7 +21,9 @@ Do not rebuild these. They are the baseline the features sit on.
 - Lexer, parser, and binder for the supported SPARQL subset.
 - Left-deep planner, triple scan, nested-loop join, filter, and projection.
 - The page frame, including an 8-byte pageLSN at offset 0.
-- `LogRecord` factories and `Transaction` accessors. Serialization and the managers still throw.
+- `LogRecord` serialization with a CRC-32C per record (8.1), and `LogManager` with a flush thread and group commit (8.2). `CheckpointManager` and `LogRecovery` still throw; they belong to the disk path.
+- The durable memory database (9.1 to 9.7): `ontodb <dir>`, a snapshot and a logical write-ahead log, recovery modes, `\checkpoint`, `\verify`, `\log`, and `\crash`.
+- `Transaction` accessors.
 - Query files, the isolation specs, and the crash harness. The harness self-tests pass. The real lock manager and the real store do not, yet.
 
 ## Features
@@ -36,7 +38,8 @@ Do not rebuild these. They are the baseline the features sit on.
 | Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
 | Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |
 | Concurrency | `scripts/check concurrency` | The feature is green under TSan |
-| Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
+| Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0. 8.1 and 8.2 pass |
+| Durable memory database | `scripts/check durable` | Done. All seven slices pass |
 
 Slice ids such as `1.4` and `8.6` stay in the test names and in `not built yet (PLAN x.y)`. The feature name is the one you pass to `scripts/check`.
 
@@ -50,6 +53,8 @@ These have no stubs. Write the design next to the code, then a benchmark, then a
 - Leaf compression with delta-encoded keys.
 - RDFS `subClassOf` materialization.
 - A query window that sends the same text the shell sends.
+- Page checksums on the disk store, checked on read and by `\verify`, once pages exist.
+- Restore to a chosen LSN: replay the snapshot and the log up to an LSN and stop.
 
 ## How to read ahead
 

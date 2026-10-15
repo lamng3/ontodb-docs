@@ -3,22 +3,56 @@ title: Persistence and snapshots
 slug: durability
 order: 12
 kicker: Durability
-description: How OntoDB persists pages and the log, reclaims space on delete, and what a checkpoint or a scan actually freezes.
-lede: Pages and a write-ahead log are the durable state. Deletes shrink the B+ tree in place. A checkpoint is a recovery bookmark, and a scan freezes only the triples it already copied.
+description: How OntoDB keeps the memory database on disk today, how the page path will persist, how deletes reclaim space, and what a checkpoint or a scan freezes.
+lede: Today a snapshot and a write-ahead log keep the memory database. Later, pages and the log are the durable state. Deletes shrink the B+ tree in place, and a scan freezes only the triples it already copied.
 ---
 
-Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is the database file plus the log. Space comes back when a delete merges or reuses a slot. A snapshot, in the form this store ships, is either a copied scan result or a lock held until commit.
+Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is a snapshot plus the log today, and the database file plus the log once pages exist. Space comes back when a delete merges or reuses a slot. A snapshot is a full image the memory database writes at `\checkpoint`, or, inside a query, a copied scan result or a lock held until commit.
+
+## The durable memory database
+
+This runs today. Give the shell a directory and the memory database lives there:
+
+```text
+./build/dev/ontodb mydb
+\load data/tiny.owl
+INSERT DATA { <http://example.org/materials#Ceramic> <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://example.org/materials#Material> . }
+\checkpoint
+\verify
+```
+
+The directory holds two files. `snapshot` is a full image at one LSN: every dictionary term in id order, then every triple, with a CRC-32C over the body. `wal` holds every log record after it. Redo is logical: an update record names a triple, not a page, and its `page_id` is `INVALID_PAGE_ID`, because the memory store has no pages.
+
+A statement is a transaction. It runs against a `RecordingStore` that remembers the triples it changed. Then the log gets begin, a term record for each spelling not logged yet, one update per changed triple, and commit, and the commit is forced before the statement returns. A statement that throws is undone in memory. A statement that changed nothing logs nothing. `\load` is one transaction for the whole file.
+
+Opening the directory loads the snapshot and replays the log. Term records replay whatever their transaction did, because the dictionary only grows and a term no committed triple uses is invisible; that keeps ids identical across restarts. Updates replay only for transactions with a commit record, in log order. An uncommitted transaction leaves no trace. The open prints one line: the snapshot LSN, how many records, how many committed and dropped transactions, and the triple count.
+
+`\checkpoint` writes the snapshot to a temporary file, fsyncs it, renames it over the old one, and empties the log. A crash between the rename and the truncate leaves the new snapshot with the old log. Replay skips every record at or below the snapshot's LSN, so nothing applies twice.
+
+| Event | Durable after |
+| --- | --- |
+| An update statement or `\load` returns | its commit record is on the log |
+| A statement throws | nothing; it was undone in memory |
+| `\checkpoint` returns | the renamed snapshot, and an empty log |
+| `\quit` | everything committed; the log is already forced |
+| `\crash` | everything committed; anything still buffered is lost |
+
+::: today
+`scripts/check durable` passes all seven slices. The scenarios: Turtle and RDF/XML loads survive a reopen, inserts and deletes replay in order, a crash before commit leaves no trace, term ids are stable, a crash after the snapshot does not replay twice, a corrupt snapshot refuses to open, a torn or corrupt log keeps the committed prefix, and a tampered log fails `\verify`. How a bad log record is handled is in [WAL and ARIES](recovery.html#torn-and-corrupt-records).
+:::
+
+The memory database scans every triple on insert, so a snapshot of a large graph loads slowly. That is the memory store, not the format. The indexed store is what makes a large graph fast.
 
 ## Persistence
 
-Two files, once the disk path exists.
+Two files, once the disk path exists. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7; the memory path above does not use it.
 
 The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page ids survive restart. Each page image starts with an 8-byte pageLSN. The catalog page records the root of `spo`, `pos`, `osp`, and the dictionary. Term spellings live in the term heap, which is more pages in that same file. Triple keys live in the B+ tree leaves.
 
 The log is a separate append-only file. `LogManager` is constructed with a `log_path`. `Append` assigns an LSN. `Flush` makes every record up to that LSN durable. Commit forces the commit record. That commit record is the acknowledgement a later open will trust.
 
 ::: today
-Nothing is durable. `MemStore` and `MemDictionary` live in the process. Opening a path prints that recovery is not built and starts an empty memory database. `DiskManager::ShutDown` throws plan 1.1. `FlushAllPages` throws plan 1.4. `Checkpoint` throws plan 8.5.
+The page path does not exist yet. `DiskManager::ShutDown` throws plan 1.1. `FlushAllPages` throws plan 1.4. `CheckpointManager::Checkpoint` throws plan 8.5. The memory database is durable through its own snapshot and log, above.
 :::
 
 A clean close and a crash are different successes.
@@ -55,7 +89,7 @@ Bulk load is the other time the tree gets dense. Plan 2.6 builds full leaves fro
 
 Leaf compression is smaller keys inside a leaf, delta-encoded the RDF-3X way. It has no stub. It changes `Compare` and the prefix bounds. It is a page layout, written when the leaf is written, not a background rewrite of old levels.
 
-The log grows for the life of the process under the plan as written. A checkpoint tells recovery where to start. It does not, by itself, delete bytes in front of that LSN. Truncating the log after a checkpoint, once no active transaction or dirty page still needs the older records, is the natural follow-on of plan 8.5. It is not a separate plan item. Do it only after redo's starting LSN is real, or you will throw away the record that would have repaired a stolen page.
+On the memory path, `\checkpoint` already empties the log, because the snapshot holds everything before it. On the page path, the log grows for the life of the process under the plan as written. A checkpoint tells recovery where to start. It does not, by itself, delete bytes in front of that LSN. Truncating the log after a checkpoint, once no active transaction or dirty page still needs the older records, is the natural follow-on of plan 8.5. It is not a separate plan item. Do it only after redo's starting LSN is real, or you will throw away the record that would have repaired a stolen page.
 
 Which permutations exist is the other space decision. Plan 3.5 measures before adding POS or OSP. A permutation you do not build does not need a compaction policy.
 
@@ -67,7 +101,7 @@ The delete path is slice 2.7. The heap slot is slice 3.1. Bulk load is slices 2.
 
 `MemStore::Scan` copies the matching triples into the iterator and then drops the mutex. Inserts and deletes that happen after `Scan` returns do not change that iterator. The copy is one pattern's result, held for one operator. It is not a named database snapshot, and it is not repeatable across a second `Scan` in the same query. The indexed iterator does not copy the tree. It pins one leaf at a time, so a concurrent split is the crabbing problem in plan 7.1, not a frozen view.
 
-`\checkpoint` writes a checkpoint record: the active transactions, and the LSN recovery may start from. A blocking checkpoint waits until writers are quiet and can force dirty pages. A fuzzy checkpoint does not wait, and it must record the dirty-page table. Either way, a SPARQL query does not read "as of" that checkpoint. Open after a crash does.
+On the memory path, `\checkpoint` is a real snapshot: the whole database at one LSN, and the next open starts from it. On the page path, `\checkpoint` writes a checkpoint record: the active transactions, and the LSN recovery may start from. A blocking checkpoint waits until writers are quiet and can force dirty pages. A fuzzy checkpoint does not wait, and it must record the dirty-page table. Either way, a SPARQL query does not read "as of" that checkpoint. Open after a crash does.
 
 Repeatable read holds shared locks on the keys you read until commit. That keeps those triples from changing. It does not freeze the store. An insert of a triple you did not lock can still appear in a second scan. That is the phantom in plan 7.6. Serializable adds a range lock, a gap lock, or a predicate lock so the insert waits. The frozen set is the lock set, not a timestamp.
 

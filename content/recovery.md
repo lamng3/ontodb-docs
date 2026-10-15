@@ -3,7 +3,7 @@ title: WAL and ARIES
 slug: recovery
 order: 11
 kicker: Recovery
-description: Write-ahead logging, group commit, compensation records, and the three ARIES passes OntoDB will run on open.
+description: Write-ahead logging, checksummed log records, group commit, torn and corrupt records, compensation records, and the three ARIES passes OntoDB will run on open.
 lede: OntoDB uses write-ahead logging and ARIES. Redo is page-oriented. Undo of a triple is logical. A B+ tree split is redone, not undone.
 ---
 
@@ -26,16 +26,29 @@ Plan 8.3, after the log manager can flush. The test expects the new bytes to be 
 
 ## Log records
 
-The byte layout is yours. `SerializeTo` writes `Size()` bytes. `Deserialize` reads one record and throws `StorageException` when the buffer is short. Put the length in the record so a torn tail is detectable. `Size()` on the deserialized record equals the number of bytes consumed.
+Plan 8.1, done. `SerializeTo` writes `Size()` bytes. `Deserialize` reads one record. `Size()` on the deserialized record equals the number of bytes consumed.
+
+Every record starts with its length and a CRC-32C, the checksum PostgreSQL, RocksDB, and InnoDB put on their log records. The checksum covers every byte after it.
+
+```text
+u32 size       whole record, header included
+u32 crc32c     over every byte after this field
+u8  type
+i64 lsn, i64 txn_id, i64 prev_lsn
+then, by type, the fields below
+```
 
 | Type | What it carries |
 | --- | --- |
 | begin, commit, abort | the transaction id |
-| update | the triple, and whether this update inserted it |
-| CLR | the triple undone, and `undo_next` |
+| update | page id, whether this update inserted, and the triple |
+| CLR | the update fields, and `undo_next` |
 | checkpoint | the active transactions |
+| term | a dictionary id and its canonical spelling |
 
-The factories already fill those fields. `Size`, `SerializeTo`, and `Deserialize` throw `PLAN 8.1`.
+The term record is for the memory database: replaying term records into an empty dictionary rebuilds the same ids.
+
+Two failures are kept apart. A buffer shorter than the record throws `StorageException`; that is a torn final write, the expected shape of a crash. A record whose bytes are all there but wrong, with a bad checksum, a bad type, or an impossible size, throws `LogCorruptionException`.
 
 `prev_lsn` chains the records of one transaction, newest toward the begin record.
 
@@ -45,7 +58,20 @@ An in-memory buffer and a background flush thread. `Append` assigns an LSN and r
 
 Group commit: commits that arrive while a flush is running share that flush, so `GetFlushCount` grows slower than the number of commits. A single client pays the latency of its own flush. A crowd of clients pays one flush per batch. If every commit flushes alone, the group-commit test fails.
 
-The constructor does not throw. `StartFlushThread` throws `PLAN 8.2` until you write it.
+Plan 8.2, done. Opening a log that already has records continues its LSNs after the last valid one. LSNs start at 1. Without a running flush thread, `Flush` writes on the caller's thread. The destructor flushes; `\crash` exits without destructors, so whatever is buffered is lost.
+
+## Torn and corrupt records
+
+`ScanLog` returns the valid prefix of a log file and says where and why it stopped. What to do at that point is a policy, named after RocksDB's WAL recovery modes:
+
+| Mode | Shell | What happens at the first bad record |
+| --- | --- | --- |
+| point in time | `ontodb <dir>` | Keep every transaction before it, truncate the log there, and print what was dropped |
+| absolute consistency | `ontodb --strict <dir>` | Refuse to open |
+
+Point in time is also what a torn final write needs, so it is the default. A transaction whose commit record is past the bad record is not committed, which is the same answer a crash gives.
+
+`\verify` is the offline check, in the spirit of PostgreSQL's `pg_amcheck`, MySQL's `CHECK TABLE`, and RocksDB's `VerifyChecksum`. It reads the snapshot and the log, checks both checksums, rebuilds the database into a fresh store, compares it with the live one, and checks that no triple is duplicated and every id is in the dictionary. It changes nothing.
 
 ## Abort and compensation
 
@@ -90,7 +116,7 @@ The harness already proves it can see a lie. A fake store that forgets a commit 
 Plan 8.7 points that same oracle at the real store. `scripts/crashtest --seeds 200` is the bar.
 
 ::: today
-Opening a path prints `recovery not built yet (PLAN 8.6)` and uses an empty memory database. `\log`, `\checkpoint`, and `\crash` print `not built yet`. The harness self-tests pass.
+8.1 and 8.2 pass. With a directory, `\log`, `\checkpoint`, `\crash`, and `\verify` work on the [durable memory database](durability.html#the-durable-memory-database), which uses these records and this log manager with logical redo. Without one, `\log`, `\checkpoint`, and `\crash` print `not built yet`. The page path, 8.3 to 8.7, is still to build. The harness self-tests pass.
 :::
 
 ::: read
