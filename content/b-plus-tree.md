@@ -29,18 +29,20 @@ The contracts:
 A zeroed page is not a valid header until the root is initialized to `INVALID_PAGE_ID`.
 
 ::: next
-Plan 2.1 is done; `scripts/check 2.1`. Next is `CheckInvariants` (plan 2.2), before insert. A broken split is easier to see as a failed invariant than as a wrong query.
+Plans 2.1 to 2.7 are done; `scripts/check index` runs them all. The tree is single-threaded until crabbing (plan 7.1).
 :::
 
 ## Order
 
 `CheckInvariants` returns nullopt when the tree is well formed, otherwise a description of the first broken rule. Check size, order, sibling links, and the separator rule: keys in child `i - 1` are strictly less than `KeyAt(i)`, and keys in child `i` are greater than or equal to it.
 
-`ToDot` is a Graphviz digraph. `\tree spo` and `\tree spo dot` call these. Until plan 2.2 those shell commands print `not built yet`.
+`CheckInvariants` also checks the minimum fill (every node but the root at least half its maximum), that every leaf is at the same depth, and that each key lies in the range its ancestors' separators allow. It reads one page at a time, so it runs on a tiny pool.
+
+`ToString` prints one line per level. `ToDot` is a Graphviz digraph, with dashed edges for sibling links. `\tree spo` and `\tree spo dot` call these once the indexed backend exists (plan 3.4); with the memory backend they answer `no index`.
 
 ## Point search
 
-`GetValue` walks from the root to a leaf. An empty tree is empty. A missing key returns false. The pinned-frame count is zero on return. A freshly allocated header page is zeros; treat that as empty only after plan 2.1 has defined how an empty root is stored.
+`GetValue` walks from the root to a leaf. An empty tree is empty. A missing key returns false. The pinned-frame count is zero on return. The header page must be created with `Init`, which stores `INVALID_PAGE_ID`; a zeroed header would read as a tree rooted at page 0.
 
 ## Insert and split
 
@@ -55,6 +57,10 @@ After the pages agree, call:
 
 Unpin before returning. The random-insert test compares the tree to a sorted `std::vector`.
 
+OntoDB splits in the middle: a leaf keeps the left half and copies the right half's first key up; an internal page moves its middle key up. Pages store no parent pointer. An insert remembers the page ids on its way down, releasing each page before reading its child, and re-fetches a parent by id only if the split reaches it. That keeps at most three pages pinned and is correct while one thread changes the tree.
+
+The constructor takes optional maximum node sizes, defaulting to what a page holds. Tests pass sizes as small as 2 to grow deep trees from few keys; a randomized test checks every invariant after every insert and delete against `std::set`.
+
 ## Iterator
 
 `Begin()` walks every leaf through sibling pointers and holds one leaf guard. `Begin(key, prefix_len)` starts at the first key of that prefix and stops at `PrefixUpper`. Destroying the iterator drops the guard. `operator*` on an end iterator is undefined. The default-constructed iterator is the end, and it does not throw.
@@ -65,13 +71,13 @@ This iterator is what `IndexedTripleIterator` wraps, and what a triple scan will
 
 ## Bulk load
 
-Bulk load is not a loop of `Insert`. The keys arrive sorted and unique. One pass builds full leaves and links them. One pass per level builds the parents. Leaves are filled to `MaxSize()`. `CheckInvariants` passes. `GetValue` finds the first and last key.
+Bulk load is not a loop of `Insert`. The keys arrive sorted and unique. One pass builds full leaves and links them. One pass per level builds the parents. Leaves are filled to their maximum, with no fill factor. If the last node of a level would fall below its minimum, it and its left neighbour split their entries evenly. `CheckInvariants` passes. `GetValue` finds the first and last key. Unsorted input throws `std::invalid_argument`; a tree that is not empty throws `std::logic_error`.
 
 The loader uses this in plan 6.1: intern every term, encode, sort each permutation, then bulk-load. Sorting strings would be the wrong order. The order is the order of the ids.
 
 ## Delete
 
-Removing a missing key returns false. Merge or redistribute so every node except the root stays at least half full. A merge-only tree is fine. A redistribute-only tree is fine. The test accepts either crash point:
+Removing a missing key returns false. Merge or redistribute so every node except the root stays at least half full. OntoDB merges when the two siblings fit in one page and borrows one entry otherwise; an internal merge pulls the separator down between the halves, and an internal borrow rotates through the parent. When the root is left with one child, that child becomes the root; when the last key goes, the tree is empty. The test accepts either crash point:
 
 - `BPlusTree::Remove::after_redistribute`
 - `BPlusTree::Remove::after_merge`

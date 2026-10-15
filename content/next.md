@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 17 of 53 slices are done. The triple key, the whole buffer pool, and the B+ tree's page layout run; next are the tree's invariants, search, and insert.
+lede: 23 of 53 slices are done. The triple key, the buffer pool, and the B+ tree run; the next piece of code is RDF storage, starting with the term heap.
 ---
 
 ## Done
@@ -15,6 +15,7 @@ lede: 17 of 53 slices are done. The triple key, the whole buffer pool, and the B
 | SPARQL shell | `scripts/check shell` | Done |
 | Triple key | `scripts/check key` | Done: the key round-trips and the prefix bounds match |
 | Buffer pool | `scripts/check buffer` | Done: disk file, I/O thread, LRU-K, pool, guards, inspection |
+| B+ tree | `scripts/check index` | Done: layout, invariants, search, insert, iterator, bulk load, delete |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -24,7 +25,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| B+ tree | `scripts/check index` | Random insert matches a sorted vector |
 | RDF storage | `scripts/check storage` | A clean restart sees the triples |
 | Query execution | `scripts/check execution` | `\set join` selects a real operator |
 | Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
