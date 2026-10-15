@@ -20,7 +20,7 @@ A SPARQL join of four patterns has a factorial number of orders and three algori
 The factory already builds the executor from the node type. Slice 5.4 swaps the node. It does not teach the executor to ignore its own type.
 
 ::: today
-`Optimize` throws `PLAN 5.3`. `\explain analyze` throws `PLAN 5.5`. Statistics and the cardinality estimator throw their own plan ids. The shell setting `\set join auto|nlj|inlj|hash` is stored either way.
+Statistics (5.1), cardinality (5.2), and join order (5.3) run. The automatic choice of join (5.4) and `\explain analyze` (5.5) are next.
 :::
 
 ::: next
@@ -53,6 +53,8 @@ A fully unbound pattern joined with itself is not `TripleCount` for the join res
 ## Join order
 
 Start greedy and left-deep. Enumerate bushy plans only after left-deep works. The test checks rows, not which order you picked. Your own timing experiment is what checks the order.
+
+OntoDB's order (plan 5.3, done): flatten the nested-loop chain into its patterns; start from the one with the fewest estimated rows; at each step add the remaining pattern connected to what is joined (sharing a variable) whose join is estimated smallest; take a cross product only when nothing is connected; keep the written order on ties. Estimates carry each variable's distinct-value count down the chain. The engine optimizes whenever it has statistics. The database collects them on the first query after a load or a backend switch, shares one snapshot between sessions, and does not refresh it after updates. `\explain` shows the reordered plan: `?s ?p ?o . ?s a ub:Professor` starts from the Professor pattern.
 
 Selinger's search keeps, for each subset of patterns, the cheapest way to produce it, plus interesting orders if you later add sort. OntoDB's first version can ignore interesting orders and keep one winner per subset. `ORDER BY` is an operator above the joins, not a reason to preserve a permutation's order, until you decide that a range scan is already sorted.
 

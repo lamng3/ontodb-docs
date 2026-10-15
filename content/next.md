@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 37 of 53 slices are done. Statistics and cardinality estimation run; next are join ordering and the automatic choice of join.
+lede: 38 of 53 slices are done. The optimizer orders joins from exact statistics; next are the automatic choice of join and EXPLAIN ANALYZE.
 ---
 
 ## Done
