@@ -46,6 +46,8 @@ Estimates are finite and never negative. A pattern with nothing bound estimates 
 
 The usual formula treats positions as independent. Two bound positions estimate `|p| * |o| / |T|`. Check that against `PatternCount` on a few real patterns and write down the worst q-error, which is the ratio of estimate to truth, taking the worse direction.
 
+OntoDB's estimator (plan 5.2, done) needs no formula for a single pattern: its estimate is the exact `PatternCount` of its constants, and 0 if a constant is not in the dictionary. Joins follow System R: `|L| * |R| / max(V(L, x), V(R, x))` for each shared variable `x`, where `V` is the number of distinct values `x` takes. For one pattern, `V` comes from per-predicate distinct subject and object counts that `Collect` also keeps. On 100 students taking 3 of 10 courses, that is exact for both the star join of students with their names (100) and the join of enrolments with the course class (300); assuming every join value distinct (`min(|L|, |R|)`) would say 10 for the second. `EstimateJoin(l, r, k)` is that simpler fallback, for callers that know no `V`.
+
 A fully unbound pattern joined with itself is not `TripleCount` for the join result. The second copy is correlated through the shared variables. An estimate that ignores the correlation will look precise and still pick a bad order.
 
 ## Join order
