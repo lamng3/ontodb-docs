@@ -62,7 +62,7 @@ Projection keeps the slots in the `SELECT` clause. `SELECT *` keeps every slot i
 `ORDER BY` compares the way the filter does. Do not sort raw ids. Ids are assigned in intern order, which is not value order. A small run sorts in memory. A run that does not fit sorts externally through the buffer pool, so a spill is a page with a pageLSN, not a private `fwrite`.
 
 ::: next
-Plans 4.4 and 4.5. The plan nodes already exist in `stub_plans.h`. The factory throws `PLAN 4.4` and `PLAN 4.5` until the executors exist. `\set join inlj` and `\set join hash` run (plans 4.2 and 4.3).
+Plan 4.4, done: `DISTINCT` passes each projected row the first time it appears, in its child's order, and keeps a hash set of what it has passed, so its memory grows with the number of distinct rows. `LIMIT` skips the offset, then stops pulling from its child once it has passed the limit. Without `ORDER BY` the engine promises no order: the memory store yields triples in insertion order and the indexed store in key order, so `LIMIT` alone may pick different rows on the two backends, and both are correct. Plan 4.5, sort, is next; until then the factory throws `PLAN 4.5`. `\set join inlj` and `\set join hash` run (plans 4.2 and 4.3).
 :::
 
 ## Insert and delete executors

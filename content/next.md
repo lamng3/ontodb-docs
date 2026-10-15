@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 32 of 53 slices are done. All three join operators run; next are distinct, limit, sort, and insert and delete as operators.
+lede: 33 of 53 slices are done. The three joins, DISTINCT, LIMIT, and OFFSET run; next are sort, with an external merge sort through the buffer pool, and insert and delete as operators.
 ---
 
 ## Done
