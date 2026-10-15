@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 11 of 53 slices are done. The triple key and the disk manager run; the next piece of code is the I/O scheduler, then LRU-K.
+lede: 12 of 53 slices are done. The triple key, the disk manager, and the I/O scheduler run; the next piece of code is the LRU-K replacer.
 ---
 
 ## Done

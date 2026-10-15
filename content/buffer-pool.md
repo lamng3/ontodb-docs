@@ -16,7 +16,7 @@ lede: The B+ tree never reads a file. It pins a frame. The buffer pool is the on
 
 Write the bytes you were given. Do not invent a second header in front of the page.
 
-The file's length is the allocation record. `AllocatePage` grows the file by one zero page, so a restart sees every page allocated before it, and page 0 is an ordinary page (the catalog uses it). `DeallocatePage` does not reuse the id: the file only grows, because a reused id that a log record still names would send redo into someone else's page. `WritePage` goes through the page cache and does not `fsync`; `ShutDown` does, and a failed `fsync` throws instead of retrying. Reading or writing a page that was never allocated throws `StorageException`.
+The file's length is the allocation record. `AllocatePage` grows the file by one zero page, so a restart sees every page allocated before it, and page 0 is an ordinary page (the catalog uses it). `DeallocatePage` does not reuse the id: the file only grows, because a reused id that a log record still names would send redo into someone else's page. `WritePage` goes through the page cache and does not `fsync`; `ShutDown` does, and a failed `fsync` throws instead of retrying. A write past the end grows the file, and a read past the end returns zeros, so recovery can redo a record for a page the file has not reached yet. A negative page id, or any call after `ShutDown`, throws `StorageException`.
 
 ::: next
 Plan 1.1 is done. `scripts/check 1.1`.
@@ -27,6 +27,8 @@ Plan 1.1 is done. `scripts/check 1.1`.
 One background thread drains a queue of `DiskRequest`. `Schedule` returns immediately. The promise is set when the I/O finishes, on the scheduler thread, not the caller. The destructor finishes queued work and joins. The caller's buffer stays valid until then. Trace component `"io"`.
 
 The query thread must not call `ReadPage` itself once the scheduler exists. A prefetch and a flush can then overlap the CPU work. The promise is moved into the queue. Do not touch it after `Schedule`.
+
+Requests run in the order they were scheduled, so a write followed by a read of the same page reads what was written. If the disk manager throws, the exception is stored in the promise and `get()` rethrows it. Plan 1.2 is done; `scripts/check 1.2`.
 
 ## LRU-K
 
