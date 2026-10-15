@@ -16,8 +16,10 @@ lede: The B+ tree never reads a file. It pins a frame. The buffer pool is the on
 
 Write the bytes you were given. Do not invent a second header in front of the page.
 
+The file's length is the allocation record. `AllocatePage` grows the file by one zero page, so a restart sees every page allocated before it, and page 0 is an ordinary page (the catalog uses it). `DeallocatePage` does not reuse the id: the file only grows, because a reused id that a log record still names would send redo into someone else's page. `WritePage` goes through the page cache and does not `fsync`; `ShutDown` does, and a failed `fsync` throws instead of retrying. Reading or writing a page that was never allocated throws `StorageException`.
+
 ::: next
-Plan 1.1. It depends on nothing. `scripts/check 1.1`.
+Plan 1.1 is done. `scripts/check 1.1`.
 :::
 
 ## Disk scheduler
