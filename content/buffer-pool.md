@@ -38,6 +38,8 @@ Infinite distance is larger than every finite distance. A frame touched once is 
 
 The classic paper is O'Neil, O'Neil, and Weikum, "The LRU-K Page Replacement Algorithm". `k = 1` is LRU.
 
+Time is a logical clock that ticks on every `RecordAccess`, so eviction is deterministic. Among frames with infinite distance, the one whose oldest recorded access is earliest goes first; with `k = 2` that is LRU among frames seen once. `Evict` drops the victim's history. A frame id out of range throws `std::invalid_argument`. Choosing a victim scans every frame, which is cheap at the default 64. Plan 1.3 is done; `scripts/check 1.3`.
+
 ## Buffer pool
 
 Thread-safe from the first version. `NewPage` allocates, pins, and returns a zeroed frame. `FetchPage` pins, and reads from disk on a miss. `UnpinPage` drops one pin and marks dirty when asked. `DeletePage` fails when the page is pinned. `GetPinnedFrameCount` is safe to call from a test thread while a query runs. `BufferHit` on a memory fetch, `BufferMiss` when a frame is read from disk. Trace component `"bpm"`.
