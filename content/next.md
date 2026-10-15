@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 35 of 53 slices are done. Storage and query execution are complete; next is the optimizer: statistics, cardinality, join order, and the automatic choice of join.
+lede: 36 of 53 slices are done. The optimizer has begun with exact pattern statistics; next are cardinality estimates and join ordering.
 ---
 
 ## Done

@@ -38,6 +38,8 @@ The factory already builds the executor from the node type. Slice 5.4 swaps the 
 
 `PatternCount` may scan. It does not have to be clever. The estimator is what has to be cheap, because planning calls it on every alternative.
 
+OntoDB's `Collect` (plan 5.1, done) scans the store once and keeps counts per subject, predicate, and object, per pair of positions, and the set of triples. Every `PatternCount` is then an exact hash lookup, for every combination of bound positions; pair counts alone cannot answer a fully bound pattern, because all three pairs of a triple that is not stored can each occur elsewhere. That costs about seven hash entries per triple. The counts are a snapshot: updates after `Collect` leave them stale until the next collection.
+
 ## Cardinality
 
 Estimates are finite and never negative. A pattern with nothing bound estimates `TripleCount`. Binding one more position never increases the estimate.
