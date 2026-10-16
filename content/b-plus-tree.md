@@ -67,6 +67,8 @@ The constructor takes optional maximum node sizes, defaulting to what a page hol
 
 During a scan the pinned-frame count stays at most 1, and it is 0 after the iterator dies. Drop the current leaf before pinning the sibling. Holding the parent as well deadlocks a 3-frame pool on a tall tree.
 
+OntoDB's iterator goes further and holds nothing between rows: reaching a leaf, it copies the leaf's remaining keys up to the bound, notes the sibling's id, and releases the leaf, latching the sibling only when those keys run out. A join keeps one scan open while others descend other trees; with held leaf latches that is latch order in both directions across trees, which ThreadSanitizer flagged and which a waiting writer can turn into a deadlock. A scan sees each leaf as it was when it read it.
+
 This iterator is what `IndexedTripleIterator` wraps, and what a triple scan pulls when the backend is indexed.
 
 ## Bulk load
@@ -94,7 +96,7 @@ Pessimistic crabbing latches the path and holds a parent only while the child mi
 
 Concurrent insert, delete, and scan run under the `tsan` preset. Pins are zero after the threads join.
 
-OntoDB uses pessimistic crabbing. Readers latch each child before releasing its parent, and an iterator starts on the leaf its descent latched. Insert and Remove latch the header and then the path in write mode, and release every latched ancestor once the newest page is safe (not full for an insert, above its minimum for a delete; for the root, more than one key), so the latched path is exactly what a split or merge can touch, and the split and merge code works on those latched pages. A split writes and releases its two leaves before allocating the parent's new page. A leaf emptied by a merge is not freed: it keeps its sibling link, because an iterator moving right may already hold its id. The cost is pins: on a path of full pages, a writer pins every level, so the pool must exceed the height plus two. A test runs four writers and a scanner on 3-key nodes and checks every key under ThreadSanitizer.
+OntoDB uses pessimistic crabbing. Readers latch each child before releasing its parent, and an iterator starts on the leaf its descent latched. Insert and Remove latch the header and then the path in write mode, and release every latched ancestor once the newest page is safe (not full for an insert, above its minimum for a delete; for the root, more than one key), so the latched path is exactly what a split or merge can touch, and the split and merge code works on those latched pages. A split writes and releases its two leaves before allocating the parent's new page. A leaf emptied by a merge is not freed: it keeps its sibling link, because an iterator moving right may already hold its id. Latches are taken in one order everywhere: the header, then down the tree, and siblings left to right; a delete that works with its left sibling releases the node, latches the sibling, and latches the node again, with the parent held throughout. The cost is pins: on a path of full pages, a writer pins every level, so the pool must exceed the height plus two. A test runs four writers and a scanner on 3-key nodes and checks every key under ThreadSanitizer.
 
 ## Splits and the log
 
