@@ -36,7 +36,7 @@ The shell reads standard input, so a script can be piped in: `ontodb mydb < scri
 | `\load path` | Loads a Turtle (`.ttl`), N-Triples (`.nt`), or RDF/XML (`.rdf`, `.owl`) file. In a persistent database the whole file is one transaction |
 | SPARQL statement | Runs a query or an update. In a persistent database an update is one transaction |
 | `\explain query` | Prints the plan without running it |
-| `\explain analyze query` | Not built (PLAN 5.5) |
+| `\explain analyze query` | Runs the query and prints each plan node with its estimated and actual rows, then the time |
 | `\checkpoint` | Persistent databases: writes a snapshot and empties the log |
 | `\verify` | Persistent databases: checks the snapshot and log, rebuilds from them, and compares with the live database |
 | `\log [n]` | Persistent databases: prints the last `n` log records (default 20), oldest first |

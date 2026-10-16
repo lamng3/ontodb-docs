@@ -78,6 +78,6 @@ verify: ok
 ## Limits
 
 - One process per directory. Two shells on the same directory are not supported.
-- The whole database is held in memory; the directory is its durable copy. The page-based disk store, which does not need to fit in memory, is planned (see [Roadmap](next.html)).
+- The whole database is held in memory; the directory is its durable copy. The page-based disk store, which does not need to fit in memory, exists and recovers from crashes in the tests, but the shell does not open it from a directory yet (see [Roadmap](next.html)).
 
 The file layouts are in [File formats](formats.html).

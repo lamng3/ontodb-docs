@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 48 of 53 slices are done. Everything but page-level recovery runs; next are the write-ahead rule on pages, abort by the log, checkpoints, ARIES, and the crash test.
+lede: All 53 slices are done, page-level recovery included. Next is moving the shell's persistent databases onto the page store, then the open items below.
 ---
 
 ## Done
@@ -22,15 +22,16 @@ lede: 48 of 53 slices are done. Everything but page-level recovery runs; next ar
 | Bulk load | `scripts/check load` | Done: batch load, packed trees, LUBM(1) on a 32-frame pool |
 | Concurrency | `scripts/check concurrency` | Done: crabbing, transactions, locks, isolation, deadlocks, phantoms |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
-| Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
+| Recovery | `scripts/check recovery` | Done: page images, page groups, abort by the log, sharp checkpoint, ARIES, `scripts/crashtest --seeds 200` |
 
-## Being built
+## Next
 
-In order. Each feature's page in Internals describes its design.
+Not in `PLAN.md` yet. Each would start as a design next to its code.
 
-| Feature | Check | Done when |
-| --- | --- | --- |
-| Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
+- `ontodb <dir>` on the page store: open the database file and its log, run recovery, and keep the memory database as an option.
+- Truncate the log after a checkpoint, once no loser or dirty page needs the older records.
+- Fuzzy checkpoints, so updates do not stall.
+- Smaller page records: a diff, or a full image only on a page's first change after a checkpoint.
 
 ## Left open
 

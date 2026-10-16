@@ -71,7 +71,7 @@ Serializable picks one extra mechanism: key-range locks, gap locks, or predicate
 
 `TransactionManager` (plan 7.2, done) undoes before it unlocks, so no other transaction sees a change being taken back. A transaction's state is atomic, because the deadlock detector marks a waiting transaction aborted from its own thread.
 
-The write set is temporary. Plan 8.4 replaces it with log undo when a `LogManager` was passed in. The constructor already takes that pointer so the signature does not change later. Null means write-set undo.
+With a `LogManager` passed in, abort undoes by the log instead and writes CLRs (plan 8.4, see [WAL and ARIES](recovery.html#abort-and-compensation)). Null means write-set undo, which is what the shell's backends use.
 
 ::: today
 `\begin`, `\commit`, `\abort`, `\txns` (one line per transaction), and `\locks` (the lock table, with waiters) run. All twelve specs pass on the memory and indexed backends.

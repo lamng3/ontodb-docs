@@ -8,18 +8,18 @@ description: The design of the page-based disk store: the database file, the log
 lede: The page-based store keeps a database file of 4 KiB pages plus a write-ahead log. Deletes shrink the B+ tree in place, and a scan freezes only the triples it already copied. For the persistent databases that run today, see Persistent databases.
 ---
 
-Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is a snapshot plus the log today, and the database file plus the log once pages exist. Space comes back when a delete merges or reuses a slot. On the page path, a snapshot is a copied scan result or a lock held until commit. The persistent databases that run today keep a different, simpler pair of files; see [Persistent databases](persistence.html).
+Three words get borrowed from log-structured stores and do not name three background jobs here. Persistence is a snapshot plus the log for the shell's databases, and the database file plus the log for the page store. Space comes back when a delete merges or reuses a slot. On the page path, a snapshot is a copied scan result or a lock held until commit. The persistent databases that run today keep a different, simpler pair of files; see [Persistent databases](persistence.html).
 
 ## Persistence
 
-Two files, once the disk path exists. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7.
+Two files. This is the page path, plans 1.1, 3.6, and 8.3 to 8.7.
 
 The database file is a sequence of 4096-byte pages. `DiskManager` owns it. Page ids survive restart. Each page image starts with an 8-byte pageLSN. The catalog, page 0, records the header page of `spo`, `pos`, and `osp`, and the dictionary's root. Term spellings live in the term heap, which is more pages in that same file. Triple keys live in the B+ tree leaves.
 
 The log is a separate append-only file. `LogManager` is constructed with a `log_path`. `Append` assigns an LSN. `Flush` makes every record up to that LSN durable. Commit forces the commit record. That commit record is the acknowledgement a later open will trust.
 
 ::: today
-The page path is being built. `DiskManager::ShutDown` (plan 1.1) fsyncs the file, and `FlushAllPages` (plan 1.4) writes every dirty frame; nothing calls them on the shell's path until the indexed store exists. `CheckpointManager::Checkpoint` throws plan 8.5. The in-memory database is durable through its own snapshot and log; see [Persistent databases](persistence.html).
+The page path runs and recovers from crashes in the tests and the crash harness ([WAL and ARIES](recovery.html)). The shell does not open it from a directory yet: `ontodb <dir>` is durable through its own snapshot and log; see [Persistent databases](persistence.html).
 :::
 
 A clean close and a crash are different successes.
@@ -34,14 +34,14 @@ What becomes durable, and when:
 | --- | --- |
 | Insert still in a transaction | the log record, only if a dirty page was stolen and the WAL rule flushed first |
 | `\commit` | the commit record is on the log |
-| `\checkpoint` | the checkpoint record, and whatever a blocking checkpoint also forced |
+| Checkpoint | every dirty page, then the checkpoint record (the checkpoint is sharp) |
 | Process exit through `ShutDown` | every dirty page and the catalog |
 | `\crash` | only what a previous flush already wrote |
 
 The shell knobs `pool_size` and `lru_k` change which pages stay in memory. They do not change the file format.
 
 ::: next
-Plan 1.1 creates the database file. Plan 3.6 is the clean restart. Plans 8.1 through 8.7 are the log, the WAL rule, and crash recovery. Build the clean close before you depend on ARIES, so a shutdown bug is not mistaken for a recovery bug.
+Plan 1.1 created the database file, plan 3.6 the clean restart, and plans 8.1 through 8.7 the log, the WAL rule, and crash recovery. The clean close came first, so a shutdown bug was never mistaken for a recovery bug.
 :::
 
 ## Reclaiming space
@@ -56,7 +56,7 @@ Bulk load is the other time the tree gets dense. Plan 2.6 builds full leaves fro
 
 Leaf compression is smaller keys inside a leaf, delta-encoded the RDF-3X way. It has no stub. It changes `Compare` and the prefix bounds. It is a page layout, written when the leaf is written, not a background rewrite of old levels.
 
-On the memory path, `\checkpoint` already empties the log, because the snapshot holds everything before it. On the page path, the log grows for the life of the process under the plan as written. A checkpoint tells recovery where to start. It does not, by itself, delete bytes in front of that LSN. Truncating the log after a checkpoint, once no active transaction or dirty page still needs the older records, is the natural follow-on of plan 8.5. It is not a separate plan item. Do it only after redo's starting LSN is real, or you will throw away the record that would have repaired a stolen page.
+On the memory path, `\checkpoint` already empties the log, because the snapshot holds everything before it. On the page path, the log grows for the life of the database today. A checkpoint tells recovery where redo can start. It does not delete bytes in front of that LSN, and analysis still reads the whole file to find losers that began before it. Truncating the log after a checkpoint, once no active transaction or dirty page still needs the older records, is the natural follow-on of plan 8.5. Do it only after redo's starting LSN is real, or you will throw away the record that would have repaired a stolen page.
 
 Which permutations exist is the other space decision. Plan 3.5 measures before adding POS or OSP. A permutation you do not build does not need a compaction policy.
 
@@ -66,7 +66,7 @@ The delete path is slice 2.7. The heap slot is slice 3.1. Bulk load is slices 2.
 
 ## What a snapshot is here
 
-`MemStore::Scan` copies the matching triples into the iterator and then drops the mutex. Inserts and deletes that happen after `Scan` returns do not change that iterator. The copy is one pattern's result, held for one operator. It is not a named database snapshot, and it is not repeatable across a second `Scan` in the same query. The indexed iterator does not copy the tree. It pins one leaf at a time, so a concurrent split is handled by latch crabbing (plan 7.1), not by a frozen view.
+`MemStore::Scan` copies the matching triples into the iterator and then drops the mutex. Inserts and deletes that happen after `Scan` returns do not change that iterator. The copy is one pattern's result, held for one operator. It is not a named database snapshot, and it is not repeatable across a second `Scan` in the same query. The indexed iterator does not copy the tree. It copies one leaf's remaining keys and holds no latch or pin between rows, so a concurrent split or merge is handled by latch crabbing (plan 7.1) and kept empty leaves, not by a frozen view.
 
 On the memory path, `\checkpoint` is a real snapshot: the whole database at one LSN, and the next open starts from it. On the page path, `\checkpoint` writes a checkpoint record: the active transactions, and the LSN recovery may start from. A blocking checkpoint waits until writers are quiet and can force dirty pages. A fuzzy checkpoint does not wait, and it must record the dirty-page table. Either way, a SPARQL query does not read "as of" that checkpoint. Open after a crash does.
 

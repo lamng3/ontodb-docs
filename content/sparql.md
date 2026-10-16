@@ -24,7 +24,7 @@ SELECT ?name WHERE {
 | `SELECT ?a ?b` and `SELECT *` | Yes. `*` projects every variable in order of first appearance |
 | Basic graph pattern, one group | Yes. `a` means `rdf:type`; `;` repeats the subject; `,` repeats subject and predicate |
 | `FILTER` with `= != < > <= >=` combined by `&&` | Yes |
-| `DISTINCT`, `LIMIT`, `OFFSET`, `ORDER BY` | Parsed and shown by `\explain`; running them answers `not built yet` (PLAN 4.4, 4.5) |
+| `DISTINCT`, `LIMIT`, `OFFSET`, `ORDER BY` | Yes. `ORDER BY` sorts by SPARQL term order, and on the indexed backend spills to an external merge sort when rows outgrow half the pool |
 | `OPTIONAL`, `UNION`, nested groups, property paths, aggregates | Rejected |
 
 Numbers in a query are `xsd:integer` or `xsd:decimal` literals and compare numerically with numeric literals in the data.
