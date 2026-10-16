@@ -38,10 +38,18 @@ OntoDB's lock manager (plan 7.3, done) keeps a FIFO queue per resource. A reques
 
 The specs in `test/isolation/specs/` are the contract. Twelve of them cover dirty read, nonrepeatable read, lost update, lock upgrade, two deadlocks, write-write conflict, abort releasing locks, and phantoms.
 
-- Read uncommitted takes no shared locks. A dirty read is allowed.
-- Read committed releases shared locks at the end of the statement. A value you read can change before you commit. You do not see uncommitted writes.
-- Repeatable read holds shared locks until commit. A row you read stays. A row you did not read can appear.
-- Serializable holds shared locks until commit and adds the phantom mechanism from plan 7.6.
+What OntoDB locks (plans 7.4 to 7.6, done). Exclusive locks: always, until commit.
+
+| Level | A scan locks |
+| --- | --- |
+| ru | nothing |
+| rc | S on each triple it returns |
+| rr | S on each triple it returns, and S on the set of triples |
+| ser | S on the whole database, for each query |
+
+Shared locks are kept until commit at every level that takes them. That is stricter than the textbook read committed, which releases them at the end of each statement; the specs require it, because `lock-upgrade` and `upgrade-deadlock` run at read committed and expect a key read by an earlier statement to block a later delete. Read committed still forbids dirty reads and still lets new triples appear.
+
+Locks name logical triples, not index entries: the database, then the set of triples (named `spo`), then one triple keyed by its SPO key, whichever index a scan used. A scan takes S on a triple before returning it; if that lock had to wait, it checks the triple is still there, since the writer may have aborted. A write takes IX on the database and the set, X on the triple, and records the change in the write set. A statement outside `\begin` runs in its own implicit transaction, so every statement locks the same way. `\load` takes X on the whole database instead of one lock per triple. A persistent database does not accept `\begin` yet: its log commits each statement on its own. The specs pass on both backends.
 
 The mechanism is locks, not snapshots. MVCC is an open design with no stub. It is not a substitute you slip into the concurrency feature. A versioned reader is described with [snapshots](durability.html#what-a-snapshot-is-here).
 
@@ -52,6 +60,8 @@ A background thread wakes every 20 ms, builds the waits-for graph (an edge from 
 ## Phantoms
 
 Repeatable read holds locks on triples you read. An insert of a new triple does not conflict with those locks, so a second scan can see Dana even though the first scan did not. The repeatable-read spec expects that. Do not "fix" it by taking a predicate lock at every isolation level.
+
+OntoDB's choice: repeatable read takes S on the set of triples for each scan that runs, and serializable takes S on the whole database for each query, a predicate lock whose predicate is every triple. A pattern naming a term the store has never seen matches nothing, and its scan does not run (queries no longer add their constants to the dictionary), so in `phantom-rr` the insert goes through, while in `phantom-ser` the database lock blocks it. The cost is concurrency: one serializable reader stops every writer.
 
 Serializable picks one extra mechanism: key-range locks, gap locks, or predicate locks. Write the choice in the header comment above the code. Under serializable the insert blocks until the reader commits. A predicate lock on `?s rdf:type ub:Student` also blocks a transaction that inserts a course if your predicate is wider than the query. That cost is the reason to write down which predicate you actually locked.
 
@@ -64,11 +74,11 @@ Serializable picks one extra mechanism: key-range locks, gap locks, or predicate
 The write set is temporary. Plan 8.4 replaces it with log undo when a `LogManager` was passed in. The constructor already takes that pointer so the signature does not change later. Null means write-set undo.
 
 ::: today
-`\begin`, `\commit`, `\abort`, `\txns`, and `\locks` print `not built yet`. The isolation harness has a self-test that passes without a lock manager: a driver that fails to block is reported, and a scripted driver that blocks is accepted. The real specs are disabled under plans 7.4, 7.5, and 7.6.
+`\begin`, `\commit`, `\abort`, `\txns` (one line per transaction), and `\locks` (the lock table, with waiters) run. All twelve specs pass on the memory and indexed backends.
 :::
 
 ::: next
-Plans 7.1 (latch crabbing, see [B+ tree](b-plus-tree.html#crabbing)), 7.2 (transactions), and 7.3 (the lock manager and deadlock detector) are done. Next: 7.4 isolation through the shell, 7.5 deadlocks between sessions, 7.6 phantoms.
+Concurrency is done: plans 7.1 (latch crabbing, see [B+ tree](b-plus-tree.html#crabbing)) through 7.6.
 :::
 
 ::: read

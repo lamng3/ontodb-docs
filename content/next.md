@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 45 of 53 slices are done. The tree is concurrent and transactions and the lock manager run; next is isolation through the shell.
+lede: 48 of 53 slices are done. Everything but page-level recovery runs; next are the write-ahead rule on pages, abort by the log, checkpoints, ARIES, and the crash test.
 ---
 
 ## Done
@@ -20,6 +20,7 @@ lede: 45 of 53 slices are done. The tree is concurrent and transactions and the 
 | Query execution | `scripts/check execution` | Done: rebinding, index nested loop, hash join, distinct, limit, external sort, insert and delete |
 | Optimizer | `scripts/check optimizer` | Done: exact statistics, System R join estimates, greedy order, auto join choice, explain analyze |
 | Bulk load | `scripts/check load` | Done: batch load, packed trees, LUBM(1) on a 32-frame pool |
+| Concurrency | `scripts/check concurrency` | Done: crabbing, transactions, locks, isolation, deadlocks, phantoms |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -29,7 +30,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| Concurrency | `scripts/check concurrency` | The feature is green under ThreadSanitizer |
 | Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
 
 ## Left open
