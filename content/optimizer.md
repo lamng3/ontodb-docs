@@ -20,7 +20,7 @@ A SPARQL join of four patterns has a factorial number of orders and three algori
 The factory already builds the executor from the node type. Slice 5.4 swaps the node. It does not teach the executor to ignore its own type.
 
 ::: today
-Statistics (5.1), cardinality (5.2), and join order (5.3) run. The automatic choice of join (5.4) and `\explain analyze` (5.5) are next.
+Statistics (5.1), cardinality (5.2), join order (5.3), and the automatic choice of join (5.4) run. `\explain analyze` (5.5) is next.
 :::
 
 ::: next
@@ -67,6 +67,8 @@ Cost the three algorithms with the cardinalities you just estimated.
 - Hash join is linear in the two inputs and needs memory for the build side. It loses when the build side is the whole store, when the key is almost unique so the index was already a point lookup, and when you cannot afford the table.
 
 Forcing `kHash` belongs in the optimizer because the executor must not secretly become a hash join while the explained plan still says nested loop.
+
+OntoDB's `auto` (plan 5.4, done, and the default) decides per join of the reordered chain: a cross product stays a nested loop; otherwise an index nested-loop join when the estimated outer side is no larger than the inner pattern, and a hash join built on the smaller inner pattern when it is larger. `benchmarks/joins/results.md` runs the 14 LUBM queries under five settings: LUBM's query 2, in its written order, starts with three unconnected type patterns and does not finish in 20 seconds; reordered, it takes 0.1 ms, and `auto` matches the best forced operator on every query. The benchmark stops runaway plans with an executor deadline that every scan checks.
 
 ## Explain analyze
 
