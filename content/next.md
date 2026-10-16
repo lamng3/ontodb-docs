@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: All 53 slices are done, page-level recovery included. Next is moving the shell's persistent databases onto the page store, then the open items below.
+lede: All 53 slices are done, page-level recovery included. Next: the page store behind ontodb <dir>, log housekeeping, more of SPARQL, and RDFS inference.
 ---
 
 ## Done
@@ -26,12 +26,14 @@ lede: All 53 slices are done, page-level recovery included. Next is moving the s
 
 ## Next
 
-Not in `PLAN.md` yet. Each would start as a design next to its code.
+Planned in `PLAN.md`, in this order. None has tests yet; each starts by adding them.
 
-- `ontodb <dir>` on the page store: open the database file and its log, run recovery, and keep the memory database as an option.
-- Truncate the log after a checkpoint, once no loser or dirty page needs the older records.
-- Fuzzy checkpoints, so updates do not stall.
-- Smaller page records: a diff, or a full image only on a page's first change after a checkpoint.
+| Feature | Check | Slices |
+| --- | --- | --- |
+| Page store in the shell | `scripts/check pagestore` | 10.1 directory format, 10.2 recovery on open, 10.3 statements log, 10.4 loads, 10.5 clean close and checkpoint, 10.6 verify, 10.7 crash test through the shell |
+| Log housekeeping | `scripts/check logkeep` | 11.1 truncate after a checkpoint, 11.2 smaller page records, 11.3 fuzzy checkpoint |
+| SPARQL breadth | `scripts/check sparql` | 12.1 `OPTIONAL`, 12.2 `UNION`, 12.3 aggregates, 12.4 planning around them, 12.5 `DELETE/INSERT WHERE` |
+| RDFS inference | `scripts/check rdfs` | 13.1 rules, 13.2 materialize, 13.3 insert, 13.4 delete (DRed), 13.5 LUBM |
 
 ## Left open
 
@@ -41,7 +43,6 @@ These have no stubs. Each starts as a design written next to its code, then a be
 - A different set of index permutations.
 - MVCC beside strict two-phase locking.
 - Leaf compression with delta-encoded keys.
-- RDFS `subClassOf` materialization.
 - A query window that sends the same text the shell sends.
 - Page checksums on the disk store, checked on read and by `\verify`.
 - Restore to a chosen LSN: replay the snapshot and the log up to an LSN and stop.
