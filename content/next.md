@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 43 of 53 slices are done. The B+ tree is safe for concurrent use; next are transactions, the lock manager, and isolation.
+lede: 45 of 53 slices are done. The tree is concurrent and transactions and the lock manager run; next is isolation through the shell.
 ---
 
 ## Done

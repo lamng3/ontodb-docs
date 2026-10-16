@@ -32,6 +32,8 @@ Resources are the database, an index (`"spo"`, `"pos"`, `"osp"`), and a key. Tak
 
 The same transaction may upgrade in place. An upgrade does not jump ahead of a waiter. `Lock` blocks until the request is granted or the transaction is aborted. Before blocking, if a session was passed in, call `SetWaiting` with the reason, and `ClearWaiting` when the wait ends. The waiting thread is the one inside `Lock`, so the reason has to be set before the wait. The shell polls it.
 
+OntoDB's lock manager (plan 7.3, done) keeps a FIFO queue per resource. A request is granted when it is compatible with every lock other transactions hold there and nothing ahead of it is still waiting. An upgrade keeps its old lock while it waits, queued behind any waiter, and replaces it when granted; a mode the transaction already covers is granted at once. Holders are recorded by transaction id, so a lock outliving its `Transaction` object does no harm. Two sessions that read a key and then both try to change it therefore deadlock on the upgrade, and the detector resolves it.
+
 ## Isolation
 
 The specs in `test/isolation/specs/` are the contract. Twelve of them cover dirty read, nonrepeatable read, lost update, lock upgrade, two deadlocks, write-write conflict, abort releasing locks, and phantoms.
@@ -45,7 +47,7 @@ The mechanism is locks, not snapshots. MVCC is an open design with no stub. It i
 
 ## Deadlock
 
-A background thread builds the waits-for graph and aborts the youngest transaction in each cycle. Younger means the larger id. The abort throws `TransactionAbortException` out of that transaction's `Lock` call. Aborting whoever happened to notice the cycle fails the spec: session 1 starts first, so it has the smaller id, and session 2 is the victim in both the two-key cycle and the upgrade cycle.
+A background thread wakes every 20 ms, builds the waits-for graph (an edge from each waiting request to every transaction holding an incompatible lock, or waiting ahead of it), and aborts the youngest transaction in each cycle. Younger means the larger id. The abort throws `TransactionAbortException` out of that transaction's `Lock` call. Aborting whoever happened to notice the cycle fails the spec: session 1 starts first, so it has the smaller id, and session 2 is the victim in both the two-key cycle and the upgrade cycle.
 
 ## Phantoms
 
@@ -57,6 +59,8 @@ Serializable picks one extra mechanism: key-range locks, gap locks, or predicate
 
 `Begin` returns a growing transaction. Ids increase from 1. `Commit` releases locks and moves to committed. `Abort`, when no log manager was installed, undoes the write set newest-first, releases locks, and moves to aborted. Newest-first matters: an insert followed by a delete of the same triple restores the wrong state if you undo the insert first. A committed or aborted transaction accepts no further work.
 
+`TransactionManager` (plan 7.2, done) undoes before it unlocks, so no other transaction sees a change being taken back. A transaction's state is atomic, because the deadlock detector marks a waiting transaction aborted from its own thread.
+
 The write set is temporary. Plan 8.4 replaces it with log undo when a `LogManager` was passed in. The constructor already takes that pointer so the signature does not change later. Null means write-set undo.
 
 ::: today
@@ -64,7 +68,7 @@ The write set is temporary. Plan 8.4 replaces it with log undo when a `LogManage
 :::
 
 ::: next
-Plan 7.1, latch crabbing, is done (see [B+ tree](b-plus-tree.html#crabbing)). Then 7.2 transactions, 7.3 the lock manager, 7.4 isolation, 7.5 deadlock, 7.6 phantoms.
+Plans 7.1 (latch crabbing, see [B+ tree](b-plus-tree.html#crabbing)), 7.2 (transactions), and 7.3 (the lock manager and deadlock detector) are done. Next: 7.4 isolation through the shell, 7.5 deadlocks between sessions, 7.6 phantoms.
 :::
 
 ::: read
