@@ -20,7 +20,7 @@ A SPARQL join of four patterns has a factorial number of orders and three algori
 The factory already builds the executor from the node type. Slice 5.4 swaps the node. It does not teach the executor to ignore its own type.
 
 ::: today
-Statistics (5.1), cardinality (5.2), join order (5.3), and the automatic choice of join (5.4) run. `\explain analyze` (5.5) is next.
+The optimizer is complete: statistics (5.1), cardinality (5.2), join order (5.3), the automatic choice of join (5.4), and `\explain analyze` (5.5).
 :::
 
 ::: next
@@ -73,6 +73,8 @@ OntoDB's `auto` (plan 5.4, done, and the default) decides per join of the reorde
 ## Explain analyze
 
 `\explain analyze` prints an estimated count and an actual count for each node. The actual count is how many times `Next` returned a row. Run the plan, count, then print. Do not estimate the actual.
+
+OntoDB's (plan 5.5, done) wraps every executor in a counter, runs the query to the end, and prints each node as `Label  (estimated E, actual A)`, then the execution time. The estimates are the optimizer's own; a filter is assumed to keep a third of its input. The inner scan of an index nested-loop join prints `probed by the join above`, because the join asks the store directly and the scan never runs. Updates are planned but not run.
 
 When the estimate says 10 and the node returned 10,000, look at that node first. The missing statistic is usually a correlation `PatternCount` would have seen and the independence formula averaged away.
 

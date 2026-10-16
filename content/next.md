@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 39 of 53 slices are done. The optimizer orders joins and chooses their operators; next is EXPLAIN ANALYZE.
+lede: 40 of 53 slices are done. Storage, query execution, and the optimizer are complete; next is the bulk loader.
 ---
 
 ## Done
@@ -18,6 +18,7 @@ lede: 39 of 53 slices are done. The optimizer orders joins and chooses their ope
 | B+ tree | `scripts/check index` | Done: layout, invariants, search, insert, iterator, bulk load, delete |
 | RDF storage | `scripts/check storage` | Done: term heap, disk dictionary, catalog, indexed store, SPO/POS/OSP measured, clean restart |
 | Query execution | `scripts/check execution` | Done: rebinding, index nested loop, hash join, distinct, limit, external sort, insert and delete |
+| Optimizer | `scripts/check optimizer` | Done: exact statistics, System R join estimates, greedy order, auto join choice, explain analyze |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -27,7 +28,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| Optimizer | `scripts/check optimizer` | A rewritten plan returns the same rows |
 | Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |
 | Concurrency | `scripts/check concurrency` | The feature is green under ThreadSanitizer |
 | Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
