@@ -73,7 +73,9 @@ This iterator is what `IndexedTripleIterator` wraps, and what a triple scan pull
 
 Bulk load is not a loop of `Insert`. The keys arrive sorted and unique. One pass builds full leaves and links them. One pass per level builds the parents. Leaves are filled to their maximum, with no fill factor. If the last node of a level would fall below its minimum, it and its left neighbour split their entries evenly. `CheckInvariants` passes. `GetValue` finds the first and last key. Unsorted input throws `std::invalid_argument`; a tree that is not empty throws `std::logic_error`.
 
-The loader uses this in plan 6.1: intern every term, encode, sort each permutation, then bulk-load. Sorting strings would be the wrong order. The order is the order of the ids.
+The loader uses this (plan 6.1, done): it interns every term while parsing, then hands all the triples to the store in one `InsertBatch`; an empty indexed store sorts each permutation's keys and bulk-loads every tree, and a store that already has triples inserts them one at a time. `RdfLoader::LoadFiles` batches several files, so a multi-file dataset bulk-loads too. Sorting strings would be the wrong order. The order is the order of the ids.
+
+On LUBM(1), 15 files in one batch load in 1.1 s instead of 1.7, into 10.8 MiB instead of 16.2, and every scan reads about half the pages, because the leaves are packed (`benchmarks/indexing/results.md`). Plan 6.2 loads one LUBM file on a 32-frame pool and runs queries 1, 6, and 14; query 6 needs inference and returns nothing, as expected.
 
 ## Delete
 

@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 40 of 53 slices are done. Storage, query execution, and the optimizer are complete; next is the bulk loader.
+lede: 42 of 53 slices are done. Storage, query execution, the optimizer, and bulk loading are complete; next are concurrency control and page-level recovery.
 ---
 
 ## Done
@@ -19,6 +19,7 @@ lede: 40 of 53 slices are done. Storage, query execution, and the optimizer are 
 | RDF storage | `scripts/check storage` | Done: term heap, disk dictionary, catalog, indexed store, SPO/POS/OSP measured, clean restart |
 | Query execution | `scripts/check execution` | Done: rebinding, index nested loop, hash join, distinct, limit, external sort, insert and delete |
 | Optimizer | `scripts/check optimizer` | Done: exact statistics, System R join estimates, greedy order, auto join choice, explain analyze |
+| Bulk load | `scripts/check load` | Done: batch load, packed trees, LUBM(1) on a 32-frame pool |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
 | Recovery | `scripts/check recovery` | Log records (8.1) and log manager (8.2) done; page-based recovery to build |
 
@@ -28,7 +29,6 @@ In order. Each feature's page in Internals describes its design.
 
 | Feature | Check | Done when |
 | --- | --- | --- |
-| Bulk load | `scripts/check load` | About 100k LUBM triples load under a small pool |
 | Concurrency | `scripts/check concurrency` | The feature is green under ThreadSanitizer |
 | Recovery | `scripts/check recovery` | `scripts/crashtest --seeds 200` exits 0 |
 
