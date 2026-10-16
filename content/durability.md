@@ -66,7 +66,7 @@ The delete path is slice 2.7. The heap slot is slice 3.1. Bulk load is slices 2.
 
 ## What a snapshot is here
 
-`MemStore::Scan` copies the matching triples into the iterator and then drops the mutex. Inserts and deletes that happen after `Scan` returns do not change that iterator. The copy is one pattern's result, held for one operator. It is not a named database snapshot, and it is not repeatable across a second `Scan` in the same query. The indexed iterator does not copy the tree. It pins one leaf at a time, so a concurrent split is the crabbing problem in plan 7.1, not a frozen view.
+`MemStore::Scan` copies the matching triples into the iterator and then drops the mutex. Inserts and deletes that happen after `Scan` returns do not change that iterator. The copy is one pattern's result, held for one operator. It is not a named database snapshot, and it is not repeatable across a second `Scan` in the same query. The indexed iterator does not copy the tree. It pins one leaf at a time, so a concurrent split is handled by latch crabbing (plan 7.1), not by a frozen view.
 
 On the memory path, `\checkpoint` is a real snapshot: the whole database at one LSN, and the next open starts from it. On the page path, `\checkpoint` writes a checkpoint record: the active transactions, and the LSN recovery may start from. A blocking checkpoint waits until writers are quiet and can force dirty pages. A fuzzy checkpoint does not wait, and it must record the dirty-page table. Either way, a SPARQL query does not read "as of" that checkpoint. Open after a crash does.
 

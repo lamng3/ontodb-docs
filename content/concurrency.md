@@ -64,7 +64,7 @@ The write set is temporary. Plan 8.4 replaces it with log undo when a `LogManage
 :::
 
 ::: next
-Plan 7.1, latch crabbing, once the single-threaded B+ tree inserts, deletes, and scans. Then 7.2 transactions, 7.3 the lock manager, 7.4 isolation, 7.5 deadlock, 7.6 phantoms.
+Plan 7.1, latch crabbing, is done (see [B+ tree](b-plus-tree.html#crabbing)). Then 7.2 transactions, 7.3 the lock manager, 7.4 isolation, 7.5 deadlock, 7.6 phantoms.
 :::
 
 ::: read

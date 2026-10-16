@@ -5,7 +5,7 @@ part: Project
 order: 2
 kicker: Project
 description: What OntoDB can do now, what is being built next, and what is deliberately left open.
-lede: 42 of 53 slices are done. Storage, query execution, the optimizer, and bulk loading are complete; next are concurrency control and page-level recovery.
+lede: 43 of 53 slices are done. The B+ tree is safe for concurrent use; next are transactions, the lock manager, and isolation.
 ---
 
 ## Done
