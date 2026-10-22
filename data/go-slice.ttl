@@ -1,0 +1,2046 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix GO: <http://purl.obolibrary.org/obo/GO_> .
+
+GO:0000038 rdfs:label "very long-chain fatty acid metabolic process" .
+GO:0000038 rdfs:subClassOf GO:0006631 .
+GO:0000278 rdfs:label "mitotic cell cycle" .
+GO:0000278 rdfs:subClassOf GO:0007049 .
+GO:0000769 rdfs:label "syncytium formation by mitosis without cytokinesis" .
+GO:0000769 rdfs:subClassOf GO:0033301 .
+GO:0001516 rdfs:label "prostaglandin biosynthetic process" .
+GO:0001516 rdfs:subClassOf GO:0006693 .
+GO:0001516 rdfs:subClassOf GO:0046457 .
+GO:0001523 rdfs:label "retinoid metabolic process" .
+GO:0001523 rdfs:subClassOf GO:0016101 .
+GO:0001555 rdfs:label "oocyte growth" .
+GO:0001555 rdfs:subClassOf GO:0048588 .
+GO:0001561 rdfs:label "fatty acid alpha-oxidation" .
+GO:0001561 rdfs:subClassOf GO:0009062 .
+GO:0001561 rdfs:subClassOf GO:0019395 .
+GO:0001572 rdfs:label "lactosylceramide biosynthetic process" .
+GO:0001572 rdfs:subClassOf GO:0006688 .
+GO:0001572 rdfs:subClassOf GO:0046513 .
+GO:0001573 rdfs:label "ganglioside metabolic process" .
+GO:0001573 rdfs:subClassOf GO:0006672 .
+GO:0001573 rdfs:subClassOf GO:0006687 .
+GO:0001574 rdfs:label "ganglioside biosynthetic process" .
+GO:0001574 rdfs:subClassOf GO:0001573 .
+GO:0001574 rdfs:subClassOf GO:0006688 .
+GO:0001574 rdfs:subClassOf GO:0046513 .
+GO:0001575 rdfs:label "globoside metabolic process" .
+GO:0001575 rdfs:subClassOf GO:0006687 .
+GO:0001576 rdfs:label "globoside biosynthetic process" .
+GO:0001576 rdfs:subClassOf GO:0001575 .
+GO:0001576 rdfs:subClassOf GO:0006688 .
+GO:0001676 rdfs:label "long-chain fatty acid metabolic process" .
+GO:0001676 rdfs:subClassOf GO:0006631 .
+GO:0001781 rdfs:label "neutrophil apoptotic process" .
+GO:0001781 rdfs:subClassOf GO:0006925 .
+GO:0001781 rdfs:subClassOf GO:0033028 .
+GO:0001781 rdfs:subClassOf GO:0071887 .
+GO:0001783 rdfs:label "B cell apoptotic process" .
+GO:0001783 rdfs:subClassOf GO:0070227 .
+GO:0001788 rdfs:label "antibody-dependent cellular cytotoxicity" .
+GO:0001788 rdfs:subClassOf GO:0001794 .
+GO:0001794 rdfs:label "type IIa hypersensitivity" .
+GO:0001794 rdfs:subClassOf GO:0002445 .
+GO:0001795 rdfs:label "type IIb hypersensitivity" .
+GO:0001795 rdfs:subClassOf GO:0002445 .
+GO:0001802 rdfs:label "type III hypersensitivity" .
+GO:0001802 rdfs:subClassOf GO:0002524 .
+GO:0001802 rdfs:subClassOf GO:0016064 .
+GO:0001806 rdfs:label "type IV hypersensitivity" .
+GO:0001806 rdfs:subClassOf GO:0002456 .
+GO:0001806 rdfs:subClassOf GO:0002524 .
+GO:0001867 rdfs:label "complement activation, lectin pathway" .
+GO:0001867 rdfs:subClassOf GO:0006956 .
+GO:0001867 rdfs:subClassOf GO:0045087 .
+GO:0001896 rdfs:label "autolysis" .
+GO:0001896 rdfs:subClassOf GO:0012501 .
+GO:0001905 rdfs:label "activation of membrane attack complex" .
+GO:0001905 rdfs:subClassOf GO:0006956 .
+GO:0001913 rdfs:label "T cell mediated cytotoxicity" .
+GO:0001913 rdfs:subClassOf GO:0002456 .
+GO:0002138 rdfs:label "retinoic acid biosynthetic process" .
+GO:0002138 rdfs:subClassOf GO:0016102 .
+GO:0002138 rdfs:subClassOf GO:0042573 .
+GO:0002152 rdfs:label "bile acid conjugation" .
+GO:0002152 rdfs:subClassOf GO:0008206 .
+GO:0002227 rdfs:label "innate immune response in mucosa" .
+GO:0002227 rdfs:subClassOf GO:0002385 .
+GO:0002227 rdfs:subClassOf GO:0045087 .
+GO:0002228 rdfs:label "natural killer cell mediated immunity" .
+GO:0002228 rdfs:subClassOf GO:0045087 .
+GO:0002250 rdfs:label "adaptive immune response" .
+GO:0002250 rdfs:subClassOf GO:0006955 .
+GO:0002251 rdfs:label "organ or tissue specific immune response" .
+GO:0002251 rdfs:subClassOf GO:0006955 .
+GO:0002342 rdfs:label "central B cell deletion" .
+GO:0002342 rdfs:subClassOf GO:0002516 .
+GO:0002342 rdfs:subClassOf GO:0010623 .
+GO:0002368 rdfs:label "B cell cytokine production" .
+GO:0002368 rdfs:subClassOf GO:0019724 .
+GO:0002369 rdfs:label "T cell cytokine production" .
+GO:0002369 rdfs:subClassOf GO:0002456 .
+GO:0002370 rdfs:label "natural killer cell cytokine production" .
+GO:0002370 rdfs:subClassOf GO:0002228 .
+GO:0002376 rdfs:label "immune system process" .
+GO:0002376 rdfs:subClassOf GO:0008150 .
+GO:0002383 rdfs:label "immune response in brain or nervous system" .
+GO:0002383 rdfs:subClassOf GO:0002251 .
+GO:0002384 rdfs:label "hepatic immune response" .
+GO:0002384 rdfs:subClassOf GO:0002251 .
+GO:0002385 rdfs:label "mucosal immune response" .
+GO:0002385 rdfs:subClassOf GO:0002251 .
+GO:0002387 rdfs:label "immune response in gut-associated lymphoid tissue" .
+GO:0002387 rdfs:subClassOf GO:0006955 .
+GO:0002388 rdfs:label "immune response in Peyer's patch" .
+GO:0002388 rdfs:subClassOf GO:0002387 .
+GO:0002389 rdfs:label "tolerance induction in Peyer's patch" .
+GO:0002389 rdfs:subClassOf GO:0002388 .
+GO:0002389 rdfs:subClassOf GO:0002394 .
+GO:0002394 rdfs:label "tolerance induction in gut-associated lymphoid tissue" .
+GO:0002394 rdfs:subClassOf GO:0002387 .
+GO:0002394 rdfs:subClassOf GO:0002401 .
+GO:0002395 rdfs:label "immune response in nasopharyngeal-associated lymphoid tissue" .
+GO:0002395 rdfs:subClassOf GO:0002387 .
+GO:0002400 rdfs:label "tolerance induction in nasopharyngeal-associated lymphoid tissue" .
+GO:0002400 rdfs:subClassOf GO:0002394 .
+GO:0002400 rdfs:subClassOf GO:0002395 .
+GO:0002401 rdfs:label "tolerance induction in mucosal-associated lymphoid tissue" .
+GO:0002401 rdfs:subClassOf GO:0002427 .
+GO:0002402 rdfs:label "B cell tolerance induction in mucosal-associated lymphoid tissue" .
+GO:0002402 rdfs:subClassOf GO:0002401 .
+GO:0002402 rdfs:subClassOf GO:0002451 .
+GO:0002403 rdfs:label "T cell tolerance induction in mucosal-associated lymphoid tissue" .
+GO:0002403 rdfs:subClassOf GO:0002401 .
+GO:0002403 rdfs:subClassOf GO:0002458 .
+GO:0002411 rdfs:label "T cell tolerance induction to tumor cell" .
+GO:0002411 rdfs:subClassOf GO:0002413 .
+GO:0002411 rdfs:subClassOf GO:0002424 .
+GO:0002411 rdfs:subClassOf GO:0002458 .
+GO:0002413 rdfs:label "tolerance induction to tumor cell" .
+GO:0002413 rdfs:subClassOf GO:0002418 .
+GO:0002413 rdfs:subClassOf GO:0002465 .
+GO:0002418 rdfs:label "immune response to tumor cell" .
+GO:0002418 rdfs:subClassOf GO:0006955 .
+GO:0002419 rdfs:label "T cell mediated cytotoxicity directed against tumor cell target" .
+GO:0002419 rdfs:subClassOf GO:0001913 .
+GO:0002419 rdfs:subClassOf GO:0002424 .
+GO:0002420 rdfs:label "natural killer cell mediated cytotoxicity directed against tumor cell target" .
+GO:0002420 rdfs:subClassOf GO:0002423 .
+GO:0002420 rdfs:subClassOf GO:0042267 .
+GO:0002423 rdfs:label "natural killer cell mediated immune response to tumor cell" .
+GO:0002423 rdfs:subClassOf GO:0002228 .
+GO:0002423 rdfs:subClassOf GO:0002418 .
+GO:0002424 rdfs:label "T cell mediated immune response to tumor cell" .
+GO:0002424 rdfs:subClassOf GO:0002418 .
+GO:0002424 rdfs:subClassOf GO:0002456 .
+GO:0002425 rdfs:label "tolerance induction in urogenital tract" .
+GO:0002425 rdfs:subClassOf GO:0002427 .
+GO:0002427 rdfs:label "mucosal tolerance induction" .
+GO:0002427 rdfs:subClassOf GO:0002385 .
+GO:0002427 rdfs:subClassOf GO:0002462 .
+GO:0002437 rdfs:label "inflammatory response to antigenic stimulus" .
+GO:0002437 rdfs:subClassOf GO:0006955 .
+GO:0002438 rdfs:label "acute inflammatory response to antigenic stimulus" .
+GO:0002438 rdfs:subClassOf GO:0002437 .
+GO:0002439 rdfs:label "chronic inflammatory response to antigenic stimulus" .
+GO:0002439 rdfs:subClassOf GO:0002437 .
+GO:0002445 rdfs:label "type II hypersensitivity" .
+GO:0002445 rdfs:subClassOf GO:0002524 .
+GO:0002445 rdfs:subClassOf GO:0016064 .
+GO:0002451 rdfs:label "peripheral B cell tolerance induction" .
+GO:0002451 rdfs:subClassOf GO:0002465 .
+GO:0002451 rdfs:subClassOf GO:0019724 .
+GO:0002454 rdfs:label "peripheral B cell deletion" .
+GO:0002454 rdfs:subClassOf GO:0002516 .
+GO:0002455 rdfs:label "humoral immune response mediated by circulating immunoglobulin" .
+GO:0002455 rdfs:subClassOf GO:0006959 .
+GO:0002455 rdfs:subClassOf GO:0016064 .
+GO:0002456 rdfs:label "T cell mediated immunity" .
+GO:0002456 rdfs:subClassOf GO:0002460 .
+GO:0002458 rdfs:label "peripheral T cell tolerance induction" .
+GO:0002458 rdfs:subClassOf GO:0002456 .
+GO:0002458 rdfs:subClassOf GO:0002465 .
+GO:0002459 rdfs:label "adaptive immune response based on somatic recombination of immune receptors built from leucine-rich repeat domains" .
+GO:0002459 rdfs:subClassOf GO:0002250 .
+GO:0002460 rdfs:label "adaptive immune response based on somatic recombination of immune receptors built from immunoglobulin superfamily domains" .
+GO:0002460 rdfs:subClassOf GO:0002250 .
+GO:0002461 rdfs:label "tolerance induction dependent upon immune response" .
+GO:0002461 rdfs:subClassOf GO:0002460 .
+GO:0002462 rdfs:label "tolerance induction to nonself antigen" .
+GO:0002462 rdfs:subClassOf GO:0002461 .
+GO:0002463 rdfs:label "central tolerance induction to nonself antigen" .
+GO:0002463 rdfs:subClassOf GO:0002462 .
+GO:0002464 rdfs:label "peripheral tolerance induction to nonself antigen" .
+GO:0002464 rdfs:subClassOf GO:0002462 .
+GO:0002464 rdfs:subClassOf GO:0002465 .
+GO:0002465 rdfs:label "peripheral tolerance induction" .
+GO:0002465 rdfs:subClassOf GO:0002461 .
+GO:0002466 rdfs:label "peripheral tolerance induction to self antigen" .
+GO:0002466 rdfs:subClassOf GO:0002465 .
+GO:0002467 rdfs:label "germinal center formation" .
+GO:0002467 rdfs:subClassOf GO:0002460 .
+GO:0002516 rdfs:label "B cell deletion" .
+GO:0002516 rdfs:subClassOf GO:0001783 .
+GO:0002516 rdfs:subClassOf GO:1902742 .
+GO:0002524 rdfs:label "hypersensitivity" .
+GO:0002524 rdfs:subClassOf GO:0002438 .
+GO:0002558 rdfs:label "type I hypersensitivity mediated by mast cells" .
+GO:0002558 rdfs:subClassOf GO:0016068 .
+GO:0002559 rdfs:label "type I hypersensitivity mediated by basophils" .
+GO:0002559 rdfs:subClassOf GO:0016068 .
+GO:0002901 rdfs:label "mature B cell apoptotic process" .
+GO:0002901 rdfs:subClassOf GO:0001783 .
+GO:0002933 rdfs:label "lipid hydroxylation" .
+GO:0002933 rdfs:subClassOf GO:0030258 .
+GO:0003247 rdfs:label "post-embryonic cardiac muscle cell growth involved in heart morphogenesis" .
+GO:0003247 rdfs:subClassOf GO:0048588 .
+GO:0003275 rdfs:label "apoptotic process involved in outflow tract morphogenesis" .
+GO:0003275 rdfs:subClassOf GO:0003278 .
+GO:0003277 rdfs:label "apoptotic process involved in endocardial cushion morphogenesis" .
+GO:0003277 rdfs:subClassOf GO:0003278 .
+GO:0003278 rdfs:label "apoptotic process involved in heart morphogenesis" .
+GO:0003278 rdfs:subClassOf GO:0060561 .
+GO:0003415 rdfs:label "chondrocyte hypertrophy" .
+GO:0003415 rdfs:subClassOf GO:0048588 .
+GO:0003430 rdfs:label "growth plate cartilage chondrocyte growth" .
+GO:0003430 rdfs:subClassOf GO:0003415 .
+GO:0006070 rdfs:label "octanol metabolic process" .
+GO:0006070 rdfs:subClassOf GO:1903173 .
+GO:0006489 rdfs:label "dolichyl diphosphate biosynthetic process" .
+GO:0006489 rdfs:subClassOf GO:0008654 .
+GO:0006505 rdfs:label "GPI anchor metabolic process" .
+GO:0006505 rdfs:subClassOf GO:0006650 .
+GO:0006505 rdfs:subClassOf GO:0006664 .
+GO:0006506 rdfs:label "GPI anchor biosynthetic process" .
+GO:0006506 rdfs:subClassOf GO:0006505 .
+GO:0006506 rdfs:subClassOf GO:0009247 .
+GO:0006506 rdfs:subClassOf GO:0046474 .
+GO:0006629 rdfs:label "lipid metabolic process" .
+GO:0006629 rdfs:subClassOf GO:0044238 .
+GO:0006631 rdfs:label "fatty acid metabolic process" .
+GO:0006631 rdfs:subClassOf GO:0006629 .
+GO:0006633 rdfs:label "fatty acid biosynthetic process" .
+GO:0006633 rdfs:subClassOf GO:0006631 .
+GO:0006633 rdfs:subClassOf GO:0008610 .
+GO:0006635 rdfs:label "fatty acid beta-oxidation" .
+GO:0006635 rdfs:subClassOf GO:0009062 .
+GO:0006635 rdfs:subClassOf GO:0019395 .
+GO:0006636 rdfs:label "unsaturated fatty acid biosynthetic process" .
+GO:0006636 rdfs:subClassOf GO:0006633 .
+GO:0006636 rdfs:subClassOf GO:0033559 .
+GO:0006638 rdfs:label "neutral lipid metabolic process" .
+GO:0006638 rdfs:subClassOf GO:0006629 .
+GO:0006639 rdfs:label "acylglycerol metabolic process" .
+GO:0006639 rdfs:subClassOf GO:0006638 .
+GO:0006639 rdfs:subClassOf GO:0046486 .
+GO:0006640 rdfs:label "monoacylglycerol biosynthetic process" .
+GO:0006640 rdfs:subClassOf GO:0046462 .
+GO:0006640 rdfs:subClassOf GO:0046463 .
+GO:0006641 rdfs:label "triglyceride metabolic process" .
+GO:0006641 rdfs:subClassOf GO:0006639 .
+GO:0006642 rdfs:label "triglyceride mobilization" .
+GO:0006642 rdfs:subClassOf GO:0006641 .
+GO:0006644 rdfs:label "phospholipid metabolic process" .
+GO:0006644 rdfs:subClassOf GO:0006629 .
+GO:0006646 rdfs:label "phosphatidylethanolamine biosynthetic process" .
+GO:0006646 rdfs:subClassOf GO:0046337 .
+GO:0006646 rdfs:subClassOf GO:0046474 .
+GO:0006647 rdfs:label "phosphatidyl-N-monomethylethanolamine biosynthetic process" .
+GO:0006647 rdfs:subClassOf GO:0006646 .
+GO:0006648 rdfs:label "dihydrosphingosine-1-P pathway" .
+GO:0006648 rdfs:subClassOf GO:0006646 .
+GO:0006650 rdfs:label "glycerophospholipid metabolic process" .
+GO:0006650 rdfs:subClassOf GO:0006644 .
+GO:0006650 rdfs:subClassOf GO:0046486 .
+GO:0006651 rdfs:label "diacylglycerol biosynthetic process" .
+GO:0006651 rdfs:subClassOf GO:0046339 .
+GO:0006651 rdfs:subClassOf GO:0046463 .
+GO:0006653 rdfs:label "1,2-diacyl-sn-glycero-3-phosphocholine metabolic process" .
+GO:0006653 rdfs:subClassOf GO:0046470 .
+GO:0006654 rdfs:label "phosphatidic acid biosynthetic process" .
+GO:0006654 rdfs:subClassOf GO:0046473 .
+GO:0006654 rdfs:subClassOf GO:0046474 .
+GO:0006655 rdfs:label "phosphatidylglycerol biosynthetic process" .
+GO:0006655 rdfs:subClassOf GO:0046471 .
+GO:0006655 rdfs:subClassOf GO:0046474 .
+GO:0006656 rdfs:label "phosphatidylcholine biosynthetic process" .
+GO:0006656 rdfs:subClassOf GO:0046470 .
+GO:0006656 rdfs:subClassOf GO:0046474 .
+GO:0006657 rdfs:label "CDP-choline pathway" .
+GO:0006657 rdfs:subClassOf GO:0006656 .
+GO:0006658 rdfs:label "phosphatidylserine metabolic process" .
+GO:0006658 rdfs:subClassOf GO:0006650 .
+GO:0006659 rdfs:label "phosphatidylserine biosynthetic process" .
+GO:0006659 rdfs:subClassOf GO:0006658 .
+GO:0006659 rdfs:subClassOf GO:0046474 .
+GO:0006660 rdfs:label "phosphatidylserine catabolic process" .
+GO:0006660 rdfs:subClassOf GO:0006658 .
+GO:0006660 rdfs:subClassOf GO:0046475 .
+GO:0006661 rdfs:label "phosphatidylinositol biosynthetic process" .
+GO:0006661 rdfs:subClassOf GO:0046474 .
+GO:0006661 rdfs:subClassOf GO:0046488 .
+GO:0006663 rdfs:label "platelet activating factor biosynthetic process" .
+GO:0006663 rdfs:subClassOf GO:0008611 .
+GO:0006663 rdfs:subClassOf GO:0046469 .
+GO:0006663 rdfs:subClassOf GO:0046474 .
+GO:0006664 rdfs:label "glycolipid metabolic process" .
+GO:0006664 rdfs:subClassOf GO:1903509 .
+GO:0006665 rdfs:label "sphingolipid metabolic process" .
+GO:0006665 rdfs:subClassOf GO:0006629 .
+GO:0006667 rdfs:label "sphinganine metabolic process" .
+GO:0006667 rdfs:subClassOf GO:0046519 .
+GO:0006668 rdfs:label "sphinganine-1-phosphate metabolic process" .
+GO:0006668 rdfs:subClassOf GO:0006644 .
+GO:0006668 rdfs:subClassOf GO:0006665 .
+GO:0006669 rdfs:label "sphinganine-1-phosphate biosynthetic process" .
+GO:0006669 rdfs:subClassOf GO:0006668 .
+GO:0006669 rdfs:subClassOf GO:0008654 .
+GO:0006669 rdfs:subClassOf GO:0030148 .
+GO:0006670 rdfs:label "sphingosine metabolic process" .
+GO:0006670 rdfs:subClassOf GO:0046519 .
+GO:0006671 rdfs:label "phytosphingosine metabolic process" .
+GO:0006671 rdfs:subClassOf GO:0046519 .
+GO:0006672 rdfs:label "ceramide metabolic process" .
+GO:0006672 rdfs:subClassOf GO:0006665 .
+GO:0006673 rdfs:label "inositol phosphoceramide metabolic process" .
+GO:0006673 rdfs:subClassOf GO:0006644 .
+GO:0006673 rdfs:subClassOf GO:0006665 .
+GO:0006675 rdfs:label "mannosyl-inositol phosphorylceramide metabolic process" .
+GO:0006675 rdfs:subClassOf GO:0006673 .
+GO:0006675 rdfs:subClassOf GO:0006687 .
+GO:0006676 rdfs:label "mannosyl diphosphorylinositol ceramide metabolic process" .
+GO:0006676 rdfs:subClassOf GO:0006505 .
+GO:0006676 rdfs:subClassOf GO:0006673 .
+GO:0006677 rdfs:label "glycosylceramide metabolic process" .
+GO:0006677 rdfs:subClassOf GO:0006672 .
+GO:0006677 rdfs:subClassOf GO:0006687 .
+GO:0006678 rdfs:label "glucosylceramide metabolic process" .
+GO:0006678 rdfs:subClassOf GO:0006677 .
+GO:0006679 rdfs:label "glucosylceramide biosynthetic process" .
+GO:0006679 rdfs:subClassOf GO:0006678 .
+GO:0006679 rdfs:subClassOf GO:0006688 .
+GO:0006679 rdfs:subClassOf GO:0046513 .
+GO:0006680 rdfs:label "glucosylceramide catabolic process" .
+GO:0006680 rdfs:subClassOf GO:0006678 .
+GO:0006680 rdfs:subClassOf GO:0046477 .
+GO:0006681 rdfs:label "galactosylceramide metabolic process" .
+GO:0006681 rdfs:subClassOf GO:0006677 .
+GO:0006681 rdfs:subClassOf GO:0019374 .
+GO:0006682 rdfs:label "galactosylceramide biosynthetic process" .
+GO:0006682 rdfs:subClassOf GO:0006681 .
+GO:0006682 rdfs:subClassOf GO:0006688 .
+GO:0006682 rdfs:subClassOf GO:0019375 .
+GO:0006682 rdfs:subClassOf GO:0046513 .
+GO:0006683 rdfs:label "galactosylceramide catabolic process" .
+GO:0006683 rdfs:subClassOf GO:0006681 .
+GO:0006683 rdfs:subClassOf GO:0019376 .
+GO:0006683 rdfs:subClassOf GO:0046477 .
+GO:0006684 rdfs:label "sphingomyelin metabolic process" .
+GO:0006684 rdfs:subClassOf GO:0006644 .
+GO:0006684 rdfs:subClassOf GO:0006665 .
+GO:0006685 rdfs:label "sphingomyelin catabolic process" .
+GO:0006685 rdfs:subClassOf GO:0006684 .
+GO:0006685 rdfs:subClassOf GO:0009395 .
+GO:0006685 rdfs:subClassOf GO:0030149 .
+GO:0006686 rdfs:label "sphingomyelin biosynthetic process" .
+GO:0006686 rdfs:subClassOf GO:0006684 .
+GO:0006686 rdfs:subClassOf GO:0008654 .
+GO:0006686 rdfs:subClassOf GO:0030148 .
+GO:0006687 rdfs:label "glycosphingolipid metabolic process" .
+GO:0006687 rdfs:subClassOf GO:0006664 .
+GO:0006687 rdfs:subClassOf GO:0006665 .
+GO:0006688 rdfs:label "glycosphingolipid biosynthetic process" .
+GO:0006688 rdfs:subClassOf GO:0006687 .
+GO:0006688 rdfs:subClassOf GO:0009247 .
+GO:0006688 rdfs:subClassOf GO:0030148 .
+GO:0006689 rdfs:label "ganglioside catabolic process" .
+GO:0006689 rdfs:subClassOf GO:0001573 .
+GO:0006689 rdfs:subClassOf GO:0046479 .
+GO:0006689 rdfs:subClassOf GO:0046514 .
+GO:0006692 rdfs:label "prostanoid metabolic process" .
+GO:0006692 rdfs:subClassOf GO:0033559 .
+GO:0006693 rdfs:label "prostaglandin metabolic process" .
+GO:0006693 rdfs:subClassOf GO:0006692 .
+GO:0006694 rdfs:label "steroid biosynthetic process" .
+GO:0006694 rdfs:subClassOf GO:0008202 .
+GO:0006694 rdfs:subClassOf GO:0008610 .
+GO:0006695 rdfs:label "cholesterol biosynthetic process" .
+GO:0006695 rdfs:subClassOf GO:0008203 .
+GO:0006695 rdfs:subClassOf GO:0016126 .
+GO:0006696 rdfs:label "ergosterol biosynthetic process" .
+GO:0006696 rdfs:subClassOf GO:0008204 .
+GO:0006696 rdfs:subClassOf GO:0016126 .
+GO:0006696 rdfs:subClassOf GO:0016129 .
+GO:0006697 rdfs:label "ecdysone biosynthetic process" .
+GO:0006697 rdfs:subClassOf GO:0008205 .
+GO:0006697 rdfs:subClassOf GO:0016126 .
+GO:0006697 rdfs:subClassOf GO:0045456 .
+GO:0006699 rdfs:label "bile acid biosynthetic process" .
+GO:0006699 rdfs:subClassOf GO:0008206 .
+GO:0006700 rdfs:label "C21-steroid hormone biosynthetic process" .
+GO:0006700 rdfs:subClassOf GO:0008207 .
+GO:0006700 rdfs:subClassOf GO:0120178 .
+GO:0006701 rdfs:label "progesterone biosynthetic process" .
+GO:0006701 rdfs:subClassOf GO:0006700 .
+GO:0006701 rdfs:subClassOf GO:0042448 .
+GO:0006702 rdfs:label "androgen biosynthetic process" .
+GO:0006702 rdfs:subClassOf GO:0008209 .
+GO:0006702 rdfs:subClassOf GO:0120178 .
+GO:0006703 rdfs:label "estrogen biosynthetic process" .
+GO:0006703 rdfs:subClassOf GO:0008210 .
+GO:0006703 rdfs:subClassOf GO:0120178 .
+GO:0006704 rdfs:label "glucocorticoid biosynthetic process" .
+GO:0006704 rdfs:subClassOf GO:0008211 .
+GO:0006704 rdfs:subClassOf GO:0120178 .
+GO:0006705 rdfs:label "mineralocorticoid biosynthetic process" .
+GO:0006705 rdfs:subClassOf GO:0008212 .
+GO:0006705 rdfs:subClassOf GO:0120178 .
+GO:0006706 rdfs:label "steroid catabolic process" .
+GO:0006706 rdfs:subClassOf GO:0008202 .
+GO:0006706 rdfs:subClassOf GO:0016042 .
+GO:0006707 rdfs:label "cholesterol catabolic process" .
+GO:0006707 rdfs:subClassOf GO:0008203 .
+GO:0006707 rdfs:subClassOf GO:0016127 .
+GO:0006708 rdfs:label "ecdysone catabolic process" .
+GO:0006708 rdfs:subClassOf GO:0008205 .
+GO:0006708 rdfs:subClassOf GO:0016127 .
+GO:0006708 rdfs:subClassOf GO:0046344 .
+GO:0006709 rdfs:label "progesterone catabolic process" .
+GO:0006709 rdfs:subClassOf GO:0008208 .
+GO:0006709 rdfs:subClassOf GO:0042448 .
+GO:0006710 rdfs:label "androgen catabolic process" .
+GO:0006710 rdfs:subClassOf GO:0006706 .
+GO:0006710 rdfs:subClassOf GO:0008209 .
+GO:0006711 rdfs:label "estrogen catabolic process" .
+GO:0006711 rdfs:subClassOf GO:0006706 .
+GO:0006711 rdfs:subClassOf GO:0008210 .
+GO:0006712 rdfs:label "mineralocorticoid catabolic process" .
+GO:0006712 rdfs:subClassOf GO:0006706 .
+GO:0006712 rdfs:subClassOf GO:0008212 .
+GO:0006713 rdfs:label "glucocorticoid catabolic process" .
+GO:0006713 rdfs:subClassOf GO:0006706 .
+GO:0006713 rdfs:subClassOf GO:0008211 .
+GO:0006714 rdfs:label "sesquiterpenoid metabolic process" .
+GO:0006714 rdfs:subClassOf GO:0006721 .
+GO:0006715 rdfs:label "farnesol biosynthetic process" .
+GO:0006715 rdfs:subClassOf GO:0016094 .
+GO:0006715 rdfs:subClassOf GO:0016106 .
+GO:0006715 rdfs:subClassOf GO:0016487 .
+GO:0006716 rdfs:label "juvenile hormone metabolic process" .
+GO:0006716 rdfs:subClassOf GO:0006714 .
+GO:0006718 rdfs:label "juvenile hormone biosynthetic process" .
+GO:0006718 rdfs:subClassOf GO:0006716 .
+GO:0006718 rdfs:subClassOf GO:0016106 .
+GO:0006719 rdfs:label "juvenile hormone catabolic process" .
+GO:0006719 rdfs:subClassOf GO:0006716 .
+GO:0006719 rdfs:subClassOf GO:0016107 .
+GO:0006720 rdfs:label "isoprenoid metabolic process" .
+GO:0006720 rdfs:subClassOf GO:0006629 .
+GO:0006721 rdfs:label "terpenoid metabolic process" .
+GO:0006721 rdfs:subClassOf GO:0006720 .
+GO:0006722 rdfs:label "triterpenoid metabolic process" .
+GO:0006722 rdfs:subClassOf GO:0006721 .
+GO:0006776 rdfs:label "vitamin A metabolic process" .
+GO:0006776 rdfs:subClassOf GO:0001523 .
+GO:0006915 rdfs:label "apoptotic process" .
+GO:0006915 rdfs:subClassOf GO:0012501 .
+GO:0006924 rdfs:label "activation-induced cell death of T cells" .
+GO:0006924 rdfs:subClassOf GO:0070231 .
+GO:0006925 rdfs:label "inflammatory cell apoptotic process" .
+GO:0006925 rdfs:subClassOf GO:0006915 .
+GO:0006955 rdfs:label "immune response" .
+GO:0006955 rdfs:subClassOf GO:0002376 .
+GO:0006955 rdfs:subClassOf GO:0050896 .
+GO:0006956 rdfs:label "complement activation" .
+GO:0006956 rdfs:subClassOf GO:0006959 .
+GO:0006957 rdfs:label "complement activation, alternative pathway" .
+GO:0006957 rdfs:subClassOf GO:0006956 .
+GO:0006957 rdfs:subClassOf GO:0045087 .
+GO:0006958 rdfs:label "complement activation, classical pathway" .
+GO:0006958 rdfs:subClassOf GO:0006956 .
+GO:0006959 rdfs:label "humoral immune response" .
+GO:0006959 rdfs:subClassOf GO:0006955 .
+GO:0006962 rdfs:label "male-specific antibacterial humoral response" .
+GO:0006962 rdfs:subClassOf GO:0019731 .
+GO:0007049 rdfs:label "cell cycle" .
+GO:0007049 rdfs:subClassOf GO:0009987 .
+GO:0007113 rdfs:label "endomitotic cell cycle" .
+GO:0007113 rdfs:subClassOf GO:0000278 .
+GO:0007124 rdfs:label "pseudohyphal growth" .
+GO:0007124 rdfs:subClassOf GO:0016049 .
+GO:0007285 rdfs:label "primary spermatocyte growth" .
+GO:0007285 rdfs:subClassOf GO:0048588 .
+GO:0007394 rdfs:label "dorsal closure, elongation of leading edge cells" .
+GO:0007394 rdfs:subClassOf GO:0009826 .
+GO:0008150 rdfs:label "biological_process" .
+GO:0008152 rdfs:label "metabolic process" .
+GO:0008152 rdfs:subClassOf GO:0009987 .
+GO:0008202 rdfs:label "steroid metabolic process" .
+GO:0008202 rdfs:subClassOf GO:0006629 .
+GO:0008203 rdfs:label "cholesterol metabolic process" .
+GO:0008203 rdfs:subClassOf GO:0016125 .
+GO:0008204 rdfs:label "ergosterol metabolic process" .
+GO:0008204 rdfs:subClassOf GO:0016125 .
+GO:0008205 rdfs:label "ecdysone metabolic process" .
+GO:0008205 rdfs:subClassOf GO:0016125 .
+GO:0008205 rdfs:subClassOf GO:0045455 .
+GO:0008206 rdfs:label "bile acid metabolic process" .
+GO:0008206 rdfs:subClassOf GO:0008202 .
+GO:0008207 rdfs:label "C21-steroid hormone metabolic process" .
+GO:0008207 rdfs:subClassOf GO:0008202 .
+GO:0008208 rdfs:label "C21-steroid hormone catabolic process" .
+GO:0008208 rdfs:subClassOf GO:0006706 .
+GO:0008208 rdfs:subClassOf GO:0008207 .
+GO:0008209 rdfs:label "androgen metabolic process" .
+GO:0008209 rdfs:subClassOf GO:0008202 .
+GO:0008210 rdfs:label "estrogen metabolic process" .
+GO:0008210 rdfs:subClassOf GO:0008202 .
+GO:0008211 rdfs:label "glucocorticoid metabolic process" .
+GO:0008211 rdfs:subClassOf GO:0008202 .
+GO:0008212 rdfs:label "mineralocorticoid metabolic process" .
+GO:0008212 rdfs:subClassOf GO:0008202 .
+GO:0008219 rdfs:label "cell death" .
+GO:0008219 rdfs:subClassOf GO:0009987 .
+GO:0008299 rdfs:label "isoprenoid biosynthetic process" .
+GO:0008299 rdfs:subClassOf GO:0006720 .
+GO:0008299 rdfs:subClassOf GO:0008610 .
+GO:0008300 rdfs:label "isoprenoid catabolic process" .
+GO:0008300 rdfs:subClassOf GO:0006720 .
+GO:0008300 rdfs:subClassOf GO:0016042 .
+GO:0008610 rdfs:label "lipid biosynthetic process" .
+GO:0008610 rdfs:subClassOf GO:0006629 .
+GO:0008611 rdfs:label "ether lipid biosynthetic process" .
+GO:0008611 rdfs:subClassOf GO:0008610 .
+GO:0008611 rdfs:subClassOf GO:0046485 .
+GO:0008653 rdfs:label "lipopolysaccharide metabolic process" .
+GO:0008653 rdfs:subClassOf GO:1903509 .
+GO:0008654 rdfs:label "phospholipid biosynthetic process" .
+GO:0008654 rdfs:subClassOf GO:0006644 .
+GO:0008654 rdfs:subClassOf GO:0008610 .
+GO:0009062 rdfs:label "fatty acid catabolic process" .
+GO:0009062 rdfs:subClassOf GO:0006631 .
+GO:0009062 rdfs:subClassOf GO:0016042 .
+GO:0009103 rdfs:label "lipopolysaccharide biosynthetic process" .
+GO:0009103 rdfs:subClassOf GO:0008610 .
+GO:0009103 rdfs:subClassOf GO:0008653 .
+GO:0009104 rdfs:label "lipopolysaccharide catabolic process" .
+GO:0009104 rdfs:subClassOf GO:0008653 .
+GO:0009104 rdfs:subClassOf GO:0016042 .
+GO:0009106 rdfs:label "lipoate metabolic process" .
+GO:0009106 rdfs:subClassOf GO:0006631 .
+GO:0009107 rdfs:label "lipoate biosynthetic process" .
+GO:0009107 rdfs:subClassOf GO:0006633 .
+GO:0009107 rdfs:subClassOf GO:0009106 .
+GO:0009240 rdfs:label "isopentenyl diphosphate biosynthetic process" .
+GO:0009240 rdfs:subClassOf GO:0008654 .
+GO:0009240 rdfs:subClassOf GO:0046490 .
+GO:0009245 rdfs:label "lipid A biosynthetic process" .
+GO:0009245 rdfs:subClassOf GO:0008654 .
+GO:0009245 rdfs:subClassOf GO:0009247 .
+GO:0009245 rdfs:subClassOf GO:0046493 .
+GO:0009247 rdfs:label "glycolipid biosynthetic process" .
+GO:0009247 rdfs:subClassOf GO:0006664 .
+GO:0009247 rdfs:subClassOf GO:0008610 .
+GO:0009395 rdfs:label "phospholipid catabolic process" .
+GO:0009395 rdfs:subClassOf GO:0006644 .
+GO:0009395 rdfs:subClassOf GO:0016042 .
+GO:0009554 rdfs:label "megasporogenesis" .
+GO:0009554 rdfs:subClassOf GO:0048236 .
+GO:0009556 rdfs:label "microsporogenesis" .
+GO:0009556 rdfs:subClassOf GO:0048236 .
+GO:0009616 rdfs:label "RNAi-mediated antiviral immune response" .
+GO:0009616 rdfs:subClassOf GO:0045087 .
+GO:0009626 rdfs:label "plant-type hypersensitive response" .
+GO:0009626 rdfs:subClassOf GO:0034050 .
+GO:0009626 rdfs:subClassOf GO:0045087 .
+GO:0009682 rdfs:label "induced systemic resistance" .
+GO:0009682 rdfs:subClassOf GO:0045087 .
+GO:0009685 rdfs:label "gibberellin metabolic process" .
+GO:0009685 rdfs:subClassOf GO:0016101 .
+GO:0009686 rdfs:label "gibberellin biosynthetic process" .
+GO:0009686 rdfs:subClassOf GO:0009685 .
+GO:0009686 rdfs:subClassOf GO:0016102 .
+GO:0009687 rdfs:label "abscisic acid metabolic process" .
+GO:0009687 rdfs:subClassOf GO:0006714 .
+GO:0009688 rdfs:label "abscisic acid biosynthetic process" .
+GO:0009688 rdfs:subClassOf GO:0009687 .
+GO:0009688 rdfs:subClassOf GO:0016106 .
+GO:0009688 rdfs:subClassOf GO:0043289 .
+GO:0009694 rdfs:label "jasmonic acid metabolic process" .
+GO:0009694 rdfs:subClassOf GO:0001676 .
+GO:0009695 rdfs:label "jasmonic acid biosynthetic process" .
+GO:0009695 rdfs:subClassOf GO:0009694 .
+GO:0009695 rdfs:subClassOf GO:0042759 .
+GO:0009825 rdfs:label "multidimensional cell growth" .
+GO:0009825 rdfs:subClassOf GO:0016049 .
+GO:0009826 rdfs:label "unidimensional cell growth" .
+GO:0009826 rdfs:subClassOf GO:0016049 .
+GO:0009860 rdfs:label "pollen tube growth" .
+GO:0009860 rdfs:subClassOf GO:0009932 .
+GO:0009860 rdfs:subClassOf GO:0048588 .
+GO:0009932 rdfs:label "cell tip growth" .
+GO:0009932 rdfs:subClassOf GO:0009826 .
+GO:0009987 rdfs:label "cellular process" .
+GO:0009987 rdfs:subClassOf GO:0008150 .
+GO:0010025 rdfs:label "wax biosynthetic process" .
+GO:0010025 rdfs:subClassOf GO:0010166 .
+GO:0010025 rdfs:subClassOf GO:1901570 .
+GO:0010028 rdfs:label "xanthophyll cycle" .
+GO:0010028 rdfs:subClassOf GO:0016122 .
+GO:0010166 rdfs:label "wax metabolic process" .
+GO:0010166 rdfs:subClassOf GO:1901568 .
+GO:0010198 rdfs:label "synergid death" .
+GO:0010198 rdfs:subClassOf GO:0010623 .
+GO:0010263 rdfs:label "tricyclic triterpenoid biosynthetic process" .
+GO:0010263 rdfs:subClassOf GO:0016104 .
+GO:0010343 rdfs:label "singlet oxygen-mediated programmed cell death" .
+GO:0010343 rdfs:subClassOf GO:0097468 .
+GO:0010379 rdfs:label "phaseic acid biosynthetic process" .
+GO:0010379 rdfs:subClassOf GO:0016106 .
+GO:0010379 rdfs:subClassOf GO:0043289 .
+GO:0010421 rdfs:label "hydrogen peroxide-mediated programmed cell death" .
+GO:0010421 rdfs:subClassOf GO:0097468 .
+GO:0010430 rdfs:label "fatty acid omega-oxidation" .
+GO:0010430 rdfs:subClassOf GO:0019395 .
+GO:0010597 rdfs:label "green leaf volatile biosynthetic process" .
+GO:0010597 rdfs:subClassOf GO:0019372 .
+GO:0010623 rdfs:label "programmed cell death involved in cell development" .
+GO:0010623 rdfs:subClassOf GO:0012501 .
+GO:0010657 rdfs:label "muscle cell apoptotic process" .
+GO:0010657 rdfs:subClassOf GO:0006915 .
+GO:0010658 rdfs:label "striated muscle cell apoptotic process" .
+GO:0010658 rdfs:subClassOf GO:0010657 .
+GO:0010659 rdfs:label "cardiac muscle cell apoptotic process" .
+GO:0010659 rdfs:subClassOf GO:0010658 .
+GO:0010684 rdfs:label "tricyclic triterpenoid catabolic process" .
+GO:0010684 rdfs:subClassOf GO:0016105 .
+GO:0010686 rdfs:label "tetracyclic triterpenoid biosynthetic process" .
+GO:0010686 rdfs:subClassOf GO:0016104 .
+GO:0012501 rdfs:label "programmed cell death" .
+GO:0012501 rdfs:subClassOf GO:0008219 .
+GO:0016024 rdfs:label "CDP-diacylglycerol biosynthetic process" .
+GO:0016024 rdfs:subClassOf GO:0046341 .
+GO:0016024 rdfs:subClassOf GO:0046474 .
+GO:0016042 rdfs:label "lipid catabolic process" .
+GO:0016042 rdfs:subClassOf GO:0006629 .
+GO:0016049 rdfs:label "cell growth" .
+GO:0016049 rdfs:subClassOf GO:0009987 .
+GO:0016049 rdfs:subClassOf GO:0040007 .
+GO:0016064 rdfs:label "immunoglobulin mediated immune response" .
+GO:0016064 rdfs:subClassOf GO:0019724 .
+GO:0016068 rdfs:label "type I hypersensitivity" .
+GO:0016068 rdfs:subClassOf GO:0002524 .
+GO:0016068 rdfs:subClassOf GO:0016064 .
+GO:0016091 rdfs:label "prenol biosynthetic process" .
+GO:0016091 rdfs:subClassOf GO:0008299 .
+GO:0016092 rdfs:label "prenol catabolic process" .
+GO:0016092 rdfs:subClassOf GO:0008300 .
+GO:0016093 rdfs:label "polyprenol metabolic process" .
+GO:0016093 rdfs:subClassOf GO:0006720 .
+GO:0016094 rdfs:label "polyprenol biosynthetic process" .
+GO:0016094 rdfs:subClassOf GO:0008299 .
+GO:0016094 rdfs:subClassOf GO:0016093 .
+GO:0016095 rdfs:label "polyprenol catabolic process" .
+GO:0016095 rdfs:subClassOf GO:0008300 .
+GO:0016095 rdfs:subClassOf GO:0016093 .
+GO:0016098 rdfs:label "monoterpenoid metabolic process" .
+GO:0016098 rdfs:subClassOf GO:0006721 .
+GO:0016099 rdfs:label "monoterpenoid biosynthetic process" .
+GO:0016099 rdfs:subClassOf GO:0016098 .
+GO:0016099 rdfs:subClassOf GO:0016114 .
+GO:0016100 rdfs:label "monoterpenoid catabolic process" .
+GO:0016100 rdfs:subClassOf GO:0016098 .
+GO:0016100 rdfs:subClassOf GO:0016115 .
+GO:0016101 rdfs:label "diterpenoid metabolic process" .
+GO:0016101 rdfs:subClassOf GO:0006721 .
+GO:0016102 rdfs:label "diterpenoid biosynthetic process" .
+GO:0016102 rdfs:subClassOf GO:0016101 .
+GO:0016102 rdfs:subClassOf GO:0016114 .
+GO:0016103 rdfs:label "diterpenoid catabolic process" .
+GO:0016103 rdfs:subClassOf GO:0016101 .
+GO:0016103 rdfs:subClassOf GO:0016115 .
+GO:0016104 rdfs:label "triterpenoid biosynthetic process" .
+GO:0016104 rdfs:subClassOf GO:0006722 .
+GO:0016104 rdfs:subClassOf GO:0016114 .
+GO:0016105 rdfs:label "triterpenoid catabolic process" .
+GO:0016105 rdfs:subClassOf GO:0006722 .
+GO:0016105 rdfs:subClassOf GO:0016115 .
+GO:0016106 rdfs:label "sesquiterpenoid biosynthetic process" .
+GO:0016106 rdfs:subClassOf GO:0006714 .
+GO:0016106 rdfs:subClassOf GO:0016114 .
+GO:0016107 rdfs:label "sesquiterpenoid catabolic process" .
+GO:0016107 rdfs:subClassOf GO:0006714 .
+GO:0016107 rdfs:subClassOf GO:0016115 .
+GO:0016109 rdfs:label "tetraterpenoid biosynthetic process" .
+GO:0016109 rdfs:subClassOf GO:0016114 .
+GO:0016110 rdfs:label "tetraterpenoid catabolic process" .
+GO:0016110 rdfs:subClassOf GO:0016115 .
+GO:0016112 rdfs:label "polyterpenoid biosynthetic process" .
+GO:0016112 rdfs:subClassOf GO:0016114 .
+GO:0016113 rdfs:label "polyterpenoid catabolic process" .
+GO:0016113 rdfs:subClassOf GO:0016115 .
+GO:0016114 rdfs:label "terpenoid biosynthetic process" .
+GO:0016114 rdfs:subClassOf GO:0006721 .
+GO:0016114 rdfs:subClassOf GO:0008299 .
+GO:0016115 rdfs:label "terpenoid catabolic process" .
+GO:0016115 rdfs:subClassOf GO:0006721 .
+GO:0016115 rdfs:subClassOf GO:0008300 .
+GO:0016116 rdfs:label "carotenoid metabolic process" .
+GO:0016116 rdfs:subClassOf GO:0006721 .
+GO:0016117 rdfs:label "carotenoid biosynthetic process" .
+GO:0016117 rdfs:subClassOf GO:0016109 .
+GO:0016117 rdfs:subClassOf GO:0016116 .
+GO:0016118 rdfs:label "carotenoid catabolic process" .
+GO:0016118 rdfs:subClassOf GO:0016110 .
+GO:0016118 rdfs:subClassOf GO:0016116 .
+GO:0016119 rdfs:label "carotene metabolic process" .
+GO:0016119 rdfs:subClassOf GO:0042214 .
+GO:0016120 rdfs:label "carotene biosynthetic process" .
+GO:0016120 rdfs:subClassOf GO:0016119 .
+GO:0016120 rdfs:subClassOf GO:0046246 .
+GO:0016121 rdfs:label "carotene catabolic process" .
+GO:0016121 rdfs:subClassOf GO:0016119 .
+GO:0016121 rdfs:subClassOf GO:0046247 .
+GO:0016122 rdfs:label "xanthophyll metabolic process" .
+GO:0016122 rdfs:subClassOf GO:0016116 .
+GO:0016123 rdfs:label "xanthophyll biosynthetic process" .
+GO:0016123 rdfs:subClassOf GO:0016117 .
+GO:0016123 rdfs:subClassOf GO:0016122 .
+GO:0016124 rdfs:label "xanthophyll catabolic process" .
+GO:0016124 rdfs:subClassOf GO:0016118 .
+GO:0016124 rdfs:subClassOf GO:0016122 .
+GO:0016125 rdfs:label "sterol metabolic process" .
+GO:0016125 rdfs:subClassOf GO:0008202 .
+GO:0016126 rdfs:label "sterol biosynthetic process" .
+GO:0016126 rdfs:subClassOf GO:0006694 .
+GO:0016126 rdfs:subClassOf GO:0016125 .
+GO:0016127 rdfs:label "sterol catabolic process" .
+GO:0016127 rdfs:subClassOf GO:0006706 .
+GO:0016127 rdfs:subClassOf GO:0016125 .
+GO:0016129 rdfs:label "phytosteroid biosynthetic process" .
+GO:0016129 rdfs:subClassOf GO:0006694 .
+GO:0016130 rdfs:label "phytosteroid catabolic process" .
+GO:0016130 rdfs:subClassOf GO:0006706 .
+GO:0016131 rdfs:label "brassinosteroid metabolic process" .
+GO:0016131 rdfs:subClassOf GO:0008202 .
+GO:0016132 rdfs:label "brassinosteroid biosynthetic process" .
+GO:0016132 rdfs:subClassOf GO:0016129 .
+GO:0016132 rdfs:subClassOf GO:0016131 .
+GO:0016133 rdfs:label "brassinosteroid catabolic process" .
+GO:0016133 rdfs:subClassOf GO:0016130 .
+GO:0016133 rdfs:subClassOf GO:0016131 .
+GO:0016330 rdfs:label "second mitotic wave involved in compound eye morphogenesis" .
+GO:0016330 rdfs:subClassOf GO:0000278 .
+GO:0016487 rdfs:label "farnesol metabolic process" .
+GO:0016487 rdfs:subClassOf GO:0006714 .
+GO:0016487 rdfs:subClassOf GO:0016093 .
+GO:0016488 rdfs:label "farnesol catabolic process" .
+GO:0016488 rdfs:subClassOf GO:0016095 .
+GO:0016488 rdfs:subClassOf GO:0016107 .
+GO:0016488 rdfs:subClassOf GO:0016487 .
+GO:0018867 rdfs:label "alpha-pinene metabolic process" .
+GO:0018867 rdfs:subClassOf GO:0033073 .
+GO:0019287 rdfs:label "isopentenyl diphosphate biosynthetic process, mevalonate pathway" .
+GO:0019287 rdfs:subClassOf GO:0009240 .
+GO:0019288 rdfs:label "isopentenyl diphosphate biosynthetic process, methylerythritol phosphate pathway" .
+GO:0019288 rdfs:subClassOf GO:0009240 .
+GO:0019334 rdfs:label "p-cymene catabolic process" .
+GO:0019334 rdfs:subClassOf GO:0043694 .
+GO:0019347 rdfs:label "GDP-alpha-D-mannosylchitobiosyldiphosphodolichol biosynthetic process" .
+GO:0019347 rdfs:subClassOf GO:0008654 .
+GO:0019347 rdfs:subClassOf GO:0009247 .
+GO:0019347 rdfs:subClassOf GO:0016114 .
+GO:0019367 rdfs:label "fatty acid elongation, saturated fatty acid" .
+GO:0019367 rdfs:subClassOf GO:0030497 .
+GO:0019368 rdfs:label "fatty acid elongation, unsaturated fatty acid" .
+GO:0019368 rdfs:subClassOf GO:0030497 .
+GO:0019369 rdfs:label "arachidonate metabolic process" .
+GO:0019369 rdfs:subClassOf GO:0001676 .
+GO:0019369 rdfs:subClassOf GO:0033559 .
+GO:0019371 rdfs:label "cyclooxygenase pathway" .
+GO:0019371 rdfs:subClassOf GO:0019369 .
+GO:0019372 rdfs:label "lipoxygenase pathway" .
+GO:0019372 rdfs:subClassOf GO:0006631 .
+GO:0019373 rdfs:label "epoxygenase P450 pathway" .
+GO:0019373 rdfs:subClassOf GO:0019369 .
+GO:0019374 rdfs:label "galactolipid metabolic process" .
+GO:0019374 rdfs:subClassOf GO:0006664 .
+GO:0019375 rdfs:label "galactolipid biosynthetic process" .
+GO:0019375 rdfs:subClassOf GO:0009247 .
+GO:0019375 rdfs:subClassOf GO:0019374 .
+GO:0019376 rdfs:label "galactolipid catabolic process" .
+GO:0019376 rdfs:subClassOf GO:0019374 .
+GO:0019376 rdfs:subClassOf GO:0019377 .
+GO:0019377 rdfs:label "glycolipid catabolic process" .
+GO:0019377 rdfs:subClassOf GO:0006664 .
+GO:0019377 rdfs:subClassOf GO:0016042 .
+GO:0019383 rdfs:label "(+)-camphor catabolic process" .
+GO:0019383 rdfs:subClassOf GO:0016100 .
+GO:0019395 rdfs:label "fatty acid oxidation" .
+GO:0019395 rdfs:subClassOf GO:0006631 .
+GO:0019395 rdfs:subClassOf GO:0034440 .
+GO:0019432 rdfs:label "triglyceride biosynthetic process" .
+GO:0019432 rdfs:subClassOf GO:0006641 .
+GO:0019432 rdfs:subClassOf GO:0046463 .
+GO:0019433 rdfs:label "triglyceride catabolic process" .
+GO:0019433 rdfs:subClassOf GO:0006641 .
+GO:0019433 rdfs:subClassOf GO:0046464 .
+GO:0019435 rdfs:label "sophorosyloxydocosanoate biosynthetic process" .
+GO:0019435 rdfs:subClassOf GO:0140377 .
+GO:0019436 rdfs:label "sophorosyloxydocosanoate catabolic process" .
+GO:0019436 rdfs:subClassOf GO:0019377 .
+GO:0019475 rdfs:label "L-lysine fermentation" .
+GO:0019475 rdfs:subClassOf GO:0019605 .
+GO:0019541 rdfs:label "propionate metabolic process" .
+GO:0019541 rdfs:subClassOf GO:0046459 .
+GO:0019542 rdfs:label "propionate biosynthetic process" .
+GO:0019542 rdfs:subClassOf GO:0019541 .
+GO:0019542 rdfs:subClassOf GO:0051790 .
+GO:0019543 rdfs:label "propionate catabolic process" .
+GO:0019543 rdfs:subClassOf GO:0019541 .
+GO:0019543 rdfs:subClassOf GO:0019626 .
+GO:0019605 rdfs:label "butyrate metabolic process" .
+GO:0019605 rdfs:subClassOf GO:0046459 .
+GO:0019606 rdfs:label "2-oxobutyrate catabolic process" .
+GO:0019606 rdfs:subClassOf GO:0019626 .
+GO:0019618 rdfs:label "protocatechuate catabolic process, ortho-cleavage" .
+GO:0019618 rdfs:subClassOf GO:1901568 .
+GO:0019626 rdfs:label "short-chain fatty acid catabolic process" .
+GO:0019626 rdfs:subClassOf GO:0009062 .
+GO:0019626 rdfs:subClassOf GO:0046459 .
+GO:0019639 rdfs:label "6-hydroxycineole catabolic process" .
+GO:0019639 rdfs:subClassOf GO:0016100 .
+GO:0019657 rdfs:label "pyruvate fermentation to propionate" .
+GO:0019657 rdfs:subClassOf GO:0019541 .
+GO:0019724 rdfs:label "B cell mediated immunity" .
+GO:0019724 rdfs:subClassOf GO:0002460 .
+GO:0019730 rdfs:label "antimicrobial humoral response" .
+GO:0019730 rdfs:subClassOf GO:0006959 .
+GO:0019731 rdfs:label "antibacterial humoral response" .
+GO:0019731 rdfs:subClassOf GO:0019730 .
+GO:0019732 rdfs:label "antifungal humoral response" .
+GO:0019732 rdfs:subClassOf GO:0019730 .
+GO:0019741 rdfs:label "pentacyclic triterpenoid catabolic process" .
+GO:0019741 rdfs:subClassOf GO:0016105 .
+GO:0019741 rdfs:subClassOf GO:0019742 .
+GO:0019742 rdfs:label "pentacyclic triterpenoid metabolic process" .
+GO:0019742 rdfs:subClassOf GO:0006722 .
+GO:0019743 rdfs:label "hopanoid catabolic process" .
+GO:0019743 rdfs:subClassOf GO:0016105 .
+GO:0019745 rdfs:label "pentacyclic triterpenoid biosynthetic process" .
+GO:0019745 rdfs:subClassOf GO:0016104 .
+GO:0019745 rdfs:subClassOf GO:0019742 .
+GO:0019746 rdfs:label "hopanoid biosynthetic process" .
+GO:0019746 rdfs:subClassOf GO:0016104 .
+GO:0030148 rdfs:label "sphingolipid biosynthetic process" .
+GO:0030148 rdfs:subClassOf GO:0006665 .
+GO:0030148 rdfs:subClassOf GO:0008610 .
+GO:0030149 rdfs:label "sphingolipid catabolic process" .
+GO:0030149 rdfs:subClassOf GO:0006665 .
+GO:0030149 rdfs:subClassOf GO:0016042 .
+GO:0030258 rdfs:label "lipid modification" .
+GO:0030258 rdfs:subClassOf GO:0006629 .
+GO:0030497 rdfs:label "fatty acid elongation" .
+GO:0030497 rdfs:subClassOf GO:0006633 .
+GO:0030573 rdfs:label "bile acid catabolic process" .
+GO:0030573 rdfs:subClassOf GO:0008206 .
+GO:0030645 rdfs:label "acetyl-CoA fermentation to butanoate" .
+GO:0030645 rdfs:subClassOf GO:0019605 .
+GO:0030715 rdfs:label "oocyte growth in germarium-derived egg chamber" .
+GO:0030715 rdfs:subClassOf GO:0001555 .
+GO:0031161 rdfs:label "phosphatidylinositol catabolic process" .
+GO:0031161 rdfs:subClassOf GO:0046475 .
+GO:0031161 rdfs:subClassOf GO:0046488 .
+GO:0031525 rdfs:label "menthol biosynthetic process" .
+GO:0031525 rdfs:subClassOf GO:0016099 .
+GO:0032048 rdfs:label "cardiolipin metabolic process" .
+GO:0032048 rdfs:subClassOf GO:0046471 .
+GO:0032049 rdfs:label "cardiolipin biosynthetic process" .
+GO:0032049 rdfs:subClassOf GO:0006655 .
+GO:0032049 rdfs:subClassOf GO:0032048 .
+GO:0032323 rdfs:label "lipoate catabolic process" .
+GO:0032323 rdfs:subClassOf GO:0009062 .
+GO:0032323 rdfs:subClassOf GO:0009106 .
+GO:0032341 rdfs:label "aldosterone metabolic process" .
+GO:0032341 rdfs:subClassOf GO:0008207 .
+GO:0032341 rdfs:subClassOf GO:0008212 .
+GO:0032342 rdfs:label "aldosterone biosynthetic process" .
+GO:0032342 rdfs:subClassOf GO:0006700 .
+GO:0032342 rdfs:subClassOf GO:0006705 .
+GO:0032342 rdfs:subClassOf GO:0032341 .
+GO:0032343 rdfs:label "aldosterone catabolic process" .
+GO:0032343 rdfs:subClassOf GO:0006712 .
+GO:0032343 rdfs:subClassOf GO:0008208 .
+GO:0032343 rdfs:subClassOf GO:0032341 .
+GO:0033024 rdfs:label "mast cell apoptotic process" .
+GO:0033024 rdfs:subClassOf GO:0033028 .
+GO:0033024 rdfs:subClassOf GO:0071887 .
+GO:0033028 rdfs:label "myeloid cell apoptotic process" .
+GO:0033028 rdfs:subClassOf GO:0006915 .
+GO:0033073 rdfs:label "pinene metabolic process" .
+GO:0033073 rdfs:subClassOf GO:0043692 .
+GO:0033074 rdfs:label "pinene catabolic process" .
+GO:0033074 rdfs:subClassOf GO:0033073 .
+GO:0033074 rdfs:subClassOf GO:0043694 .
+GO:0033301 rdfs:label "cell cycle comprising mitosis without cytokinesis" .
+GO:0033301 rdfs:subClassOf GO:0000278 .
+GO:0033306 rdfs:label "phytol metabolic process" .
+GO:0033306 rdfs:subClassOf GO:0016101 .
+GO:0033306 rdfs:subClassOf GO:1903173 .
+GO:0033307 rdfs:label "phytol salvage" .
+GO:0033307 rdfs:subClassOf GO:0033520 .
+GO:0033331 rdfs:label "ent-kaurene metabolic process" .
+GO:0033331 rdfs:subClassOf GO:0042214 .
+GO:0033332 rdfs:label "ent-kaurene biosynthetic process" .
+GO:0033332 rdfs:subClassOf GO:0033331 .
+GO:0033332 rdfs:subClassOf GO:0046246 .
+GO:0033383 rdfs:label "geranyl diphosphate metabolic process" .
+GO:0033383 rdfs:subClassOf GO:0006644 .
+GO:0033383 rdfs:subClassOf GO:0006721 .
+GO:0033384 rdfs:label "geranyl diphosphate biosynthetic process" .
+GO:0033384 rdfs:subClassOf GO:0008654 .
+GO:0033384 rdfs:subClassOf GO:0016114 .
+GO:0033384 rdfs:subClassOf GO:0033383 .
+GO:0033385 rdfs:label "geranylgeranyl diphosphate metabolic process" .
+GO:0033385 rdfs:subClassOf GO:0006644 .
+GO:0033385 rdfs:subClassOf GO:0006721 .
+GO:0033386 rdfs:label "geranylgeranyl diphosphate biosynthetic process" .
+GO:0033386 rdfs:subClassOf GO:0008654 .
+GO:0033386 rdfs:subClassOf GO:0016114 .
+GO:0033386 rdfs:subClassOf GO:0033385 .
+GO:0033470 rdfs:label "gibberellin 12 biosynthetic process" .
+GO:0033470 rdfs:subClassOf GO:0009686 .
+GO:0033520 rdfs:label "phytol biosynthetic process" .
+GO:0033520 rdfs:subClassOf GO:0016102 .
+GO:0033520 rdfs:subClassOf GO:0033306 .
+GO:0033520 rdfs:subClassOf GO:1903175 .
+GO:0033521 rdfs:label "phytyl diphosphate biosynthetic process" .
+GO:0033521 rdfs:subClassOf GO:0008654 .
+GO:0033521 rdfs:subClassOf GO:0016114 .
+GO:0033539 rdfs:label "fatty acid beta-oxidation using acyl-CoA dehydrogenase" .
+GO:0033539 rdfs:subClassOf GO:0006635 .
+GO:0033540 rdfs:label "fatty acid beta-oxidation using acyl-CoA oxidase" .
+GO:0033540 rdfs:subClassOf GO:0006635 .
+GO:0033559 rdfs:label "unsaturated fatty acid metabolic process" .
+GO:0033559 rdfs:subClassOf GO:0006631 .
+GO:0034050 rdfs:label "symbiont-induced defense-related programmed cell death" .
+GO:0034050 rdfs:subClassOf GO:0012501 .
+GO:0034349 rdfs:label "glial cell apoptotic process" .
+GO:0034349 rdfs:subClassOf GO:0006915 .
+GO:0034390 rdfs:label "smooth muscle cell apoptotic process" .
+GO:0034390 rdfs:subClassOf GO:0010657 .
+GO:0034439 rdfs:label "lipoprotein lipid oxidation" .
+GO:0034439 rdfs:subClassOf GO:0034440 .
+GO:0034440 rdfs:label "lipid oxidation" .
+GO:0034440 rdfs:subClassOf GO:0030258 .
+GO:0034478 rdfs:label "phosphatidylglycerol catabolic process" .
+GO:0034478 rdfs:subClassOf GO:0046471 .
+GO:0034478 rdfs:subClassOf GO:0046475 .
+GO:0034625 rdfs:label "fatty acid elongation, monounsaturated fatty acid" .
+GO:0034625 rdfs:subClassOf GO:0019368 .
+GO:0034626 rdfs:label "fatty acid elongation, polyunsaturated fatty acid" .
+GO:0034626 rdfs:subClassOf GO:0019368 .
+GO:0034638 rdfs:label "phosphatidylcholine catabolic process" .
+GO:0034638 rdfs:subClassOf GO:0046470 .
+GO:0034638 rdfs:subClassOf GO:0046475 .
+GO:0034650 rdfs:label "cortisol metabolic process" .
+GO:0034650 rdfs:subClassOf GO:0008211 .
+GO:0034651 rdfs:label "cortisol biosynthetic process" .
+GO:0034651 rdfs:subClassOf GO:0006704 .
+GO:0034651 rdfs:subClassOf GO:0034650 .
+GO:0034653 rdfs:label "retinoic acid catabolic process" .
+GO:0034653 rdfs:subClassOf GO:0016103 .
+GO:0034653 rdfs:subClassOf GO:0042573 .
+GO:0035006 rdfs:label "melanization defense response" .
+GO:0035006 rdfs:subClassOf GO:0045087 .
+GO:0035011 rdfs:label "melanotic encapsulation of foreign target" .
+GO:0035011 rdfs:subClassOf GO:0035006 .
+GO:0035096 rdfs:label "larval midgut cell programmed cell death" .
+GO:0035096 rdfs:subClassOf GO:0010623 .
+GO:0035185 rdfs:label "preblastoderm mitotic cell cycle" .
+GO:0035185 rdfs:subClassOf GO:0033301 .
+GO:0035185 rdfs:subClassOf GO:0045448 .
+GO:0035186 rdfs:label "syncytial blastoderm mitotic cell cycle" .
+GO:0035186 rdfs:subClassOf GO:0033301 .
+GO:0035186 rdfs:subClassOf GO:0045448 .
+GO:0035234 rdfs:label "ectopic germ cell programmed cell death" .
+GO:0035234 rdfs:subClassOf GO:0010623 .
+GO:0035238 rdfs:label "vitamin A biosynthetic process" .
+GO:0035238 rdfs:subClassOf GO:0006776 .
+GO:0035238 rdfs:subClassOf GO:0016102 .
+GO:0035336 rdfs:label "long-chain fatty-acyl-CoA metabolic process" .
+GO:0035336 rdfs:subClassOf GO:0035337 .
+GO:0035337 rdfs:label "fatty-acyl-CoA metabolic process" .
+GO:0035337 rdfs:subClassOf GO:1901568 .
+GO:0035338 rdfs:label "long-chain fatty-acyl-CoA biosynthetic process" .
+GO:0035338 rdfs:subClassOf GO:0035336 .
+GO:0035338 rdfs:subClassOf GO:0046949 .
+GO:0035440 rdfs:label "tuberculosinol biosynthetic process" .
+GO:0035440 rdfs:subClassOf GO:0016102 .
+GO:0035743 rdfs:label "CD4-positive, alpha-beta T cell cytokine production" .
+GO:0035743 rdfs:subClassOf GO:0002369 .
+GO:0035744 rdfs:label "T-helper 1 cell cytokine production" .
+GO:0035744 rdfs:subClassOf GO:0035743 .
+GO:0035745 rdfs:label "T-helper 2 cell cytokine production" .
+GO:0035745 rdfs:subClassOf GO:0035743 .
+GO:0035965 rdfs:label "cardiolipin acyl-chain remodeling" .
+GO:0035965 rdfs:subClassOf GO:0032048 .
+GO:0036092 rdfs:label "phosphatidylinositol-3-phosphate biosynthetic process" .
+GO:0036092 rdfs:subClassOf GO:0046854 .
+GO:0036101 rdfs:label "leukotriene B4 catabolic process" .
+GO:0036101 rdfs:subClassOf GO:0036102 .
+GO:0036101 rdfs:subClassOf GO:0042758 .
+GO:0036101 rdfs:subClassOf GO:1901523 .
+GO:0036102 rdfs:label "leukotriene B4 metabolic process" .
+GO:0036102 rdfs:subClassOf GO:0001676 .
+GO:0036102 rdfs:subClassOf GO:1901568 .
+GO:0036104 rdfs:label "Kdo2-lipid A biosynthetic process" .
+GO:0036104 rdfs:subClassOf GO:0008654 .
+GO:0036104 rdfs:subClassOf GO:0009247 .
+GO:0036104 rdfs:subClassOf GO:1901570 .
+GO:0036108 rdfs:label "4-amino-4-deoxy-alpha-L-arabinopyranosyl undecaprenyl phosphate biosynthetic process" .
+GO:0036108 rdfs:subClassOf GO:0008654 .
+GO:0036108 rdfs:subClassOf GO:0009247 .
+GO:0036108 rdfs:subClassOf GO:0016114 .
+GO:0036109 rdfs:label "alpha-linolenic acid metabolic process" .
+GO:0036109 rdfs:subClassOf GO:0001676 .
+GO:0036109 rdfs:subClassOf GO:0033559 .
+GO:0036111 rdfs:label "very long-chain fatty-acyl-CoA metabolic process" .
+GO:0036111 rdfs:subClassOf GO:0035337 .
+GO:0036112 rdfs:label "medium-chain fatty-acyl-CoA metabolic process" .
+GO:0036112 rdfs:subClassOf GO:0035337 .
+GO:0036113 rdfs:label "very long-chain fatty-acyl-CoA catabolic process" .
+GO:0036113 rdfs:subClassOf GO:0036111 .
+GO:0036113 rdfs:subClassOf GO:0036115 .
+GO:0036114 rdfs:label "medium-chain fatty-acyl-CoA catabolic process" .
+GO:0036114 rdfs:subClassOf GO:0036112 .
+GO:0036114 rdfs:subClassOf GO:0036115 .
+GO:0036115 rdfs:label "fatty-acyl-CoA catabolic process" .
+GO:0036115 rdfs:subClassOf GO:0035337 .
+GO:0036115 rdfs:subClassOf GO:1901569 .
+GO:0036116 rdfs:label "long-chain fatty-acyl-CoA catabolic process" .
+GO:0036116 rdfs:subClassOf GO:0035336 .
+GO:0036116 rdfs:subClassOf GO:0036115 .
+GO:0036148 rdfs:label "phosphatidylglycerol acyl-chain remodeling" .
+GO:0036148 rdfs:subClassOf GO:0046471 .
+GO:0036149 rdfs:label "phosphatidylinositol acyl-chain remodeling" .
+GO:0036149 rdfs:subClassOf GO:0046488 .
+GO:0036150 rdfs:label "phosphatidylserine acyl-chain remodeling" .
+GO:0036150 rdfs:subClassOf GO:0006658 .
+GO:0036151 rdfs:label "phosphatidylcholine acyl-chain remodeling" .
+GO:0036151 rdfs:subClassOf GO:0046470 .
+GO:0036152 rdfs:label "phosphatidylethanolamine acyl-chain remodeling" .
+GO:0036152 rdfs:subClassOf GO:0046470 .
+GO:0036153 rdfs:label "triglyceride acyl-chain remodeling" .
+GO:0036153 rdfs:subClassOf GO:0006641 .
+GO:0036153 rdfs:subClassOf GO:0036155 .
+GO:0036154 rdfs:label "diacylglycerol acyl-chain remodeling" .
+GO:0036154 rdfs:subClassOf GO:0036155 .
+GO:0036154 rdfs:subClassOf GO:0046339 .
+GO:0036155 rdfs:label "acylglycerol acyl-chain remodeling" .
+GO:0036155 rdfs:subClassOf GO:0006639 .
+GO:0036196 rdfs:label "zymosterol metabolic process" .
+GO:0036196 rdfs:subClassOf GO:0016125 .
+GO:0036197 rdfs:label "zymosterol biosynthetic process" .
+GO:0036197 rdfs:subClassOf GO:0016126 .
+GO:0036197 rdfs:subClassOf GO:0036196 .
+GO:0040007 rdfs:label "growth" .
+GO:0040007 rdfs:subClassOf GO:0008150 .
+GO:0042065 rdfs:label "glial cell growth" .
+GO:0042065 rdfs:subClassOf GO:0048588 .
+GO:0042066 rdfs:label "perineurial glial growth" .
+GO:0042066 rdfs:subClassOf GO:0042065 .
+GO:0042088 rdfs:label "T-helper 1 type immune response" .
+GO:0042088 rdfs:subClassOf GO:0002460 .
+GO:0042092 rdfs:label "type 2 immune response" .
+GO:0042092 rdfs:subClassOf GO:0006955 .
+GO:0042214 rdfs:label "terpene metabolic process" .
+GO:0042214 rdfs:subClassOf GO:0006720 .
+GO:0042267 rdfs:label "natural killer cell mediated cytotoxicity" .
+GO:0042267 rdfs:subClassOf GO:0002228 .
+GO:0042359 rdfs:label "vitamin D metabolic process" .
+GO:0042359 rdfs:subClassOf GO:0008202 .
+GO:0042368 rdfs:label "vitamin D biosynthetic process" .
+GO:0042368 rdfs:subClassOf GO:0006694 .
+GO:0042368 rdfs:subClassOf GO:0042359 .
+GO:0042369 rdfs:label "vitamin D catabolic process" .
+GO:0042369 rdfs:subClassOf GO:0006706 .
+GO:0042369 rdfs:subClassOf GO:0042359 .
+GO:0042381 rdfs:label "hemolymph coagulation" .
+GO:0042381 rdfs:subClassOf GO:0006959 .
+GO:0042381 rdfs:subClassOf GO:0045087 .
+GO:0042448 rdfs:label "progesterone metabolic process" .
+GO:0042448 rdfs:subClassOf GO:0008207 .
+GO:0042572 rdfs:label "retinol metabolic process" .
+GO:0042572 rdfs:subClassOf GO:0001523 .
+GO:0042573 rdfs:label "retinoic acid metabolic process" .
+GO:0042573 rdfs:subClassOf GO:0001523 .
+GO:0042574 rdfs:label "retinal metabolic process" .
+GO:0042574 rdfs:subClassOf GO:0001523 .
+GO:0042617 rdfs:label "paclitaxel biosynthetic process" .
+GO:0042617 rdfs:subClassOf GO:0016102 .
+GO:0042758 rdfs:label "long-chain fatty acid catabolic process" .
+GO:0042758 rdfs:subClassOf GO:0001676 .
+GO:0042758 rdfs:subClassOf GO:0009062 .
+GO:0042759 rdfs:label "long-chain fatty acid biosynthetic process" .
+GO:0042759 rdfs:subClassOf GO:0001676 .
+GO:0042759 rdfs:subClassOf GO:0006633 .
+GO:0042760 rdfs:label "very long-chain fatty acid catabolic process" .
+GO:0042760 rdfs:subClassOf GO:0000038 .
+GO:0042760 rdfs:subClassOf GO:0009062 .
+GO:0042761 rdfs:label "very long-chain fatty acid biosynthetic process" .
+GO:0042761 rdfs:subClassOf GO:0000038 .
+GO:0042761 rdfs:subClassOf GO:0006633 .
+GO:0042814 rdfs:label "monopolar cell growth" .
+GO:0042814 rdfs:subClassOf GO:0009826 .
+GO:0042815 rdfs:label "bipolar cell growth" .
+GO:0042815 rdfs:subClassOf GO:0009826 .
+GO:0042904 rdfs:label "9-cis-retinoic acid biosynthetic process" .
+GO:0042904 rdfs:subClassOf GO:0002138 .
+GO:0042904 rdfs:subClassOf GO:0042905 .
+GO:0042905 rdfs:label "9-cis-retinoic acid metabolic process" .
+GO:0042905 rdfs:subClassOf GO:0042573 .
+GO:0043048 rdfs:label "dolichyl monophosphate biosynthetic process" .
+GO:0043048 rdfs:subClassOf GO:0008654 .
+GO:0043152 rdfs:label "induction of bacterial agglutination" .
+GO:0043152 rdfs:subClassOf GO:0019731 .
+GO:0043276 rdfs:label "anoikis" .
+GO:0043276 rdfs:subClassOf GO:0006915 .
+GO:0043289 rdfs:label "apocarotenoid biosynthetic process" .
+GO:0043289 rdfs:subClassOf GO:0008299 .
+GO:0043290 rdfs:label "apocarotenoid catabolic process" .
+GO:0043290 rdfs:subClassOf GO:0008300 .
+GO:0043613 rdfs:label "isoprene catabolic process" .
+GO:0043613 rdfs:subClassOf GO:0046247 .
+GO:0043651 rdfs:label "linoleic acid metabolic process" .
+GO:0043651 rdfs:subClassOf GO:0001676 .
+GO:0043651 rdfs:subClassOf GO:0033559 .
+GO:0043692 rdfs:label "monoterpene metabolic process" .
+GO:0043692 rdfs:subClassOf GO:0042214 .
+GO:0043693 rdfs:label "monoterpene biosynthetic process" .
+GO:0043693 rdfs:subClassOf GO:0043692 .
+GO:0043693 rdfs:subClassOf GO:0046246 .
+GO:0043694 rdfs:label "monoterpene catabolic process" .
+GO:0043694 rdfs:subClassOf GO:0043692 .
+GO:0043694 rdfs:subClassOf GO:0046247 .
+GO:0044238 rdfs:label "primary metabolic process" .
+GO:0044238 rdfs:subClassOf GO:0008152 .
+GO:0044258 rdfs:label "intestinal lipid catabolic process" .
+GO:0044258 rdfs:subClassOf GO:0016042 .
+GO:0044346 rdfs:label "fibroblast apoptotic process" .
+GO:0044346 rdfs:subClassOf GO:0006915 .
+GO:0044578 rdfs:label "butyryl-CoA biosynthetic process" .
+GO:0044578 rdfs:subClassOf GO:0006633 .
+GO:0044578 rdfs:subClassOf GO:0046949 .
+GO:0044580 rdfs:label "butyryl-CoA catabolic process" .
+GO:0044580 rdfs:subClassOf GO:0036115 .
+GO:0044813 rdfs:label "pyruvate fermentation to butanoate" .
+GO:0044813 rdfs:subClassOf GO:0019605 .
+GO:0045017 rdfs:label "glycerolipid biosynthetic process" .
+GO:0045017 rdfs:subClassOf GO:0008610 .
+GO:0045017 rdfs:subClassOf GO:0046486 .
+GO:0045087 rdfs:label "innate immune response" .
+GO:0045087 rdfs:subClassOf GO:0006955 .
+GO:0045337 rdfs:label "trans, trans-farnesyl diphosphate biosynthetic process" .
+GO:0045337 rdfs:subClassOf GO:0008654 .
+GO:0045337 rdfs:subClassOf GO:0016114 .
+GO:0045337 rdfs:subClassOf GO:0045338 .
+GO:0045337 rdfs:subClassOf GO:0050993 .
+GO:0045338 rdfs:label "farnesyl diphosphate metabolic process" .
+GO:0045338 rdfs:subClassOf GO:0006644 .
+GO:0045338 rdfs:subClassOf GO:0006721 .
+GO:0045339 rdfs:label "farnesyl diphosphate catabolic process" .
+GO:0045339 rdfs:subClassOf GO:0009395 .
+GO:0045339 rdfs:subClassOf GO:0016115 .
+GO:0045339 rdfs:subClassOf GO:0045338 .
+GO:0045448 rdfs:label "mitotic cell cycle, embryonic" .
+GO:0045448 rdfs:subClassOf GO:0000278 .
+GO:0045455 rdfs:label "ecdysteroid metabolic process" .
+GO:0045455 rdfs:subClassOf GO:0008202 .
+GO:0045456 rdfs:label "ecdysteroid biosynthetic process" .
+GO:0045456 rdfs:subClassOf GO:0006694 .
+GO:0045456 rdfs:subClassOf GO:0045455 .
+GO:0045476 rdfs:label "nurse cell apoptotic process" .
+GO:0045476 rdfs:subClassOf GO:0010623 .
+GO:0045476 rdfs:subClassOf GO:1902742 .
+GO:0045487 rdfs:label "gibberellin catabolic process" .
+GO:0045487 rdfs:subClassOf GO:0009685 .
+GO:0045487 rdfs:subClassOf GO:0016103 .
+GO:0046155 rdfs:label "rhodopsin catabolic process" .
+GO:0046155 rdfs:subClassOf GO:0016124 .
+GO:0046171 rdfs:label "octanol biosynthetic process" .
+GO:0046171 rdfs:subClassOf GO:0006070 .
+GO:0046171 rdfs:subClassOf GO:1903175 .
+GO:0046172 rdfs:label "octanol catabolic process" .
+GO:0046172 rdfs:subClassOf GO:0006070 .
+GO:0046172 rdfs:subClassOf GO:1903174 .
+GO:0046211 rdfs:label "(+)-camphor biosynthetic process" .
+GO:0046211 rdfs:subClassOf GO:0016099 .
+GO:0046246 rdfs:label "terpene biosynthetic process" .
+GO:0046246 rdfs:subClassOf GO:0008299 .
+GO:0046246 rdfs:subClassOf GO:0042214 .
+GO:0046247 rdfs:label "terpene catabolic process" .
+GO:0046247 rdfs:subClassOf GO:0008300 .
+GO:0046247 rdfs:subClassOf GO:0042214 .
+GO:0046248 rdfs:label "alpha-pinene biosynthetic process" .
+GO:0046248 rdfs:subClassOf GO:0018867 .
+GO:0046248 rdfs:subClassOf GO:0043693 .
+GO:0046249 rdfs:label "alpha-pinene catabolic process" .
+GO:0046249 rdfs:subClassOf GO:0018867 .
+GO:0046249 rdfs:subClassOf GO:0033074 .
+GO:0046250 rdfs:label "limonene biosynthetic process" .
+GO:0046250 rdfs:subClassOf GO:0043693 .
+GO:0046251 rdfs:label "limonene catabolic process" .
+GO:0046251 rdfs:subClassOf GO:0043694 .
+GO:0046337 rdfs:label "phosphatidylethanolamine metabolic process" .
+GO:0046337 rdfs:subClassOf GO:0006650 .
+GO:0046338 rdfs:label "phosphatidylethanolamine catabolic process" .
+GO:0046338 rdfs:subClassOf GO:0046337 .
+GO:0046338 rdfs:subClassOf GO:0046475 .
+GO:0046339 rdfs:label "diacylglycerol metabolic process" .
+GO:0046339 rdfs:subClassOf GO:0006639 .
+GO:0046340 rdfs:label "diacylglycerol catabolic process" .
+GO:0046340 rdfs:subClassOf GO:0046339 .
+GO:0046340 rdfs:subClassOf GO:0046464 .
+GO:0046341 rdfs:label "CDP-diacylglycerol metabolic process" .
+GO:0046341 rdfs:subClassOf GO:0006650 .
+GO:0046342 rdfs:label "CDP-diacylglycerol catabolic process" .
+GO:0046342 rdfs:subClassOf GO:0046341 .
+GO:0046342 rdfs:subClassOf GO:0046475 .
+GO:0046344 rdfs:label "ecdysteroid catabolic process" .
+GO:0046344 rdfs:subClassOf GO:0006706 .
+GO:0046344 rdfs:subClassOf GO:0045455 .
+GO:0046345 rdfs:label "abscisic acid catabolic process" .
+GO:0046345 rdfs:subClassOf GO:0009687 .
+GO:0046345 rdfs:subClassOf GO:0016107 .
+GO:0046345 rdfs:subClassOf GO:0043290 .
+GO:0046358 rdfs:label "butyrate biosynthetic process" .
+GO:0046358 rdfs:subClassOf GO:0019605 .
+GO:0046358 rdfs:subClassOf GO:0051790 .
+GO:0046359 rdfs:label "butyrate catabolic process" .
+GO:0046359 rdfs:subClassOf GO:0019605 .
+GO:0046359 rdfs:subClassOf GO:0019626 .
+GO:0046360 rdfs:label "2-oxobutyrate biosynthetic process" .
+GO:0046360 rdfs:subClassOf GO:0051790 .
+GO:0046457 rdfs:label "prostanoid biosynthetic process" .
+GO:0046457 rdfs:subClassOf GO:0006636 .
+GO:0046457 rdfs:subClassOf GO:0006692 .
+GO:0046459 rdfs:label "short-chain fatty acid metabolic process" .
+GO:0046459 rdfs:subClassOf GO:0006631 .
+GO:0046460 rdfs:label "neutral lipid biosynthetic process" .
+GO:0046460 rdfs:subClassOf GO:0006638 .
+GO:0046460 rdfs:subClassOf GO:0008610 .
+GO:0046461 rdfs:label "neutral lipid catabolic process" .
+GO:0046461 rdfs:subClassOf GO:0006638 .
+GO:0046462 rdfs:label "monoacylglycerol metabolic process" .
+GO:0046462 rdfs:subClassOf GO:0006639 .
+GO:0046463 rdfs:label "acylglycerol biosynthetic process" .
+GO:0046463 rdfs:subClassOf GO:0006639 .
+GO:0046463 rdfs:subClassOf GO:0045017 .
+GO:0046463 rdfs:subClassOf GO:0046460 .
+GO:0046464 rdfs:label "acylglycerol catabolic process" .
+GO:0046464 rdfs:subClassOf GO:0006639 .
+GO:0046464 rdfs:subClassOf GO:0046461 .
+GO:0046464 rdfs:subClassOf GO:0046503 .
+GO:0046469 rdfs:label "platelet activating factor metabolic process" .
+GO:0046469 rdfs:subClassOf GO:0006650 .
+GO:0046469 rdfs:subClassOf GO:0046485 .
+GO:0046470 rdfs:label "phosphatidylcholine metabolic process" .
+GO:0046470 rdfs:subClassOf GO:0006650 .
+GO:0046471 rdfs:label "phosphatidylglycerol metabolic process" .
+GO:0046471 rdfs:subClassOf GO:0006650 .
+GO:0046473 rdfs:label "phosphatidic acid metabolic process" .
+GO:0046473 rdfs:subClassOf GO:0006650 .
+GO:0046474 rdfs:label "glycerophospholipid biosynthetic process" .
+GO:0046474 rdfs:subClassOf GO:0006650 .
+GO:0046474 rdfs:subClassOf GO:0008654 .
+GO:0046474 rdfs:subClassOf GO:0045017 .
+GO:0046475 rdfs:label "glycerophospholipid catabolic process" .
+GO:0046475 rdfs:subClassOf GO:0006650 .
+GO:0046475 rdfs:subClassOf GO:0009395 .
+GO:0046475 rdfs:subClassOf GO:0046503 .
+GO:0046477 rdfs:label "glycosylceramide catabolic process" .
+GO:0046477 rdfs:subClassOf GO:0006677 .
+GO:0046477 rdfs:subClassOf GO:0046479 .
+GO:0046477 rdfs:subClassOf GO:0046514 .
+GO:0046479 rdfs:label "glycosphingolipid catabolic process" .
+GO:0046479 rdfs:subClassOf GO:0006687 .
+GO:0046479 rdfs:subClassOf GO:0019377 .
+GO:0046479 rdfs:subClassOf GO:0030149 .
+GO:0046485 rdfs:label "ether lipid metabolic process" .
+GO:0046485 rdfs:subClassOf GO:0006629 .
+GO:0046486 rdfs:label "glycerolipid metabolic process" .
+GO:0046486 rdfs:subClassOf GO:0006629 .
+GO:0046488 rdfs:label "phosphatidylinositol metabolic process" .
+GO:0046488 rdfs:subClassOf GO:0006650 .
+GO:0046490 rdfs:label "isopentenyl diphosphate metabolic process" .
+GO:0046490 rdfs:subClassOf GO:0006644 .
+GO:0046493 rdfs:label "lipid A metabolic process" .
+GO:0046493 rdfs:subClassOf GO:0006644 .
+GO:0046493 rdfs:subClassOf GO:0006664 .
+GO:0046503 rdfs:label "glycerolipid catabolic process" .
+GO:0046503 rdfs:subClassOf GO:0016042 .
+GO:0046503 rdfs:subClassOf GO:0046486 .
+GO:0046505 rdfs:label "sulfolipid metabolic process" .
+GO:0046505 rdfs:subClassOf GO:0006629 .
+GO:0046506 rdfs:label "sulfolipid biosynthetic process" .
+GO:0046506 rdfs:subClassOf GO:0008610 .
+GO:0046506 rdfs:subClassOf GO:0046505 .
+GO:0046511 rdfs:label "sphinganine biosynthetic process" .
+GO:0046511 rdfs:subClassOf GO:0006667 .
+GO:0046511 rdfs:subClassOf GO:0046520 .
+GO:0046512 rdfs:label "sphingosine biosynthetic process" .
+GO:0046512 rdfs:subClassOf GO:0006670 .
+GO:0046512 rdfs:subClassOf GO:0046520 .
+GO:0046513 rdfs:label "ceramide biosynthetic process" .
+GO:0046513 rdfs:subClassOf GO:0006672 .
+GO:0046513 rdfs:subClassOf GO:0030148 .
+GO:0046514 rdfs:label "ceramide catabolic process" .
+GO:0046514 rdfs:subClassOf GO:0006672 .
+GO:0046514 rdfs:subClassOf GO:0030149 .
+GO:0046519 rdfs:label "sphingoid metabolic process" .
+GO:0046519 rdfs:subClassOf GO:0006665 .
+GO:0046520 rdfs:label "sphingoid biosynthetic process" .
+GO:0046520 rdfs:subClassOf GO:0030148 .
+GO:0046520 rdfs:subClassOf GO:0046519 .
+GO:0046521 rdfs:label "sphingoid catabolic process" .
+GO:0046521 rdfs:subClassOf GO:0030149 .
+GO:0046521 rdfs:subClassOf GO:0046519 .
+GO:0046597 rdfs:label "host-mediated suppression of symbiont invasion" .
+GO:0046597 rdfs:subClassOf GO:0045087 .
+GO:0046666 rdfs:label "retinal cell programmed cell death" .
+GO:0046666 rdfs:subClassOf GO:0010623 .
+GO:0046667 rdfs:label "compound eye retinal cell programmed cell death" .
+GO:0046667 rdfs:subClassOf GO:0046666 .
+GO:0046834 rdfs:label "lipid phosphorylation" .
+GO:0046834 rdfs:subClassOf GO:0030258 .
+GO:0046839 rdfs:label "phospholipid dephosphorylation" .
+GO:0046839 rdfs:subClassOf GO:0030258 .
+GO:0046842 rdfs:label "trisporic acid biosynthetic process" .
+GO:0046842 rdfs:subClassOf GO:0016114 .
+GO:0046854 rdfs:label "phosphatidylinositol phosphate biosynthetic process" .
+GO:0046854 rdfs:subClassOf GO:0046474 .
+GO:0046856 rdfs:label "phosphatidylinositol dephosphorylation" .
+GO:0046856 rdfs:subClassOf GO:0046488 .
+GO:0046856 rdfs:subClassOf GO:0046839 .
+GO:0046949 rdfs:label "fatty-acyl-CoA biosynthetic process" .
+GO:0046949 rdfs:subClassOf GO:0035337 .
+GO:0046949 rdfs:subClassOf GO:1901570 .
+GO:0046951 rdfs:label "ketone body biosynthetic process" .
+GO:0046951 rdfs:subClassOf GO:1901570 .
+GO:0046952 rdfs:label "ketone body catabolic process" .
+GO:0046952 rdfs:subClassOf GO:1901569 .
+GO:0048102 rdfs:label "autophagic cell death" .
+GO:0048102 rdfs:subClassOf GO:0012501 .
+GO:0048236 rdfs:label "plant-type sporogenesis" .
+GO:0048236 rdfs:subClassOf GO:0051321 .
+GO:0048252 rdfs:label "lauric acid metabolic process" .
+GO:0048252 rdfs:subClassOf GO:0051791 .
+GO:0048588 rdfs:label "developmental cell growth" .
+GO:0048588 rdfs:subClassOf GO:0016049 .
+GO:0048668 rdfs:label "collateral sprouting" .
+GO:0048668 rdfs:subClassOf GO:0048588 .
+GO:0048669 rdfs:label "collateral sprouting in absence of injury" .
+GO:0048669 rdfs:subClassOf GO:0048668 .
+GO:0048673 rdfs:label "collateral sprouting of intact axon in response to injury" .
+GO:0048673 rdfs:subClassOf GO:0048668 .
+GO:0048674 rdfs:label "collateral sprouting of injured axon" .
+GO:0048674 rdfs:subClassOf GO:0048668 .
+GO:0048674 rdfs:subClassOf GO:0048682 .
+GO:0048675 rdfs:label "axon extension" .
+GO:0048675 rdfs:subClassOf GO:1990138 .
+GO:0048677 rdfs:label "axon extension involved in regeneration" .
+GO:0048677 rdfs:subClassOf GO:0048675 .
+GO:0048677 rdfs:subClassOf GO:0048682 .
+GO:0048682 rdfs:label "sprouting of injured axon" .
+GO:0048682 rdfs:subClassOf GO:0048588 .
+GO:0048689 rdfs:label "formation of growth cone in injured axon" .
+GO:0048689 rdfs:subClassOf GO:0048682 .
+GO:0048767 rdfs:label "root hair elongation" .
+GO:0048767 rdfs:subClassOf GO:0048588 .
+GO:0048768 rdfs:label "root hair cell tip growth" .
+GO:0048768 rdfs:subClassOf GO:0009932 .
+GO:0048846 rdfs:label "axon extension involved in axon guidance" .
+GO:0048846 rdfs:subClassOf GO:0048675 .
+GO:0050896 rdfs:label "response to stimulus" .
+GO:0050896 rdfs:subClassOf GO:0008150 .
+GO:0050992 rdfs:label "dimethylallyl diphosphate biosynthetic process" .
+GO:0050992 rdfs:subClassOf GO:0008654 .
+GO:0050992 rdfs:subClassOf GO:0050993 .
+GO:0050993 rdfs:label "dimethylallyl diphosphate metabolic process" .
+GO:0050993 rdfs:subClassOf GO:0006644 .
+GO:0051122 rdfs:label "hepoxilin biosynthetic process" .
+GO:0051122 rdfs:subClassOf GO:0042759 .
+GO:0051210 rdfs:label "isotropic cell growth" .
+GO:0051210 rdfs:subClassOf GO:0016049 .
+GO:0051211 rdfs:label "anisotropic cell growth" .
+GO:0051211 rdfs:subClassOf GO:0016049 .
+GO:0051214 rdfs:label "RNAi-mediated antiviral immunity against RNA virus" .
+GO:0051214 rdfs:subClassOf GO:0009616 .
+GO:0051215 rdfs:label "RNAi-mediated antiviral immunity against DNA virus" .
+GO:0051215 rdfs:subClassOf GO:0009616 .
+GO:0051321 rdfs:label "meiotic cell cycle" .
+GO:0051321 rdfs:subClassOf GO:0007049 .
+GO:0051402 rdfs:label "neuron apoptotic process" .
+GO:0051402 rdfs:subClassOf GO:0006915 .
+GO:0051502 rdfs:label "diterpene phytoalexin biosynthetic process" .
+GO:0051502 rdfs:subClassOf GO:0016102 .
+GO:0051504 rdfs:label "diterpene phytoalexin precursor biosynthetic process" .
+GO:0051504 rdfs:subClassOf GO:0046246 .
+GO:0051761 rdfs:label "sesquiterpene metabolic process" .
+GO:0051761 rdfs:subClassOf GO:0042214 .
+GO:0051762 rdfs:label "sesquiterpene biosynthetic process" .
+GO:0051762 rdfs:subClassOf GO:0046246 .
+GO:0051762 rdfs:subClassOf GO:0051761 .
+GO:0051763 rdfs:label "sesquiterpene catabolic process" .
+GO:0051763 rdfs:subClassOf GO:0046247 .
+GO:0051763 rdfs:subClassOf GO:0051761 .
+GO:0051790 rdfs:label "short-chain fatty acid biosynthetic process" .
+GO:0051790 rdfs:subClassOf GO:0006633 .
+GO:0051790 rdfs:subClassOf GO:0046459 .
+GO:0051791 rdfs:label "medium-chain fatty acid metabolic process" .
+GO:0051791 rdfs:subClassOf GO:0006631 .
+GO:0051792 rdfs:label "medium-chain fatty acid biosynthetic process" .
+GO:0051792 rdfs:subClassOf GO:0006633 .
+GO:0051792 rdfs:subClassOf GO:0051791 .
+GO:0051793 rdfs:label "medium-chain fatty acid catabolic process" .
+GO:0051793 rdfs:subClassOf GO:0009062 .
+GO:0051793 rdfs:subClassOf GO:0051791 .
+GO:0051872 rdfs:label "sphingosine catabolic process" .
+GO:0051872 rdfs:subClassOf GO:0006670 .
+GO:0051872 rdfs:subClassOf GO:0046521 .
+GO:0051874 rdfs:label "sphinganine-1-phosphate catabolic process" .
+GO:0051874 rdfs:subClassOf GO:0006668 .
+GO:0051874 rdfs:subClassOf GO:0009395 .
+GO:0051874 rdfs:subClassOf GO:0030149 .
+GO:0051999 rdfs:label "mannosyl-inositol phosphorylceramide biosynthetic process" .
+GO:0051999 rdfs:subClassOf GO:0006675 .
+GO:0051999 rdfs:subClassOf GO:0006688 .
+GO:0051999 rdfs:subClassOf GO:0008654 .
+GO:0052651 rdfs:label "monoacylglycerol catabolic process" .
+GO:0052651 rdfs:subClassOf GO:0046462 .
+GO:0052651 rdfs:subClassOf GO:0046464 .
+GO:0055045 rdfs:label "antipodal cell degeneration" .
+GO:0055045 rdfs:subClassOf GO:0010623 .
+GO:0060057 rdfs:label "apoptotic process involved in mammary gland involution" .
+GO:0060057 rdfs:subClassOf GO:0060561 .
+GO:0060561 rdfs:label "apoptotic process involved in morphogenesis" .
+GO:0060561 rdfs:subClassOf GO:1902742 .
+GO:0060885 rdfs:label "clearance of cells from fusion plate by apoptotic process" .
+GO:0060885 rdfs:subClassOf GO:0060561 .
+GO:0061049 rdfs:label "cell growth involved in cardiac muscle cell development" .
+GO:0061049 rdfs:subClassOf GO:0048588 .
+GO:0061364 rdfs:label "apoptotic process involved in luteolysis" .
+GO:0061364 rdfs:subClassOf GO:1902742 .
+GO:0061370 rdfs:label "testosterone biosynthetic process" .
+GO:0061370 rdfs:subClassOf GO:0006694 .
+GO:0061725 rdfs:label "cytosolic lipolysis" .
+GO:0061725 rdfs:subClassOf GO:0016042 .
+GO:0061760 rdfs:label "antifungal innate immune response" .
+GO:0061760 rdfs:subClassOf GO:0045087 .
+GO:0061844 rdfs:label "antimicrobial humoral immune response mediated by antimicrobial peptide" .
+GO:0061844 rdfs:subClassOf GO:0019730 .
+GO:0062112 rdfs:label "fatty acid primary amide biosynthetic process" .
+GO:0062112 rdfs:subClassOf GO:0062126 .
+GO:0062112 rdfs:subClassOf GO:1901570 .
+GO:0062126 rdfs:label "fatty acid primary amide metabolic process" .
+GO:0062126 rdfs:subClassOf GO:1901568 .
+GO:0062127 rdfs:label "fatty acid primary amide catabolic process" .
+GO:0062127 rdfs:subClassOf GO:0062126 .
+GO:0062127 rdfs:subClassOf GO:1901569 .
+GO:0062171 rdfs:label "lutein biosynthetic process" .
+GO:0062171 rdfs:subClassOf GO:0016123 .
+GO:0062172 rdfs:label "lutein catabolic process" .
+GO:0062172 rdfs:subClassOf GO:0016124 .
+GO:0062173 rdfs:label "brexanolone metabolic process" .
+GO:0062173 rdfs:subClassOf GO:0008202 .
+GO:0062174 rdfs:label "brexanolone biosynthetic process" .
+GO:0062174 rdfs:subClassOf GO:0006694 .
+GO:0062174 rdfs:subClassOf GO:0062173 .
+GO:0062175 rdfs:label "brexanolone catabolic process" .
+GO:0062175 rdfs:subClassOf GO:0006706 .
+GO:0062175 rdfs:subClassOf GO:0062173 .
+GO:0062232 rdfs:label "prostanoid catabolic process" .
+GO:0062232 rdfs:subClassOf GO:1901523 .
+GO:0062233 rdfs:label "F2-isoprostane catabolic process" .
+GO:0062233 rdfs:subClassOf GO:1901523 .
+GO:0062234 rdfs:label "platelet activating factor catabolic process" .
+GO:0062234 rdfs:subClassOf GO:0046469 .
+GO:0062234 rdfs:subClassOf GO:0046475 .
+GO:0070227 rdfs:label "lymphocyte apoptotic process" .
+GO:0070227 rdfs:subClassOf GO:0071887 .
+GO:0070231 rdfs:label "T cell apoptotic process" .
+GO:0070231 rdfs:subClassOf GO:0070227 .
+GO:0070238 rdfs:label "activated T cell autonomous cell death" .
+GO:0070238 rdfs:subClassOf GO:0070231 .
+GO:0070242 rdfs:label "thymocyte apoptotic process" .
+GO:0070242 rdfs:subClassOf GO:0070231 .
+GO:0070246 rdfs:label "natural killer cell apoptotic process" .
+GO:0070246 rdfs:subClassOf GO:0070227 .
+GO:0070266 rdfs:label "necroptotic process" .
+GO:0070266 rdfs:subClassOf GO:0097300 .
+GO:0070268 rdfs:label "cornification" .
+GO:0070268 rdfs:subClassOf GO:0012501 .
+GO:0070292 rdfs:label "N-acylphosphatidylethanolamine metabolic process" .
+GO:0070292 rdfs:subClassOf GO:0046337 .
+GO:0070640 rdfs:label "vitamin D3 metabolic process" .
+GO:0070640 rdfs:subClassOf GO:0042359 .
+GO:0071271 rdfs:label "1-butanol biosynthetic process" .
+GO:0071271 rdfs:subClassOf GO:1903175 .
+GO:0071602 rdfs:label "phytosphingosine biosynthetic process" .
+GO:0071602 rdfs:subClassOf GO:0006671 .
+GO:0071602 rdfs:subClassOf GO:0046520 .
+GO:0071768 rdfs:label "mycolic acid biosynthetic process" .
+GO:0071768 rdfs:subClassOf GO:0006633 .
+GO:0071839 rdfs:label "apoptotic process in bone marrow cell" .
+GO:0071839 rdfs:subClassOf GO:0006915 .
+GO:0071887 rdfs:label "leukocyte apoptotic process" .
+GO:0071887 rdfs:subClassOf GO:0006915 .
+GO:0071888 rdfs:label "macrophage apoptotic process" .
+GO:0071888 rdfs:subClassOf GO:0006925 .
+GO:0071888 rdfs:subClassOf GO:0033028 .
+GO:0071888 rdfs:subClassOf GO:0071887 .
+GO:0071948 rdfs:label "activation-induced B cell apoptotic process" .
+GO:0071948 rdfs:subClassOf GO:0001783 .
+GO:0072538 rdfs:label "T-helper 17 type immune response" .
+GO:0072538 rdfs:subClassOf GO:0002460 .
+GO:0072577 rdfs:label "endothelial cell apoptotic process" .
+GO:0072577 rdfs:subClassOf GO:0006915 .
+GO:0080003 rdfs:label "thalianol metabolic process" .
+GO:0080003 rdfs:subClassOf GO:0006722 .
+GO:0080064 rdfs:label "4,4-dimethyl-9beta,19-cyclopropylsterol oxidation" .
+GO:0080064 rdfs:subClassOf GO:0034440 .
+GO:0080065 rdfs:label "4-alpha-methyl-delta7-sterol oxidation" .
+GO:0080065 rdfs:subClassOf GO:0034440 .
+GO:0080159 rdfs:label "zygote elongation" .
+GO:0080159 rdfs:subClassOf GO:0009826 .
+GO:0090122 rdfs:label "cholesterol ester hydrolysis involved in cholesterol transport" .
+GO:0090122 rdfs:subClassOf GO:0008203 .
+GO:0090254 rdfs:label "cell elongation involved in imaginal disc-derived wing morphogenesis" .
+GO:0090254 rdfs:subClassOf GO:0009826 .
+GO:0090378 rdfs:label "seed trichome elongation" .
+GO:0090378 rdfs:subClassOf GO:0009826 .
+GO:0090644 rdfs:label "age-related resistance" .
+GO:0090644 rdfs:subClassOf GO:0045087 .
+GO:0090714 rdfs:label "innate immunity memory response" .
+GO:0090714 rdfs:subClassOf GO:0045087 .
+GO:0090716 rdfs:label "adaptive immune memory response" .
+GO:0090716 rdfs:subClassOf GO:0002250 .
+GO:0090717 rdfs:label "adaptive immune memory response involving T cells and B cells" .
+GO:0090717 rdfs:subClassOf GO:0002460 .
+GO:0090717 rdfs:subClassOf GO:0090716 .
+GO:0090718 rdfs:label "adaptive immune effector response" .
+GO:0090718 rdfs:subClassOf GO:0002250 .
+GO:0090719 rdfs:label "adaptive immune effector response involving T cells and B lineage cells" .
+GO:0090719 rdfs:subClassOf GO:0002460 .
+GO:0090719 rdfs:subClassOf GO:0090718 .
+GO:0090720 rdfs:label "primary adaptive immune response" .
+GO:0090720 rdfs:subClassOf GO:0002250 .
+GO:0090721 rdfs:label "primary adaptive immune response involving T cells and B cells" .
+GO:0090721 rdfs:subClassOf GO:0002460 .
+GO:0090721 rdfs:subClassOf GO:0090720 .
+GO:0097040 rdfs:label "phthiocerol biosynthetic process" .
+GO:0097040 rdfs:subClassOf GO:0008610 .
+GO:0097041 rdfs:label "phenolic phthiocerol biosynthetic process" .
+GO:0097041 rdfs:subClassOf GO:0008610 .
+GO:0097048 rdfs:label "dendritic cell apoptotic process" .
+GO:0097048 rdfs:subClassOf GO:0071887 .
+GO:0097049 rdfs:label "motor neuron apoptotic process" .
+GO:0097049 rdfs:subClassOf GO:0051402 .
+GO:0097050 rdfs:label "type B pancreatic cell apoptotic process" .
+GO:0097050 rdfs:subClassOf GO:1904019 .
+GO:0097089 rdfs:label "methyl-branched fatty acid metabolic process" .
+GO:0097089 rdfs:subClassOf GO:0006631 .
+GO:0097093 rdfs:label "polyacyltrehalose biosynthetic process" .
+GO:0097093 rdfs:subClassOf GO:0009247 .
+GO:0097152 rdfs:label "mesenchymal cell apoptotic process" .
+GO:0097152 rdfs:subClassOf GO:0006915 .
+GO:0097251 rdfs:label "leukotriene B4 biosynthetic process" .
+GO:0097251 rdfs:subClassOf GO:0036102 .
+GO:0097251 rdfs:subClassOf GO:0042759 .
+GO:0097251 rdfs:subClassOf GO:1901570 .
+GO:0097252 rdfs:label "oligodendrocyte apoptotic process" .
+GO:0097252 rdfs:subClassOf GO:0034349 .
+GO:0097267 rdfs:label "omega-hydroxylase P450 pathway" .
+GO:0097267 rdfs:subClassOf GO:0019369 .
+GO:0097279 rdfs:label "histamine secretion mediated by IgE immunoglobulin" .
+GO:0097279 rdfs:subClassOf GO:0097280 .
+GO:0097280 rdfs:label "histamine secretion mediated by immunoglobulin" .
+GO:0097280 rdfs:subClassOf GO:0002437 .
+GO:0097281 rdfs:label "immune complex formation" .
+GO:0097281 rdfs:subClassOf GO:0016064 .
+GO:0097282 rdfs:label "immunoglobulin-mediated neutralization" .
+GO:0097282 rdfs:subClassOf GO:0016064 .
+GO:0097283 rdfs:label "keratinocyte apoptotic process" .
+GO:0097283 rdfs:subClassOf GO:1904019 .
+GO:0097284 rdfs:label "hepatocyte apoptotic process" .
+GO:0097284 rdfs:subClassOf GO:1904019 .
+GO:0097300 rdfs:label "programmed necrotic cell death" .
+GO:0097300 rdfs:subClassOf GO:0012501 .
+GO:0097385 rdfs:label "programmed necrotic cell death in response to starvation" .
+GO:0097385 rdfs:subClassOf GO:0097300 .
+GO:0097468 rdfs:label "programmed cell death in response to reactive oxygen species" .
+GO:0097468 rdfs:subClassOf GO:0012501 .
+GO:0097473 rdfs:label "retinal rod cell apoptotic process" .
+GO:0097473 rdfs:subClassOf GO:0051402 .
+GO:0097473 rdfs:subClassOf GO:1990009 .
+GO:0097474 rdfs:label "retinal cone cell apoptotic process" .
+GO:0097474 rdfs:subClassOf GO:0051402 .
+GO:0097474 rdfs:subClassOf GO:1990009 .
+GO:0097484 rdfs:label "dendrite extension" .
+GO:0097484 rdfs:subClassOf GO:1990138 .
+GO:0097490 rdfs:label "sympathetic neuron projection extension" .
+GO:0097490 rdfs:subClassOf GO:1990138 .
+GO:0097707 rdfs:label "ferroptosis" .
+GO:0097707 rdfs:subClassOf GO:0012501 .
+GO:0100008 rdfs:label "regulation of fever generation by prostaglandin biosynthetic process" .
+GO:0100008 rdfs:subClassOf GO:0001516 .
+GO:0100010 rdfs:label "positive regulation of fever generation by prostaglandin biosynthetic process" .
+GO:0100010 rdfs:subClassOf GO:0100008 .
+GO:0106110 rdfs:label "vomitoxin biosynthetic process" .
+GO:0106110 rdfs:subClassOf GO:0016106 .
+GO:0106210 rdfs:label "culmorin biosynthetic process" .
+GO:0106210 rdfs:subClassOf GO:0016106 .
+GO:0106210 rdfs:subClassOf GO:0051762 .
+GO:0106236 rdfs:label "rhamnolipid biosynthesis" .
+GO:0106236 rdfs:subClassOf GO:0009247 .
+GO:0106295 rdfs:label "resolvin biosynthetic process" .
+GO:0106295 rdfs:subClassOf GO:0042759 .
+GO:0106296 rdfs:label "D-series resolvin biosynthetic process" .
+GO:0106296 rdfs:subClassOf GO:0106295 .
+GO:0106297 rdfs:label "E-series resolvin biosynthetic process" .
+GO:0106297 rdfs:subClassOf GO:0106295 .
+GO:0106298 rdfs:label "13-series resolvin biosynthetic process" .
+GO:0106298 rdfs:subClassOf GO:0106295 .
+GO:0106342 rdfs:label "omega-hydroxyceramide biosynthetic process" .
+GO:0106342 rdfs:subClassOf GO:0046513 .
+GO:0106434 rdfs:label "retinal isomerization" .
+GO:0106434 rdfs:subClassOf GO:0042574 .
+GO:0110088 rdfs:label "hippocampal neuron apoptotic process" .
+GO:0110088 rdfs:subClassOf GO:0051402 .
+GO:0120178 rdfs:label "steroid hormone biosynthetic process" .
+GO:0120178 rdfs:subClassOf GO:0006694 .
+GO:0120322 rdfs:label "lipid modification by small protein conjugation" .
+GO:0120322 rdfs:subClassOf GO:0030258 .
+GO:0120323 rdfs:label "lipid ubiquitination" .
+GO:0120323 rdfs:subClassOf GO:0120322 .
+GO:0120552 rdfs:label "branched-chain alpha-keto acid decarboxylation to branched-chain acyl-CoA" .
+GO:0120552 rdfs:subClassOf GO:0035337 .
+GO:0140208 rdfs:label "apoptotic process in response to mitochondrial fragmentation" .
+GO:0140208 rdfs:subClassOf GO:0006915 .
+GO:0140269 rdfs:label "arthro-series glucosylceramide biosynthetic process" .
+GO:0140269 rdfs:subClassOf GO:0006688 .
+GO:0140367 rdfs:label "antibacterial innate immune response" .
+GO:0140367 rdfs:subClassOf GO:0045087 .
+GO:0140374 rdfs:label "antiviral innate immune response" .
+GO:0140374 rdfs:subClassOf GO:0045087 .
+GO:0140377 rdfs:label "sophorolipid biosynthetic process" .
+GO:0140377 rdfs:subClassOf GO:0009247 .
+GO:0140493 rdfs:label "very long-chain fatty acid beta-oxidation" .
+GO:0140493 rdfs:subClassOf GO:0042760 .
+GO:0140652 rdfs:label "pyripyropene A biosynthetic process" .
+GO:0140652 rdfs:subClassOf GO:0016106 .
+GO:0140735 rdfs:label "lovastatin biosynthetic process" .
+GO:0140735 rdfs:subClassOf GO:1901570 .
+GO:0140782 rdfs:label "novofumigatonin biosynthetic process" .
+GO:0140782 rdfs:subClassOf GO:0016114 .
+GO:0140873 rdfs:label "paxilline biosynthetic process" .
+GO:0140873 rdfs:subClassOf GO:0016102 .
+GO:0140874 rdfs:label "paraherquonin biosynthetic process" .
+GO:0140874 rdfs:subClassOf GO:0016114 .
+GO:0140875 rdfs:label "PR-toxin biosynthetic process" .
+GO:0140875 rdfs:subClassOf GO:0016106 .
+GO:0140876 rdfs:label "andrastin A biosynthetic process" .
+GO:0140876 rdfs:subClassOf GO:0006694 .
+GO:0140879 rdfs:label "conidiogenone biosynthetic process" .
+GO:0140879 rdfs:subClassOf GO:0016102 .
+GO:0141201 rdfs:label "pyroptotic cell death" .
+GO:0141201 rdfs:subClassOf GO:0012501 .
+GO:0160059 rdfs:label "programmed cell death in response to retinoic acid" .
+GO:0160059 rdfs:subClassOf GO:0012501 .
+GO:0160119 rdfs:label "cuproptosis" .
+GO:0160119 rdfs:subClassOf GO:0012501 .
+GO:0160257 rdfs:label "complement activation, GZMK pathway" .
+GO:0160257 rdfs:subClassOf GO:0006956 .
+GO:0160257 rdfs:subClassOf GO:0045087 .
+GO:0180047 rdfs:label "dolichol phosphate mannose biosynthetic process" .
+GO:0180047 rdfs:subClassOf GO:0008654 .
+GO:0180047 rdfs:subClassOf GO:0009247 .
+GO:0180047 rdfs:subClassOf GO:0016114 .
+GO:0180048 rdfs:label "phosphatidylinositol 4-phosphate biosynthetic process" .
+GO:0180048 rdfs:subClassOf GO:0046854 .
+GO:1900200 rdfs:label "mesenchymal cell apoptotic process involved in metanephros development" .
+GO:1900200 rdfs:subClassOf GO:0097152 .
+GO:1900200 rdfs:subClassOf GO:1902742 .
+GO:1900535 rdfs:label "palmitic acid biosynthetic process" .
+GO:1900535 rdfs:subClassOf GO:0042759 .
+GO:1900556 rdfs:label "emericellamide catabolic process" .
+GO:1900556 rdfs:subClassOf GO:0016042 .
+GO:1900557 rdfs:label "emericellamide biosynthetic process" .
+GO:1900557 rdfs:subClassOf GO:0008610 .
+GO:1900580 rdfs:label "(17Z)-protosta-17(20),24-dien-3beta-ol catabolic process" .
+GO:1900580 rdfs:subClassOf GO:0006706 .
+GO:1900580 rdfs:subClassOf GO:0016105 .
+GO:1900581 rdfs:label "(17Z)-protosta-17(20),24-dien-3beta-ol biosynthetic process" .
+GO:1900581 rdfs:subClassOf GO:0006694 .
+GO:1900581 rdfs:subClassOf GO:0010686 .
+GO:1900616 rdfs:label "emericellamide A catabolic process" .
+GO:1900616 rdfs:subClassOf GO:1900556 .
+GO:1900617 rdfs:label "emericellamide A biosynthetic process" .
+GO:1900617 rdfs:subClassOf GO:1900557 .
+GO:1900811 rdfs:label "helvolic acid catabolic process" .
+GO:1900811 rdfs:subClassOf GO:0006706 .
+GO:1900812 rdfs:label "helvolic acid biosynthetic process" .
+GO:1900812 rdfs:subClassOf GO:0006694 .
+GO:1900994 rdfs:label "(-)-secologanin biosynthetic process" .
+GO:1900994 rdfs:subClassOf GO:0016099 .
+GO:1901145 rdfs:label "mesenchymal cell apoptotic process involved in nephron morphogenesis" .
+GO:1901145 rdfs:subClassOf GO:0060561 .
+GO:1901145 rdfs:subClassOf GO:0097152 .
+GO:1901173 rdfs:label "phytoene catabolic process" .
+GO:1901173 rdfs:subClassOf GO:0016121 .
+GO:1901174 rdfs:label "phytoene biosynthetic process" .
+GO:1901174 rdfs:subClassOf GO:0016120 .
+GO:1901176 rdfs:label "lycopene catabolic process" .
+GO:1901176 rdfs:subClassOf GO:0016121 .
+GO:1901177 rdfs:label "lycopene biosynthetic process" .
+GO:1901177 rdfs:subClassOf GO:0016120 .
+GO:1901179 rdfs:label "spheroidene catabolic process" .
+GO:1901179 rdfs:subClassOf GO:0016124 .
+GO:1901180 rdfs:label "spheroidene biosynthetic process" .
+GO:1901180 rdfs:subClassOf GO:0016123 .
+GO:1901523 rdfs:label "icosanoid catabolic process" .
+GO:1901523 rdfs:subClassOf GO:1901569 .
+GO:1901540 rdfs:label "ent-pimara-8(14),15-diene catabolic process" .
+GO:1901540 rdfs:subClassOf GO:0046247 .
+GO:1901541 rdfs:label "ent-pimara-8(14),15-diene biosynthetic process" .
+GO:1901541 rdfs:subClassOf GO:0046246 .
+GO:1901568 rdfs:label "fatty acid derivative metabolic process" .
+GO:1901568 rdfs:subClassOf GO:0006629 .
+GO:1901569 rdfs:label "fatty acid derivative catabolic process" .
+GO:1901569 rdfs:subClassOf GO:0016042 .
+GO:1901569 rdfs:subClassOf GO:1901568 .
+GO:1901570 rdfs:label "fatty acid derivative biosynthetic process" .
+GO:1901570 rdfs:subClassOf GO:0008610 .
+GO:1901570 rdfs:subClassOf GO:1901568 .
+GO:1901600 rdfs:label "strigolactone metabolic process" .
+GO:1901600 rdfs:subClassOf GO:0006714 .
+GO:1901601 rdfs:label "strigolactone biosynthetic process" .
+GO:1901601 rdfs:subClassOf GO:0016106 .
+GO:1901601 rdfs:subClassOf GO:1901600 .
+GO:1901749 rdfs:label "leukotriene D4 catabolic process" .
+GO:1901749 rdfs:subClassOf GO:1901523 .
+GO:1901750 rdfs:label "leukotriene D4 biosynthetic process" .
+GO:1901750 rdfs:subClassOf GO:1901570 .
+GO:1901751 rdfs:label "leukotriene A4 metabolic process" .
+GO:1901751 rdfs:subClassOf GO:0001676 .
+GO:1901751 rdfs:subClassOf GO:1901568 .
+GO:1901752 rdfs:label "leukotriene A4 catabolic process" .
+GO:1901752 rdfs:subClassOf GO:0042758 .
+GO:1901752 rdfs:subClassOf GO:1901523 .
+GO:1901752 rdfs:subClassOf GO:1901751 .
+GO:1901753 rdfs:label "leukotriene A4 biosynthetic process" .
+GO:1901753 rdfs:subClassOf GO:0042759 .
+GO:1901753 rdfs:subClassOf GO:1901570 .
+GO:1901753 rdfs:subClassOf GO:1901751 .
+GO:1901754 rdfs:label "vitamin D3 catabolic process" .
+GO:1901754 rdfs:subClassOf GO:0042369 .
+GO:1901754 rdfs:subClassOf GO:0070640 .
+GO:1901755 rdfs:label "vitamin D3 biosynthetic process" .
+GO:1901755 rdfs:subClassOf GO:0042368 .
+GO:1901760 rdfs:label "beta-L-Ara4N-lipid A biosynthetic process" .
+GO:1901760 rdfs:subClassOf GO:0008654 .
+GO:1901760 rdfs:subClassOf GO:0009247 .
+GO:1901779 rdfs:label "pentalenolactone catabolic process" .
+GO:1901779 rdfs:subClassOf GO:0016107 .
+GO:1901780 rdfs:label "pentalenolactone biosynthetic process" .
+GO:1901780 rdfs:subClassOf GO:0016106 .
+GO:1901808 rdfs:label "capsanthin catabolic process" .
+GO:1901808 rdfs:subClassOf GO:0016124 .
+GO:1901809 rdfs:label "capsanthin biosynthetic process" .
+GO:1901809 rdfs:subClassOf GO:0016123 .
+GO:1901810 rdfs:label "beta-carotene metabolic process" .
+GO:1901810 rdfs:subClassOf GO:0016116 .
+GO:1901810 rdfs:subClassOf GO:0016119 .
+GO:1901811 rdfs:label "beta-carotene catabolic process" .
+GO:1901811 rdfs:subClassOf GO:0016118 .
+GO:1901811 rdfs:subClassOf GO:0016121 .
+GO:1901811 rdfs:subClassOf GO:1901810 .
+GO:1901812 rdfs:label "beta-carotene biosynthetic process" .
+GO:1901812 rdfs:subClassOf GO:0016117 .
+GO:1901812 rdfs:subClassOf GO:0016120 .
+GO:1901812 rdfs:subClassOf GO:1901810 .
+GO:1901815 rdfs:label "astaxanthin biosynthetic process" .
+GO:1901815 rdfs:subClassOf GO:0016123 .
+GO:1901817 rdfs:label "beta-zeacarotene catabolic process" .
+GO:1901817 rdfs:subClassOf GO:0016118 .
+GO:1901817 rdfs:subClassOf GO:0016121 .
+GO:1901818 rdfs:label "beta-zeacarotene biosynthetic process" .
+GO:1901818 rdfs:subClassOf GO:0016117 .
+GO:1901818 rdfs:subClassOf GO:0016120 .
+GO:1901820 rdfs:label "alpha-zeacarotene catabolic process" .
+GO:1901820 rdfs:subClassOf GO:0016118 .
+GO:1901820 rdfs:subClassOf GO:0016121 .
+GO:1901821 rdfs:label "alpha-zeacarotene biosynthetic process" .
+GO:1901821 rdfs:subClassOf GO:0016117 .
+GO:1901821 rdfs:subClassOf GO:0016120 .
+GO:1901824 rdfs:label "alpha-carotene biosynthetic process" .
+GO:1901824 rdfs:subClassOf GO:0016117 .
+GO:1901824 rdfs:subClassOf GO:0016120 .
+GO:1901826 rdfs:label "zeaxanthin catabolic process" .
+GO:1901826 rdfs:subClassOf GO:0016124 .
+GO:1901827 rdfs:label "zeaxanthin biosynthetic process" .
+GO:1901827 rdfs:subClassOf GO:0016123 .
+GO:1901830 rdfs:label "zeaxanthin bis(beta-D-glucoside) biosynthetic process" .
+GO:1901830 rdfs:subClassOf GO:0016117 .
+GO:1901833 rdfs:label "neoxanthin biosynthetic process" .
+GO:1901833 rdfs:subClassOf GO:0016123 .
+GO:1901865 rdfs:label "capsorubin catabolic process" .
+GO:1901865 rdfs:subClassOf GO:0016124 .
+GO:1901866 rdfs:label "capsorubin biosynthetic process" .
+GO:1901866 rdfs:subClassOf GO:0016123 .
+GO:1901927 rdfs:label "cadinene catabolic process" .
+GO:1901927 rdfs:subClassOf GO:0051763 .
+GO:1901928 rdfs:label "cadinene biosynthetic process" .
+GO:1901928 rdfs:subClassOf GO:0051762 .
+GO:1901930 rdfs:label "alpha-copaene catabolic process" .
+GO:1901930 rdfs:subClassOf GO:0051763 .
+GO:1901931 rdfs:label "alpha-copaene biosynthetic process" .
+GO:1901931 rdfs:subClassOf GO:0051762 .
+GO:1901933 rdfs:label "bicyclogermacrene catabolic process" .
+GO:1901933 rdfs:subClassOf GO:0051763 .
+GO:1901934 rdfs:label "bicyclogermacrene biosynthetic process" .
+GO:1901934 rdfs:subClassOf GO:0051762 .
+GO:1901936 rdfs:label "beta-caryophyllene catabolic process" .
+GO:1901936 rdfs:subClassOf GO:0051763 .
+GO:1901937 rdfs:label "beta-caryophyllene biosynthetic process" .
+GO:1901937 rdfs:subClassOf GO:0051762 .
+GO:1901939 rdfs:label "(-)-exo-alpha-bergamotene catabolic process" .
+GO:1901939 rdfs:subClassOf GO:0051763 .
+GO:1901940 rdfs:label "(-)-exo-alpha-bergamotene biosynthetic process" .
+GO:1901940 rdfs:subClassOf GO:0051762 .
+GO:1901942 rdfs:label "(+)-epi-alpha-bisabolol catabolic process" .
+GO:1901942 rdfs:subClassOf GO:0016107 .
+GO:1901943 rdfs:label "(+)-epi-alpha-bisabolol biosynthetic process" .
+GO:1901943 rdfs:subClassOf GO:0016106 .
+GO:1901945 rdfs:label "miltiradiene catabolic process" .
+GO:1901945 rdfs:subClassOf GO:0046247 .
+GO:1901946 rdfs:label "miltiradiene biosynthetic process" .
+GO:1901946 rdfs:subClassOf GO:0046246 .
+GO:1901948 rdfs:label "5alpha,9alpha,10beta-labda-8(20),13-dien-15-yl diphosphate catabolic process" .
+GO:1901948 rdfs:subClassOf GO:0009395 .
+GO:1901948 rdfs:subClassOf GO:0016103 .
+GO:1901949 rdfs:label "5alpha,9alpha,10beta-labda-8(20),13-dien-15-yl diphosphate biosynthetic process" .
+GO:1901949 rdfs:subClassOf GO:0008654 .
+GO:1901949 rdfs:subClassOf GO:0016102 .
+GO:1902056 rdfs:label "(25S)-Delta(7)-dafachronate biosynthetic process" .
+GO:1902056 rdfs:subClassOf GO:0120178 .
+GO:1902190 rdfs:label "2-methylbutanoyl-CoA(4-) catabolic process" .
+GO:1902190 rdfs:subClassOf GO:0036115 .
+GO:1902191 rdfs:label "2-methylbutanoyl-CoA(4-) biosynthetic process" .
+GO:1902191 rdfs:subClassOf GO:0046949 .
+GO:1902192 rdfs:label "2-methylbut-2-enoyl-CoA(4-) metabolic process" .
+GO:1902192 rdfs:subClassOf GO:0035337 .
+GO:1902193 rdfs:label "2-methylbut-2-enoyl-CoA(4-) catabolic process" .
+GO:1902193 rdfs:subClassOf GO:0036115 .
+GO:1902193 rdfs:subClassOf GO:1902192 .
+GO:1902194 rdfs:label "2-methylbut-2-enoyl-CoA(4-) biosynthetic process" .
+GO:1902194 rdfs:subClassOf GO:0046949 .
+GO:1902194 rdfs:subClassOf GO:1902192 .
+GO:1902196 rdfs:label "isovaleryl-CoA(4-) catabolic process" .
+GO:1902196 rdfs:subClassOf GO:0036115 .
+GO:1902197 rdfs:label "isovaleryl-CoA(4-) biosynthetic process" .
+GO:1902197 rdfs:subClassOf GO:0046949 .
+GO:1902198 rdfs:label "3-methylbut-2-enoyl-CoA(4-) metabolic process" .
+GO:1902198 rdfs:subClassOf GO:0035337 .
+GO:1902199 rdfs:label "3-methylbut-2-enoyl-CoA(4-) catabolic process" .
+GO:1902199 rdfs:subClassOf GO:0036115 .
+GO:1902199 rdfs:subClassOf GO:1902198 .
+GO:1902200 rdfs:label "3-methylbut-2-enoyl-CoA(4-) biosynthetic process" .
+GO:1902200 rdfs:subClassOf GO:0046949 .
+GO:1902200 rdfs:subClassOf GO:1902198 .
+GO:1902217 rdfs:label "erythrocyte apoptotic process" .
+GO:1902217 rdfs:subClassOf GO:0033028 .
+GO:1902242 rdfs:label "copal-8-ol diphosphate(3-) catabolic process" .
+GO:1902242 rdfs:subClassOf GO:0009395 .
+GO:1902242 rdfs:subClassOf GO:0016103 .
+GO:1902243 rdfs:label "copal-8-ol diphosphate(3-) biosynthetic process" .
+GO:1902243 rdfs:subClassOf GO:0008654 .
+GO:1902243 rdfs:subClassOf GO:0016102 .
+GO:1902245 rdfs:label "cis-abienol catabolic process" .
+GO:1902245 rdfs:subClassOf GO:0016103 .
+GO:1902246 rdfs:label "cis-abienol biosynthetic process" .
+GO:1902246 rdfs:subClassOf GO:0016102 .
+GO:1902247 rdfs:label "geranylgeranyl diphosphate catabolic process" .
+GO:1902247 rdfs:subClassOf GO:0009395 .
+GO:1902247 rdfs:subClassOf GO:0016115 .
+GO:1902247 rdfs:subClassOf GO:0033385 .
+GO:1902262 rdfs:label "apoptotic process involved in blood vessel morphogenesis" .
+GO:1902262 rdfs:subClassOf GO:0060561 .
+GO:1902263 rdfs:label "apoptotic process involved in embryonic digit morphogenesis" .
+GO:1902263 rdfs:subClassOf GO:0060561 .
+GO:1902321 rdfs:label "methyl-branched fatty acid biosynthetic process" .
+GO:1902321 rdfs:subClassOf GO:0006633 .
+GO:1902321 rdfs:subClassOf GO:0097089 .
+GO:1902362 rdfs:label "melanocyte apoptotic process" .
+GO:1902362 rdfs:subClassOf GO:0006915 .
+GO:1902382 rdfs:label "11-oxo-beta-amyrin catabolic process" .
+GO:1902382 rdfs:subClassOf GO:0019741 .
+GO:1902383 rdfs:label "11-oxo-beta-amyrin biosynthetic process" .
+GO:1902383 rdfs:subClassOf GO:0019745 .
+GO:1902385 rdfs:label "glycyrrhetinate catabolic process" .
+GO:1902385 rdfs:subClassOf GO:0019741 .
+GO:1902386 rdfs:label "glycyrrhetinate biosynthetic process" .
+GO:1902386 rdfs:subClassOf GO:0019745 .
+GO:1902482 rdfs:label "regulatory T cell apoptotic process" .
+GO:1902482 rdfs:subClassOf GO:0070231 .
+GO:1902483 rdfs:label "cytotoxic T cell pyroptotic cell death" .
+GO:1902483 rdfs:subClassOf GO:0141201 .
+GO:1902484 rdfs:label "Sertoli cell apoptotic process" .
+GO:1902484 rdfs:subClassOf GO:1904019 .
+GO:1902488 rdfs:label "cholangiocyte apoptotic process" .
+GO:1902488 rdfs:subClassOf GO:1904019 .
+GO:1902489 rdfs:label "hepatoblast apoptotic process" .
+GO:1902489 rdfs:subClassOf GO:0006915 .
+GO:1902609 rdfs:label "(R)-2-hydroxy-alpha-linolenic acid biosynthetic process" .
+GO:1902609 rdfs:subClassOf GO:0006636 .
+GO:1902609 rdfs:subClassOf GO:0042759 .
+GO:1902615 rdfs:label "immune response involved in response to exogenous dsRNA" .
+GO:1902615 rdfs:subClassOf GO:0006955 .
+GO:1902633 rdfs:label "1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate metabolic process" .
+GO:1902633 rdfs:subClassOf GO:0006650 .
+GO:1902634 rdfs:label "1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate catabolic process" .
+GO:1902634 rdfs:subClassOf GO:0046475 .
+GO:1902634 rdfs:subClassOf GO:1902633 .
+GO:1902635 rdfs:label "1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate biosynthetic process" .
+GO:1902635 rdfs:subClassOf GO:0046854 .
+GO:1902635 rdfs:subClassOf GO:1902633 .
+GO:1902640 rdfs:label "propan-2-ol biosynthetic process" .
+GO:1902640 rdfs:subClassOf GO:1903175 .
+GO:1902742 rdfs:label "apoptotic process involved in development" .
+GO:1902742 rdfs:subClassOf GO:0006915 .
+GO:1902858 rdfs:label "propionyl-CoA metabolic process" .
+GO:1902858 rdfs:subClassOf GO:0035337 .
+GO:1902859 rdfs:label "propionyl-CoA catabolic process" .
+GO:1902859 rdfs:subClassOf GO:0036115 .
+GO:1902859 rdfs:subClassOf GO:1902858 .
+GO:1902860 rdfs:label "propionyl-CoA biosynthetic process" .
+GO:1902860 rdfs:subClassOf GO:0046949 .
+GO:1902860 rdfs:subClassOf GO:1902858 .
+GO:1902898 rdfs:label "fatty acid methyl ester metabolic process" .
+GO:1902898 rdfs:subClassOf GO:1901568 .
+GO:1902899 rdfs:label "fatty acid methyl ester biosynthetic process" .
+GO:1902899 rdfs:subClassOf GO:1901570 .
+GO:1902899 rdfs:subClassOf GO:1902898 .
+GO:1903100 rdfs:label "1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate metabolic process" .
+GO:1903100 rdfs:subClassOf GO:0006650 .
+GO:1903101 rdfs:label "1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate catabolic process" .
+GO:1903101 rdfs:subClassOf GO:0046475 .
+GO:1903101 rdfs:subClassOf GO:1903100 .
+GO:1903102 rdfs:label "1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate biosynthetic process" .
+GO:1903102 rdfs:subClassOf GO:0046854 .
+GO:1903102 rdfs:subClassOf GO:1903100 .
+GO:1903173 rdfs:label "fatty alcohol metabolic process" .
+GO:1903173 rdfs:subClassOf GO:1901568 .
+GO:1903174 rdfs:label "fatty alcohol catabolic process" .
+GO:1903174 rdfs:subClassOf GO:1901569 .
+GO:1903174 rdfs:subClassOf GO:1903173 .
+GO:1903175 rdfs:label "fatty alcohol biosynthetic process" .
+GO:1903175 rdfs:subClassOf GO:1901570 .
+GO:1903175 rdfs:subClassOf GO:1903173 .
+GO:1903193 rdfs:label "sesquarterpene biosynthetic process" .
+GO:1903193 rdfs:subClassOf GO:0046246 .
+GO:1903210 rdfs:label "podocyte apoptotic process" .
+GO:1903210 rdfs:subClassOf GO:1904019 .
+GO:1903447 rdfs:label "geraniol catabolic process" .
+GO:1903447 rdfs:subClassOf GO:0016095 .
+GO:1903447 rdfs:subClassOf GO:0016100 .
+GO:1903448 rdfs:label "geraniol biosynthetic process" .
+GO:1903448 rdfs:subClassOf GO:0016094 .
+GO:1903448 rdfs:subClassOf GO:0016099 .
+GO:1903449 rdfs:label "androst-4-ene-3,17-dione biosynthetic process" .
+GO:1903449 rdfs:subClassOf GO:0006694 .
+GO:1903509 rdfs:label "liposaccharide metabolic process" .
+GO:1903509 rdfs:subClassOf GO:0006629 .
+GO:1903512 rdfs:label "phytanic acid metabolic process" .
+GO:1903512 rdfs:subClassOf GO:0001676 .
+GO:1903512 rdfs:subClassOf GO:0097089 .
+GO:1903965 rdfs:label "monounsaturated fatty acid catabolic process" .
+GO:1903965 rdfs:subClassOf GO:0009062 .
+GO:1903966 rdfs:label "monounsaturated fatty acid biosynthetic process" .
+GO:1903966 rdfs:subClassOf GO:0006633 .
+GO:1904019 rdfs:label "epithelial cell apoptotic process" .
+GO:1904019 rdfs:subClassOf GO:0006915 .
+GO:1904462 rdfs:label "ergosteryl 3-beta-D-glucoside catabolic process" .
+GO:1904462 rdfs:subClassOf GO:0006706 .
+GO:1904463 rdfs:label "ergosteryl 3-beta-D-glucoside biosynthetic process" .
+GO:1904463 rdfs:subClassOf GO:0006694 .
+GO:1904516 rdfs:label "myofibroblast cell apoptotic process" .
+GO:1904516 rdfs:subClassOf GO:0006915 .
+GO:1904562 rdfs:label "phosphatidylinositol 5-phosphate metabolic process" .
+GO:1904562 rdfs:subClassOf GO:0006650 .
+GO:1904563 rdfs:label "phosphatidylinositol 5-phosphate biosynthetic process" .
+GO:1904563 rdfs:subClassOf GO:0046854 .
+GO:1904563 rdfs:subClassOf GO:1904562 .
+GO:1904606 rdfs:label "fat cell apoptotic process" .
+GO:1904606 rdfs:subClassOf GO:0006915 .
+GO:1904700 rdfs:label "granulosa cell apoptotic process" .
+GO:1904700 rdfs:subClassOf GO:1904019 .
+GO:1905288 rdfs:label "vascular associated smooth muscle cell apoptotic process" .
+GO:1905288 rdfs:subClassOf GO:0034390 .
+GO:1905344 rdfs:label "prostaglandin catabolic process" .
+GO:1905344 rdfs:subClassOf GO:0062232 .
+GO:1905372 rdfs:label "ceramide phosphoethanolamine catabolic process" .
+GO:1905372 rdfs:subClassOf GO:0009395 .
+GO:1905372 rdfs:subClassOf GO:0030149 .
+GO:1905373 rdfs:label "ceramide phosphoethanolamine biosynthetic process" .
+GO:1905373 rdfs:subClassOf GO:0008654 .
+GO:1905373 rdfs:subClassOf GO:0030148 .
+GO:1905397 rdfs:label "activated CD8-positive, alpha-beta T cell apoptotic process" .
+GO:1905397 rdfs:subClassOf GO:0070231 .
+GO:1905398 rdfs:label "activated CD4-positive, alpha-beta T cell apoptotic process" .
+GO:1905398 rdfs:subClassOf GO:0070231 .
+GO:1905584 rdfs:label "outer hair cell apoptotic process" .
+GO:1905584 rdfs:subClassOf GO:0051402 .
+GO:1990009 rdfs:label "retinal cell apoptotic process" .
+GO:1990009 rdfs:subClassOf GO:0006915 .
+GO:1990010 rdfs:label "compound eye retinal cell apoptotic process" .
+GO:1990010 rdfs:subClassOf GO:1990009 .
+GO:1990086 rdfs:label "lens fiber cell apoptotic process" .
+GO:1990086 rdfs:subClassOf GO:1904019 .
+GO:1990134 rdfs:label "epithelial cell apoptotic process involved in palatal shelf morphogenesis" .
+GO:1990134 rdfs:subClassOf GO:0060561 .
+GO:1990134 rdfs:subClassOf GO:1904019 .
+GO:1990138 rdfs:label "neuron projection extension" .
+GO:1990138 rdfs:subClassOf GO:0048588 .
+GO:1990387 rdfs:label "isogloboside biosynthetic process" .
+GO:1990387 rdfs:subClassOf GO:0006688 .
+GO:1990387 rdfs:subClassOf GO:0046513 .
+GO:2001301 rdfs:label "lipoxin biosynthetic process" .
+GO:2001301 rdfs:subClassOf GO:1901570 .
+GO:2001302 rdfs:label "lipoxin A4 metabolic process" .
+GO:2001302 rdfs:subClassOf GO:0001676 .
+GO:2001302 rdfs:subClassOf GO:0033559 .
+GO:2001302 rdfs:subClassOf GO:1901568 .
+GO:2001303 rdfs:label "lipoxin A4 biosynthetic process" .
+GO:2001303 rdfs:subClassOf GO:0006636 .
+GO:2001303 rdfs:subClassOf GO:0042759 .
+GO:2001303 rdfs:subClassOf GO:2001301 .
+GO:2001303 rdfs:subClassOf GO:2001302 .
+GO:2001304 rdfs:label "lipoxin B4 metabolic process" .
+GO:2001304 rdfs:subClassOf GO:0001676 .
+GO:2001304 rdfs:subClassOf GO:0033559 .
+GO:2001304 rdfs:subClassOf GO:1901568 .
+GO:2001306 rdfs:label "lipoxin B4 biosynthetic process" .
+GO:2001306 rdfs:subClassOf GO:0006636 .
+GO:2001306 rdfs:subClassOf GO:0042759 .
+GO:2001306 rdfs:subClassOf GO:2001301 .
+GO:2001306 rdfs:subClassOf GO:2001304 .
+GO:2001311 rdfs:label "lysobisphosphatidic acid metabolic process" .
+GO:2001311 rdfs:subClassOf GO:0006650 .
+GO:2001312 rdfs:label "lysobisphosphatidic acid biosynthetic process" .
+GO:2001312 rdfs:subClassOf GO:0046474 .
+GO:2001312 rdfs:subClassOf GO:2001311 .
