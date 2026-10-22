@@ -83,7 +83,7 @@ def run(root) -> None:
         f.write_text(page)
         has_nav = '<nav class="nav"' in page
         if has_nav:
-            page = fix_content_page(page, f.name, order)
+            page = tidy(fix_content_page(page, f.name, order))
             f.write_text(page)
             main = re.search(r"<main[^>]*id=\"content\"[^>]*>(.*?)</main>", page, re.S)
         h1 = re.search(r"<h1[^>]*>(.*?)</h1>", main.group(1), re.S)
@@ -109,7 +109,7 @@ def fix_content_page(page: str, name: str, order: list[tuple[str, str]]) -> str:
     heads = re.findall(r'<h2[^>]*id="([^"]+)"[^>]*>(.*?)</h2>', page, re.S)
     if len(heads) >= 3 and 'class="toc"' not in page:
         items = "".join(f'<li><a href="#{i}">{text_of(t)}</a></li>' for i, t in heads)
-        toc = f'<nav class="toc"><strong>On this page</strong><ol>{items}</ol></nav>'
+        toc = f'<nav class="toc" aria-label="On this page"><strong>On this page</strong><ol>{items}</ol></nav>'
         page = re.sub(r'(<p class="lede">.*?</p>)', lambda m: m.group(1) + "\n" + toc, page, count=1, flags=re.S)
     # previous and next
     page = re.sub(r'\s*<nav class="pager".*?</nav>', "", page, flags=re.S)
