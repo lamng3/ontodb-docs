@@ -12,7 +12,7 @@
       ["Toppings of a Margherita", PIZZA + "SELECT ?topping WHERE { pizza:MargheritaPizza pizza:hasTopping ?topping }"],
       ["Pizzas and their toppings", PIZZA + "SELECT ?pizza ?topping WHERE {\n  ?pizza rdfs:subClassOf pizza:NamedPizza .\n  ?pizza pizza:hasTopping ?topping\n}"],
       ["Two steps below Pizza", PIZZA + "SELECT ?c WHERE {\n  ?c rdfs:subClassOf ?mid .\n  ?mid rdfs:subClassOf pizza:Pizza\n}"],
-      ["Count toppings per pizza", PIZZA + "SELECT ?pizza (COUNT(?t) AS ?toppings) WHERE { ?pizza pizza:hasTopping ?t } GROUP BY ?pizza"],
+      ["Count toppings per pizza (OntoDB rejects aggregates)", PIZZA + "SELECT ?pizza (COUNT(?t) AS ?toppings) WHERE { ?pizza pizza:hasTopping ?t } GROUP BY ?pizza"],
       ["Add a pizza (update)", PIZZA + "INSERT DATA {\n  pizza:FunghiPizza rdfs:subClassOf pizza:NamedPizza ;\n    rdfs:label \"Funghi\" ;\n    pizza:hasTopping pizza:MozzarellaTopping .\n}"],
     ] },
     tiny: { label: "University (tiny.ttl)", file: "data/tiny.ttl", prefixes: { "http://example.edu/univ#": "ub:" }, examples: [
@@ -20,7 +20,7 @@
       ["Everything about Alice", UB + "SELECT ?p ?o WHERE { ub:Alice ?p ?o }"],
       ["Older than 20", UB + "SELECT ?name WHERE { ?s ub:name ?name ; ub:age ?a . FILTER(?a > 20) }"],
     ] },
-    empty: { label: "Empty store", file: null, prefixes: {}, examples: [["Add two triples", "INSERT DATA { <http://example.org/a> <http://example.org/knows> <http://example.org/b> . <http://example.org/b> <http://example.org/knows> <http://example.org/c> }"], ["Friends of friends", "SELECT ?a ?c WHERE { ?a <http://example.org/knows>/<http://example.org/knows> ?c }"]] },
+    empty: { label: "Empty store", file: null, prefixes: {}, examples: [["Add two triples", "INSERT DATA { <http://example.org/a> <http://example.org/knows> <http://example.org/b> . <http://example.org/b> <http://example.org/knows> <http://example.org/c> }"], ["Friends of friends (OntoDB rejects property paths)", "SELECT ?a ?c WHERE { ?a <http://example.org/knows>/<http://example.org/knows> ?c }"]] },
   };
   var recorded = null;
   fetch("demo-data.json").then(function (r) { return r.json(); }).then(function (d) { recorded = d.queries; }).catch(function () {});
@@ -55,11 +55,17 @@
     }));
     planBox.append(h("h4", { text: "OntoDB's plan for this query" }), ul, h("p", { class: "pg-note" }, "Recorded from the real ontodb shell with \\explain analyze: estimated against actual rows per node. The rows above come from the in-browser engine."));
   }
+  // Features OntoDB's SPARQL subset rejects (see the SPARQL reference); the engine here accepts them.
+  var REJECTED = [[/\bOPTIONAL\b/i, "OPTIONAL"], [/\bUNION\b/i, "UNION"], [/\bGROUP\s+BY\b|\b(COUNT|SUM|AVG|MIN|MAX|SAMPLE|GROUP_CONCAT)\s*\(/i, "aggregates"], [/[\w>]\s*[\/+*|]\s*(<|\w+:)/, "property paths"], [/\b(DELETE|INSERT)\b[\s\S]*\bWHERE\b/i, "DELETE/INSERT … WHERE"]];
+  function ontodbNotice(query) {
+    var found = REJECTED.filter(function (r) { return r[0].test(query.replace(/<[^>]*>/g, "<>")); }).map(function (r) { return r[1]; });
+    return found.length ? h("p", { class: "pg-note", id: "pg-reject", text: "OntoDB itself would reject this query: it does not support " + found.join(", ") + ". The result above comes from Oxigraph, which does." }) : null;
+  }
   async function run() {
     result.replaceChildren(); planBox.replaceChildren();
     try {
       var r = PG.run(handle.store, editor.value, DATASETS[dataset].prefixes);
-      PG.show(result, r);
+      PG.show(result, r); var note = ontodbNotice(editor.value); if (note) result.append(note);
       if (r.kind === "update") { await handle.save(); status.textContent = handle.store.size.toLocaleString() + " triples. Saved in this browser."; }
       else plan(editor.value);
     } catch (e) { result.append(h("div", { class: "pg-error", role: "alert", text: String(e.message || e) })); }
