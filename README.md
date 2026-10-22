@@ -9,3 +9,9 @@ The site is static HTML. `python3 build.py` regenerates the pages from `content/
 ## Shared structure
 
 `normalize.py` (a copy of the one in `memcommit-docs`) runs at the end of the build. It gives every content page a search box, an "On this page" list, previous and next links, and one title format, and writes `search-index.json`. It is called by `build.py`.
+
+## The playground and the visualizations
+
+`playground.html` runs OntoDB itself: `ontodb_wasm.js` and `ontodb_wasm.wasm` are built from the `web/` directory of the ontodb repository (`web/build.sh`, which needs emsdk) and copied here. `data/go-slice.*` comes from `scripts/web-slice` in that repository. After a new build, bump `V` in `playground.js`, because browsers cache these files.
+
+`btree-scan.js` and `intervals.js` hold the algorithms behind the two step-through demos on the B+ tree and semantic-search pages. `node btree-scan.test.mjs` and `node intervals.test.mjs` check them against brute force on random inputs; the `-ui.js` files only draw.

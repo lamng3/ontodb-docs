@@ -46,6 +46,14 @@ OntoDB> \under "programmed cell death" 3
   ...
 ```
 
+## Watch the labelling
+
+Edit the hierarchy, then step through what `\hindex build` does: the spanning forest, the postorder numbers, the interval sets, and finally `\under` as range scans over those numbers. The set sizes obey the bound in the book: at most one plus the number of non-tree edges below the class.
+
+<div id="intervals" aria-label="Interval labels"></div>
+<script src="intervals.js"></script>
+<script src="intervals-ui.js"></script>
+
 ## Commands
 
 | Command | What it does |

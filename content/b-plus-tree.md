@@ -71,6 +71,14 @@ OntoDB's iterator goes further and holds nothing between rows: reaching a leaf, 
 
 This iterator is what `IndexedTripleIterator` wraps, and what a triple scan pulls when the backend is indexed.
 
+## Watch a range scan
+
+Pick a range and step through `BeginRange(lower, upper)`: the descent with `ChildFor`, `lower_bound` in the leaf, `Take` copying the keys below the bound, and `Settle` following the right-sibling links. The range is half open, as in the code. The count of pages read is the point: one per level to reach the first leaf, then one per leaf, with no climb back to the root.
+
+<div id="btree-scan" aria-label="B+ tree range scan"></div>
+<script src="btree-scan.js"></script>
+<script src="btree-scan-ui.js"></script>
+
 ## Bulk load
 
 Bulk load is not a loop of `Insert`. The keys arrive sorted and unique. One pass builds full leaves and links them. One pass per level builds the parents. Leaves are filled to their maximum, with no fill factor. If the last node of a level would fall below its minimum, it and its left neighbour split their entries evenly. `CheckInvariants` passes. `GetValue` finds the first and last key. Unsorted input throws `std::invalid_argument`; a tree that is not empty throws `std::logic_error`.

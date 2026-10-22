@@ -233,3 +233,52 @@ body:not(:has(.layout)) .nav-button { display: none; }
 main:has(.pg) { max-width: none; }
 .pg input[type="range"] { accent-color: var(--primary); }
 .pg progress { accent-color: var(--primary); width: 10em; height: 8px; }
+
+/* B+ tree range-scan stepper (btree-scan.js) */
+.bt .pg-row input[type="number"] { width: 5.5em; }
+.bt .pg-row input[type="text"] { width: 100%; border: 1px solid var(--border); border-radius: 8px; background: var(--primary-5); color: var(--fg); font: 13px var(--mono); padding: 6px 10px; }
+.bt-svg { overflow-x: auto; }
+.bt-svg svg { display: block; max-width: none; }
+.bt-msg { margin: 10px 0 0; min-height: 3em; font-size: 14.5px; }
+.bt-node rect { fill: var(--bg); stroke: var(--border); stroke-width: 1.5; }
+.bt-node.seen rect { stroke: var(--primary-50); fill: var(--primary-5); }
+.bt-node.now rect { stroke: var(--primary); stroke-width: 2.5; fill: var(--primary-10); }
+.bt-pid { font: 11px var(--mono); fill: var(--faint); }
+.bt-key { font: 13px var(--mono); fill: var(--muted); }
+.bt-key.in { fill: var(--fg); font-weight: 600; }
+.bt-key.out { fill: var(--primary); font-weight: 700; text-decoration: underline; }
+.bt-key.cur { fill: var(--warn); }
+.bt-sep { stroke: var(--border); }
+.bt-edge { stroke: var(--border); stroke-width: 1.5; }
+.bt-edge.taken { stroke: var(--primary); stroke-width: 2.5; }
+.bt-link { stroke: var(--faint); stroke-width: 1.5; fill: none; }
+.bt-link.taken { stroke: var(--primary); stroke-width: 2.5; }
+.bt-arrowhead { fill: var(--faint); }
+.bt-cols { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; }
+@media (max-width: 900px) { .bt-cols { grid-template-columns: minmax(0, 1fr); } }
+.bt-code { margin: 0; padding: 0; background: none; border: 0; font-size: 12.5px; line-height: 1.55; white-space: pre; }
+.bt-line { display: block; padding: 0 8px; border-radius: 4px; }
+.bt-line.on { background: var(--primary-15); color: var(--fg); }
+.bt-row { display: flex; justify-content: space-between; gap: 12px; padding: 5px 0; border-bottom: 1px solid var(--border); font-size: 13.5px; }
+.bt-row:last-child { border-bottom: 0; }
+.bt-row span { color: var(--subtle); }
+.bt-row b { font: 500 13px var(--mono); text-align: right; overflow-wrap: anywhere; }
+
+/* Interval-label demo (intervals.js) */
+.iv-node rect { fill: var(--bg); stroke: var(--border); stroke-width: 1.5; }
+.iv-node text { font: 13px var(--font); fill: var(--fg); }
+.iv-node.hit rect { fill: var(--primary-10); stroke: var(--primary-50); }
+.iv-node.asked rect { fill: var(--primary-15); stroke: var(--primary); stroke-width: 2.5; }
+.iv-node .iv-post { font: 600 12px var(--mono); fill: var(--primary); }
+.iv-node .iv-set { font: 11.5px var(--mono); fill: var(--subtle); }
+.iv-edge { fill: none; stroke: var(--faint); stroke-width: 1.5; }
+.iv-edge.extra { stroke-dasharray: 5 4; stroke: var(--warn); }
+.iv-cells { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.iv-cell { border: 1px solid var(--border); border-radius: 6px; padding: 2px 7px; display: grid; text-align: center; min-width: 3.4em; }
+.iv-cell span { font: 11px var(--mono); color: var(--faint); }
+.iv-cell b { font: 500 12px var(--font); color: var(--muted); }
+.iv-cell.run { background: var(--primary-10); border-color: var(--primary-50); }
+.iv-cell.run b { color: var(--fg); }
+.iv-cell.run2 { background: var(--warn-bg); border-color: var(--warn); }
+.iv-cell.run3 { background: var(--bad-bg); border-color: var(--bad); }
+.bt textarea { width: 100%; font: 13px/1.5 var(--mono); }
