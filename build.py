@@ -168,7 +168,95 @@ def render_body(md):
     return "".join(html_parts), toc
 
 
+HEAD = """<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">"""
+
+HEADER = """<header class="site">
+  <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
+  <nav class="site">
+    <a href="install.html">Install</a>
+    <a href="tutorial.html">Tutorial</a>
+    <a href="sparql.html">SPARQL</a>
+    <label class="nav-button" for="nav-toggle">Menu</label>
+    <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
+  </nav>
+</header>"""
+
+CARDS = [
+    ("tutorial", "Tutorial", "Load an ontology, query it, update it, and restart the database."),
+    ("sparql", "SPARQL", "What the query engine accepts, and how it is planned."),
+    ("durability", "Write-ahead log", "Every transaction is logged before it is applied; recovery replays the log."),
+    ("buffer-pool", "Buffer pool", "Pages, pins, and replacement, with a hit rate you can read."),
+    ("optimizer", "Optimizer", "Join order from estimated rows, checked against actual rows."),
+    ("recovery", "Recovery", "Crash the shell on purpose, then verify the database rebuilt from its log."),
+]
+
+HOME = """<section class="hero">
+  <div>
+    <h1>A database management system for ontologies</h1>
+    <p class="lede">{lede}</p>
+    <pre class="install"><span class="prompt">$ </span>brew install pkgconf raptor cmake ninja
+<span class="prompt">$ </span>git clone https://github.com/lamng3/OntoDB.git &amp;&amp; cd OntoDB
+<span class="prompt">$ </span>cmake --preset dev &amp;&amp; cmake --build --preset dev</pre>
+    <div class="actions">
+      <a class="btn solid" href="install.html">Get started</a>
+      <a class="btn" href="tutorial.html">Tutorial</a>
+      <a class="btn" href="sparql.html">SPARQL</a>
+    </div>
+  </div>
+  <div class="demo-card" id="demo">
+    <div class="head"><h3>Query a real database</h3><span class="tag">output of the <b>ontodb shell</b></span></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <p class="q" id="question"></p>
+    <pre class="sparql" id="sparql"></pre>
+    <div class="actions"><button class="btn solid" id="run">Run</button><button class="btn" id="explain">Explain analyze</button></div>
+    <pre class="out" id="out" aria-live="polite">Press Run.</pre>
+    <p class="note">Each query ran in the real shell on the Pizza ontology ({loaded}). The page shows what the shell printed, with IRI prefixes shortened. <code>\\explain analyze</code> prints each plan node with its estimated and actual rows.</p>
+  </div>
+</section>
+<section class="block">
+  <h2>What it does</h2>
+  <p class="sub">RDF in, SPARQL out, with the machinery of a database underneath.</p>
+  <div class="cards">{cards}</div>
+</section>
+<section class="block"><div class="prose-home">{body}</div></section>
+<script src="demo.js"></script>"""
+
+
+def home_html(meta, body_html):
+    cards = "".join(
+        f'<a class="card" href="{slug}.html"><strong>{html.escape(t)}</strong><span>{html.escape(d)}</span></a>'
+        for slug, t, d in CARDS
+    )
+    loaded = json.loads((ROOT / "demo-data.json").read_text())["loaded"]
+    hero = HOME.format(lede=inline(meta.get("lede", "")), cards=cards, body=body_html, loaded=loaded)
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+{HEAD}
+<title>OntoDB — a database management system for ontologies</title>
+<meta name="description" content="{html.escape(meta.get("description", ""))}">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+{HEADER}
+<main class="wrap" id="content" style="max-width:1280px">
+{hero}
+</main>
+<footer class="site">OntoDB by <a href="https://github.com/lamng3">Lam Nguyen</a> · a database management system for ontologies</footer>
+</body>
+</html>
+"""
+
+
 def page_html(meta, body_html, toc, pages):
+    if meta["slug"] == "index":
+        return home_html(meta, body_html)
     nav = [
         '<a class="brand-desk" href="index.html">OntoDB Manual</a>',
         '<input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off">',

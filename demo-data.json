@@ -1,0 +1,34 @@
+{
+ "data": "pizza.ttl",
+ "loaded": "loaded 27 triples",
+ "queries": [
+  {
+   "title": "Named pizzas",
+   "question": "Which classes are kinds of NamedPizza?",
+   "sparql": "SELECT ?pizza ?label WHERE { ?pizza rdfs:subClassOf pizza:NamedPizza . ?pizza rdfs:label ?label }",
+   "rows": "?pizza  ?label\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#MargheritaPizza>  \"Margherita\"\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#AmericanPizza>  \"American\"\n(2 rows)",
+   "plan": "Projection [?pizza, ?label]  (estimated 2, actual 2)\n  IndexNestedLoopJoin  (estimated 2, actual 2)\n    TripleScan {?pizza <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.co-ode.org/ontologies/pizza/pizza.owl#NamedPizza>}  (estimated 2, actual 2)\n    TripleScan {?pizza <http://www.w3.org/2000/01/rdf-schema#label> ?label}  (estimated 6, probed by the join above)\nexecution: 0.004292 ms"
+  },
+  {
+   "title": "Toppings of a pizza",
+   "question": "What goes on a Margherita?",
+   "sparql": "SELECT ?topping WHERE { pizza:MargheritaPizza pizza:hasTopping ?topping }",
+   "rows": "?topping\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#MozzarellaTopping>\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#TomatoTopping>\n(2 rows)",
+   "plan": "Projection [?topping]  (estimated 2, actual 2)\n  TripleScan {<http://www.co-ode.org/ontologies/pizza/pizza.owl#MargheritaPizza> <http://www.co-ode.org/ontologies/pizza/pizza.owl#hasTopping> ?topping}  (estimated 2, actual 2)\nexecution: 0.003458 ms"
+  },
+  {
+   "title": "A join",
+   "question": "Which named pizzas have a topping, and which?",
+   "sparql": "SELECT ?pizza ?topping WHERE { ?pizza rdfs:subClassOf pizza:NamedPizza . ?pizza pizza:hasTopping ?topping }",
+   "rows": "?pizza  ?topping\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#MargheritaPizza>  <http://www.co-ode.org/ontologies/pizza/pizza.owl#MozzarellaTopping>\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#MargheritaPizza>  <http://www.co-ode.org/ontologies/pizza/pizza.owl#TomatoTopping>\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#AmericanPizza>  <http://www.co-ode.org/ontologies/pizza/pizza.owl#MozzarellaTopping>\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#AmericanPizza>  <http://www.co-ode.org/ontologies/pizza/pizza.owl#PeperoniSausageTopping>\n(4 rows)",
+   "plan": "Projection [?pizza, ?topping]  (estimated 4, actual 4)\n  IndexNestedLoopJoin  (estimated 4, actual 4)\n    TripleScan {?pizza <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.co-ode.org/ontologies/pizza/pizza.owl#NamedPizza>}  (estimated 2, actual 2)\n    TripleScan {?pizza <http://www.co-ode.org/ontologies/pizza/pizza.owl#hasTopping> ?topping}  (estimated 4, probed by the join above)\nexecution: 0.00775 ms"
+  },
+  {
+   "title": "A path through the hierarchy",
+   "question": "Which classes sit two steps below Pizza?",
+   "sparql": "SELECT ?c WHERE { ?c rdfs:subClassOf ?mid . ?mid rdfs:subClassOf pizza:Pizza }",
+   "rows": "?c\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#MargheritaPizza>\n<http://www.co-ode.org/ontologies/pizza/pizza.owl#AmericanPizza>\n(2 rows)",
+   "plan": "Projection [?c]  (estimated 2, actual 2)\n  IndexNestedLoopJoin  (estimated 2, actual 2)\n    TripleScan {?mid <http://www.w3.org/2000/01/rdf-schema#subClassOf> <http://www.co-ode.org/ontologies/pizza/pizza.owl#Pizza>}  (estimated 1, actual 1)\n    TripleScan {?c <http://www.w3.org/2000/01/rdf-schema#subClassOf> ?mid}  (estimated 9, probed by the join above)\nexecution: 0.006541 ms"
+  }
+ ]
+}
