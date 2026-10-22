@@ -18,7 +18,7 @@
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
   <nav class="site" aria-label="Site">
     <a href="install.html">Install</a>
-    <a href="tutorial.html">Tutorial</a>
+    <a href="playground.html">Playground</a>
     <a href="sparql.html">SPARQL</a>
     <label class="nav-button" for="nav-toggle">Menu</label>
     <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
@@ -34,7 +34,7 @@
 <span class="prompt">$ </span>cmake --preset dev &amp;&amp; cmake --build --preset dev</pre>
     <div class="actions">
       <a class="btn solid" href="install.html">Get started</a>
-      <a class="btn" href="tutorial.html">Tutorial</a>
+      <a class="btn" href="playground.html">Playground</a>
       <a class="btn" href="sparql.html">SPARQL</a>
     </div>
   </div>
@@ -45,14 +45,14 @@
     <p class="q" id="question"></p>
     <pre class="sparql" id="sparql"></pre>
     <div class="actions"><button type="button" class="btn solid" id="run">Run</button><button type="button" class="btn" id="explain">Explain analyze</button></div>
-    <pre class="out" id="out" aria-live="polite">Press Run.</pre>
+    <div class="out" id="out" aria-live="polite">Press Run.</div>
     <p class="note">Each query ran in the real shell on the Pizza ontology (loaded 27 triples). The page shows what the shell printed, with IRI prefixes shortened. <code>\explain analyze</code> prints each plan node with its estimated and actual rows.</p>
   </div>
 </section>
 <section class="block">
   <h2>What it does</h2>
   <p class="sub">RDF in, SPARQL out, with the machinery of a database underneath.</p>
-  <div class="cards"><a class="card" href="tutorial.html"><strong>Tutorial</strong><span>Load an ontology, query it, update it, and restart the database.</span></a><a class="card" href="sparql.html"><strong>SPARQL</strong><span>What the query engine accepts, and how it is planned.</span></a><a class="card" href="durability.html"><strong>Write-ahead log</strong><span>Every transaction is logged before it is applied; recovery replays the log.</span></a><a class="card" href="buffer-pool.html"><strong>Buffer pool</strong><span>Pages, pins, and replacement, with a hit rate you can read.</span></a><a class="card" href="optimizer.html"><strong>Optimizer</strong><span>Join order from estimated rows, checked against actual rows.</span></a><a class="card" href="recovery.html"><strong>Recovery</strong><span>Crash the shell on purpose, then verify the database rebuilt from its log.</span></a></div>
+  <div class="cards"><a class="card" href="playground.html"><strong>Playground</strong><span>Run SPARQL over the Pizza ontology or your own Turtle, right in the browser.</span></a><a class="card" href="tutorial.html"><strong>Tutorial</strong><span>Load an ontology, query it, update it, and restart the database.</span></a><a class="card" href="sparql.html"><strong>SPARQL</strong><span>What the query engine accepts, and how it is planned.</span></a><a class="card" href="durability.html"><strong>Write-ahead log</strong><span>Every transaction is logged before it is applied; recovery replays the log.</span></a><a class="card" href="buffer-pool.html"><strong>Buffer pool</strong><span>Pages, pins, and replacement, with a hit rate you can read.</span></a><a class="card" href="optimizer.html"><strong>Optimizer</strong><span>Join order from estimated rows, checked against actual rows.</span></a><a class="card" href="recovery.html"><strong>Recovery</strong><span>Crash the shell on purpose, then verify the database rebuilt from its log.</span></a></div>
 </section>
 <section class="block"><div class="prose-home"><p>This manual describes how to install OntoDB, load ontologies, query and update them, keep a database on disk, and recover it after a crash. The last parts describe how OntoDB works inside and how the project is developed.</p><p>For the theory behind each part (pages, buffer pools, B+ trees, query plans, locking, the write-ahead log, and ARIES), read the companion book, <a href="https://github.com/lamng3/OntoDB/blob/main/book/ontodb-book.pdf">OntoDB: Database Internals by Example</a>. Its design-decision boxes explain why OntoDB is built the way it is: each names the choice, the alternatives, and the cost.</p><h2 id="what-ontodb-does-today">What OntoDB does today</h2><ul><li>Loads Turtle, N-Triples, and RDF/XML. OWL files load as RDF triples; there is no reasoner.</li><li>Answers SPARQL <code>SELECT</code> queries over a basic graph pattern with <code>FILTER</code>, and runs <code>INSERT DATA</code> and <code>DELETE DATA</code>. See <a href="sparql.html">SPARQL reference</a>.</li><li>Keeps a database on disk when started with a directory: every update is a transaction, a checksummed write-ahead log records it, <code>\checkpoint</code> writes a snapshot, and reopening the directory restores every committed transaction. See <a href="persistence.html">Persistent databases</a>.</li><li>Checks itself: <code>\verify</code> rebuilds the database from its files and compares it with the live one.</li></ul><p>Indexes, the cost-based optimizer, concurrent transactions, and the page-based disk store are designed and being built. See <a href="next.html">Roadmap</a>.</p><h2 id="quick-start">Quick start</h2><pre><code>cmake --preset dev &amp;&amp; cmake --build --preset dev
 ./build/dev/ontodb mydb</code></pre><pre><code>OntoDB&gt; \load data/tiny.owl
@@ -62,6 +62,7 @@ OntoDB&gt; SELECT ?kind WHERE { ?kind &lt;http://www.w3.org/2000/01/rdf-schema#s
 &lt;http://example.org/materials#Metal&gt;
 &lt;http://example.org/materials#Polymer&gt;
 (2 rows)</code></pre><p><a href="install.html">Installation</a> has the prerequisites, and the <a href="tutorial.html">Tutorial</a> walks through a full session.</p><h2 id="how-this-manual-is-organized">How this manual is organized</h2><div class="cards"><a class="card" href="install.html"><strong>Getting started</strong><span>Install, build, and a first session from load to recovery.</span></a><a class="card" href="shell.html"><strong>Using OntoDB</strong><span>The shell, SPARQL, loading data, persistent databases, and settings.</span></a><a class="card" href="formats.html"><strong>Reference</strong><span>On-disk file formats, messages, and troubleshooting.</span></a><a class="card" href="query-engine.html"><strong>Internals</strong><span>Query engine, dictionary, indexes, B+ tree, buffer pool, concurrency, and recovery.</span></a><a class="card" href="development.html"><strong>Project</strong><span>Building and testing, the roadmap, and how results are reported.</span></a></div><h2 id="conventions">Conventions</h2><p><code>OntoDB&gt;</code> is the shell prompt. Commands that start with <code>\</code> are shell commands; everything else is SPARQL. A <strong>Status</strong> box says what works today. A <strong>Planned</strong> box describes work that is designed but not built. Features that are not built yet answer <code>not built yet (PLAN x.y)</code>, where <code>x.y</code> is the item in the project&#x27;s <code>PLAN.md</code>.</p></div></section>
+<script src="pg.js"></script>
 <script src="demo.js"></script>
 </main>
 <footer class="site">OntoDB by <a href="https://github.com/lamng3">Lam Nguyen</a> · a database management system for ontologies</footer>

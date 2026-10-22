@@ -180,7 +180,7 @@ HEADER = """<header class="site">
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
   <nav class="site">
     <a href="install.html">Install</a>
-    <a href="tutorial.html">Tutorial</a>
+    <a href="playground.html">Playground</a>
     <a href="sparql.html">SPARQL</a>
     <label class="nav-button" for="nav-toggle">Menu</label>
     <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
@@ -188,6 +188,7 @@ HEADER = """<header class="site">
 </header>"""
 
 CARDS = [
+    ("playground", "Playground", "Run SPARQL over the Pizza ontology or your own Turtle, right in the browser."),
     ("tutorial", "Tutorial", "Load an ontology, query it, update it, and restart the database."),
     ("sparql", "SPARQL", "What the query engine accepts, and how it is planned."),
     ("durability", "Write-ahead log", "Every transaction is logged before it is applied; recovery replays the log."),
@@ -205,7 +206,7 @@ HOME = """<section class="hero">
 <span class="prompt">$ </span>cmake --preset dev &amp;&amp; cmake --build --preset dev</pre>
     <div class="actions">
       <a class="btn solid" href="install.html">Get started</a>
-      <a class="btn" href="tutorial.html">Tutorial</a>
+      <a class="btn" href="playground.html">Playground</a>
       <a class="btn" href="sparql.html">SPARQL</a>
     </div>
   </div>
@@ -216,7 +217,7 @@ HOME = """<section class="hero">
     <p class="q" id="question"></p>
     <pre class="sparql" id="sparql"></pre>
     <div class="actions"><button class="btn solid" id="run">Run</button><button class="btn" id="explain">Explain analyze</button></div>
-    <pre class="out" id="out" aria-live="polite">Press Run.</pre>
+    <div class="out" id="out" aria-live="polite">Press Run.</div>
     <p class="note">Each query ran in the real shell on the Pizza ontology ({loaded}). The page shows what the shell printed, with IRI prefixes shortened. <code>\\explain analyze</code> prints each plan node with its estimated and actual rows.</p>
   </div>
 </section>
@@ -226,6 +227,7 @@ HOME = """<section class="hero">
   <div class="cards">{cards}</div>
 </section>
 <section class="block"><div class="prose-home">{body}</div></section>
+<script src="pg.js"></script>
 <script src="demo.js"></script>"""
 
 
@@ -296,7 +298,7 @@ def page_html(meta, body_html, toc, pages):
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
   <nav class="site">
     <a href="install.html">Install</a>
-    <a href="tutorial.html">Tutorial</a>
+    <a href="playground.html">Playground</a>
     <a href="sparql.html">SPARQL</a>
     <label class="nav-button" for="nav-toggle">Menu</label>
     <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>

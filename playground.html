@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Playground — OntoDB Manual</title>
+<meta name="description" content="Run SPARQL over the Pizza ontology or your own Turtle in the browser, with the store saved locally.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+  <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
+  <nav class="site" aria-label="Site">
+    <a href="install.html">Install</a>
+    <a href="playground.html">Playground</a>
+    <a href="sparql.html">SPARQL</a>
+    <label class="nav-button" for="nav-toggle">Menu</label>
+    <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
+  </nav>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav" aria-label="Manual pages">
+<a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="playground.html" aria-current="page">Playground</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><a href="code-design.html">Code design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Try it</p>
+<h1>Playground</h1>
+<p class="lede">Run SPARQL queries and updates in your browser, over the Pizza ontology or your own Turtle, with the data saved in this browser between visits.</p>
+<nav class="toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#what-it-keeps">What it keeps</a></li><li><a href="#what-is-different-from-ontodb">What is different from OntoDB</a></li></ol></nav>
+<div class="callout warning" role="note"><span class="label">Warning</span><p>This playground runs <strong>Oxigraph</strong>, a SPARQL engine compiled to WebAssembly, not OntoDB itself. OntoDB is a C++ engine and is not built for the web yet. Answers should agree on the SPARQL both support; the query plans shown here are OntoDB&#x27;s own, recorded from its shell. For the real engine, see <a href="install.html">Install and run</a> and the <a href="sparql.html">SPARQL reference</a>.</p></div><div role="group" id="playground" aria-label="SPARQL playground">Loading the playground…</div><script src="pg.js"></script><script src="playground.js"></script><h2 id="what-it-keeps">What it keeps</h2><p>The store lives in your browser&#x27;s IndexedDB under this manual, one per dataset. Updates (<code>INSERT DATA</code>, <code>DELETE DATA</code>, and the rest of SPARQL Update) are saved as you run them, so reloading the page keeps your changes. Reset this store returns the dataset to its starting point, and clearing site data removes everything. Nothing is sent to a server.</p><h2 id="what-is-different-from-ontodb">What is different from OntoDB</h2><ul><li><strong>Engine.</strong> Oxigraph implements the whole of SPARQL 1.1. OntoDB answers a subset, listed in the <a href="sparql.html">SPARQL reference</a>, so a query that works here can still be refused by OntoDB.</li><li><strong>Plans.</strong> Oxigraph does not print OntoDB&#x27;s plans. The plan panel shows the recorded plans for the four Pizza queries that came from the real shell; for any other query run <code>\explain analyze</code> there.</li><li><strong>Durability.</strong> OntoDB logs every transaction before applying it and recovers with ARIES. Here, the whole store is written to IndexedDB after each update, which is neither atomic across tabs nor a write-ahead log.</li></ul>
+<nav class="pager" aria-label="Pages"><a class="prev" href="install.html"><span>Previous</span>Installation</a><a class="next" href="tutorial.html"><span>Next</span>Tutorial</a></nav>
+</main>
+</div>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
+<script src="search.js"></script>
+</body>
+</html>
