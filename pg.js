@@ -93,12 +93,22 @@ const PG = (() => {
   // ---- a language model you run yourself ----
   const LLM_KEY = "pg:llm";
   const llmConfig = () => { try { return { base: "http://localhost:11434/v1", model: "llama3.1", key: "", ...JSON.parse(localStorage.getItem(LLM_KEY) || "{}") }; } catch { return { base: "http://localhost:11434/v1", model: "llama3.1", key: "" }; } };
+  const isLoopback = (url) => { try { return ["localhost", "127.0.0.1", "[::1]"].includes(new URL(url).hostname); } catch { return false; } };
   async function chat(messages, { temperature = 0 } = {}) {
-    const c = llmConfig();
-    const res = await fetch(c.base.replace(/\/$/, "") + "/chat/completions", {
-      method: "POST", headers: { "Content-Type": "application/json", ...(c.key ? { Authorization: "Bearer " + c.key } : {}) },
-      body: JSON.stringify({ model: c.model, messages, temperature, stream: false }),
-    });
+    const c = llmConfig(), url = c.base.replace(/\/$/, "") + "/chat/completions";
+    let res;
+    try {
+      res = await fetch(url, {
+        method: "POST", headers: { "Content-Type": "application/json", ...(c.key ? { Authorization: "Bearer " + c.key } : {}) },
+        body: JSON.stringify({ model: c.model, messages, temperature, stream: false }),
+        // Chrome asks the visitor before a public page reaches a server on their own machine; this names the request as one.
+        ...(isLoopback(url) ? { targetAddressSpace: "loopback" } : {}),
+      });
+    } catch (e) {
+      throw new Error("The browser could not reach " + c.base + ". " + (isLoopback(url)
+        ? "Is the server running, and does it allow this page's origin (for Ollama: OLLAMA_ORIGINS=\"*\")? Chrome asks permission before a web page may reach a server on your computer: allow it when it asks, and try again. Safari does not allow it at all; use the paste option instead."
+        : "Does it allow this page's origin (CORS)?"));
+    }
     if (!res.ok) throw new Error(`The model endpoint answered ${res.status}: ${(await res.text()).slice(0, 200)}`);
     return (await res.json()).choices[0].message.content;
   }
