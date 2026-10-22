@@ -60,3 +60,7 @@ The shell is the interface. A later window, desktop or local page, sends the sam
 ::: next
 The next code is still the [triple key](indexes.html#the-24-byte-key). The first comparison that can be run after that is eviction, and only once the [buffer pool](buffer-pool.html) reports hits and misses.
 :::
+
+## Semantic search
+
+The semantic search benchmarks answer five questions about the Gene Ontology, LUBM, and a set of synthetic instances: does any sort order put neighbors together, how big are the interval labels, what do three ways of answering a type query cost, how do the vector indexes trade recall for time, and which strategy is best for the nearest terms under a class. The program is `tools/bench/semantic.cpp`, the method is in `benchmarks/semantic/question.md`, and the results are in `benchmarks/semantic/results.md`. They are written up in the paper `paper/ontodb-semantic.pdf` and in the book's chapter *Semantic Search*.

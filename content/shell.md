@@ -41,6 +41,7 @@ The shell reads standard input, so a script can be piped in: `ontodb mydb < scri
 | `\verify` | Persistent databases: checks the snapshot and log, rebuilds from them, and compares with the live database |
 | `\log [n]` | Persistent databases: prints the last `n` log records (default 20), oldest first |
 | `\crash` | Persistent databases: exits immediately without flushing, to test recovery |
+| `\hindex build`, `\under`, `\vload`, `\vindex build`, `\similar` | Semantic search: label the class hierarchy, list what is under a class, read vectors, build indexes, find the nearest terms. See [Semantic search](semantic-search.html) |
 | `\stats` | Prints page, buffer, and log counters |
 | `\timing on` or `off` | Prints each statement's time after its result |
 | `\set` | Prints the settings |

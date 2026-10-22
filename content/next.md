@@ -22,6 +22,7 @@ lede: All 53 slices are done, page-level recovery included. Next: the page store
 | Bulk load | `scripts/check load` | Done: batch load, packed trees, LUBM(1) on a 32-frame pool |
 | Concurrency | `scripts/check concurrency` | Done: crabbing, transactions, locks, isolation, deadlocks, phantoms |
 | Durable memory database | `scripts/check durable` | Done: all seven slices |
+| Semantic search | `scripts/check semantic` | Done: class hierarchy as interval labels in a B+ tree, one vector per term, exact, IVF, and HNSW search, hierarchy-filtered nearest neighbors, shell commands. See [Semantic search](semantic-search.html) |
 | Recovery | `scripts/check recovery` | Done: page images, page groups, abort by the log, sharp checkpoint, ARIES, `scripts/crashtest --seeds 200` |
 
 ## Next

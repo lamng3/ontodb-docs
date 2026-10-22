@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Semantic search — OntoDB Manual</title>
+<meta name="description" content="Find what is under a class, and what is close in meaning to a term, with interval labels, vector indexes, and the shell commands that drive them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=TikTok+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header class="site">
+  <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
+  <nav class="site" aria-label="Site">
+    <a href="install.html">Install</a>
+    <a href="playground.html">Playground</a>
+    <a href="sparql.html">SPARQL</a>
+    <label class="nav-button" for="nav-toggle">Menu</label>
+    <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
+  </nav>
+</header>
+<input id="nav-toggle" class="nav-toggle" type="checkbox">
+<div class="layout">
+<nav class="nav" aria-label="Manual pages">
+<a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="playground.html">Playground</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><a href="semantic-search.html" aria-current="page">Semantic search</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><a href="code-design.html">Code design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
+</nav>
+<main id="content">
+<p class="kicker">Using OntoDB</p>
+<h1>Semantic search</h1>
+<p class="lede">Two questions an ontology store is asked. Structure has an exact answer in the data; similarity needs a vector. OntoDB answers the first with a few range scans over interval labels and the second with a vector index, and combines them.</p>
+<nav class="toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#what-you-need">What you need</a></li><li><a href="#a-session">A session</a></li><li><a href="#commands">Commands</a></li><li><a href="#the-vector-file">The vector file</a></li><li><a href="#what-it-is-not">What it is not</a></li></ol></nav>
+<p>A sorted index cannot say what is close in meaning (a bandwidth argument proves no order can), so OntoDB does not try. It labels the class hierarchy so that everything under a class is a few ranges of integers, keeps one embedding per term, and searches the embeddings with an exact scan, an inverted file whose lists are B+ tree ranges, or an HNSW graph. A search can be limited to the terms under a class. The theory is in the book&#x27;s chapter *Semantic Search* and in <code>docs/semantic-search.md</code>; the paper is <code>paper/ontodb-semantic.pdf</code>; the measurements are in <code>benchmarks/semantic/results.md</code>.</p><h2 id="what-you-need">What you need</h2><p>An ontology with <code>rdfs:subClassOf</code> triples and <code>rdfs:label</code> labels, and a vector file with one embedding per term. OntoDB does not run an embedding model. To try the Gene Ontology (38,092 classes) end to end:</p><pre><code>scripts/fetch-data go                                    # go.nt and go.terms.tsv
+scripts/embed-terms data/downloads/go/go.terms.tsv data/downloads/go/go.ovec   # 45 s on a CPU</code></pre><p><code>scripts/embed-terms</code> uses <code>sentence-transformers</code> and writes the vector file format below. Any other model works if it writes the same file.</p><h2 id="a-session">A session</h2><pre><code>OntoDB&gt; \load data/downloads/go/go.nt
+OntoDB&gt; \hindex build
+labelled 38092 classes (38092 after collapsing cycles), 57456 edges, 19367 outside the spanning forest; 76570 intervals, at most 741 per class; 22.9 ms
+OntoDB&gt; \vload data/downloads/go/go.ovec
+read 38092 vectors of 384 floats, kept 38092, skipped 0 ...
+OntoDB&gt; \vindex build hnsw
+hnsw: M=16, 5 layers, 16.1 s
+OntoDB&gt; \similar &quot;apoptotic process&quot; 3
+nearest to &lt;http://purl.obolibrary.org/obo/GO_0006915&gt;  &quot;apoptotic process&quot; [hnsw, 876 us]
+  0.867  &lt;http://purl.obolibrary.org/obo/GO_0042981&gt;  &quot;regulation of apoptotic process&quot;
+  0.865  &lt;http://purl.obolibrary.org/obo/GO_1902742&gt;  &quot;apoptotic process involved in development&quot;
+  0.802  &lt;http://purl.obolibrary.org/obo/GO_0060561&gt;  &quot;apoptotic process involved in morphogenesis&quot;
+OntoDB&gt; \similar &quot;apoptotic process&quot; 3 under &quot;cell death&quot;
+nearest to ... &quot;apoptotic process&quot;, under &quot;cell death&quot; [pre-filter, 279 us]
+  0.865  &lt;http://purl.obolibrary.org/obo/GO_1902742&gt;  &quot;apoptotic process involved in development&quot;
+  ...
+OntoDB&gt; \under &quot;programmed cell death&quot; 3
+96 classes at or below &quot;programmed cell death&quot; (4 range scans, 0.012 ms)
+  &lt;http://purl.obolibrary.org/obo/GO_0001781&gt;  &quot;neutrophil apoptotic process&quot;
+  ...</code></pre><h2 id="commands">Commands</h2><table><thead><tr><th scope="col">Command</th><th scope="col">What it does</th></tr></thead><tbody><tr><td><code>\hindex build [&lt;predicate&gt;]</code></td><td>Labels the hierarchy of <code>predicate</code> (default <code>rdfs:subClassOf</code>) from the stored triples and builds the label B+ tree. Rebuild it after the hierarchy changes</td></tr><tr><td><code>\hindex</code></td><td>Shows what is built</td></tr><tr><td><code>\under &lt;class&gt; [limit]</code></td><td>The classes at or below <code>class</code>, found by one range scan per interval of the class</td></tr><tr><td><code>\vload &lt;file&gt;</code></td><td>Reads a vector file. A term the dictionary does not know is skipped</td></tr><tr><td>`\vindex build [ivf\</td><td>hnsw\</td><td>all]`</td><td>Builds the approximate indexes. Without them search is an exact scan</td></tr><tr><td><code>\similar &lt;term&gt; [k] [under &lt;class&gt;] [using &lt;strategy&gt;]</code></td><td>The <code>k</code> (default 10) terms nearest <code>term</code> in meaning, optionally only under <code>class</code></td></tr></tbody></table><p>A term is <code>&lt;iri&gt;</code>, or the text of its <code>rdfs:label</code>, quoted or bare (<code>&quot;apoptotic process&quot;</code> or <code>apoptotic process</code>). <code>\similar</code> searches from the vector of a term that is already stored; a free-text query needs an embedding model in the process, which OntoDB does not link.</p><p>Strategies for <code>using</code>: <code>auto</code> (the default), <code>pre</code>, <code>post-hnsw</code>, <code>post-ivf</code>, <code>mask-hnsw</code>, <code>mask-ivf</code>. <code>auto</code> resolves the class and scores its members exactly when it has at most 4,096 members, and otherwise searches HNSW with a label predicate. On the Gene Ontology exact resolution is the fastest strategy up to about 1,000 members; masked HNSW is fastest above 5,000. The measurements are in <a href="research.html">Benchmarks and writeups</a> and <code>benchmarks/semantic/results.md</code>.</p><p>A backend switch (<code>\set backend ...</code>) drops the labels, the vectors, and the indexes, because they name terms by the dictionary&#x27;s ids; load them again.</p><h2 id="the-vector-file">The vector file</h2><p><code>OVEC2</code>: the bytes <code>OVEC2\n</code>, a <code>uint32</code> dimension, a <code>uint64</code> count, then for each term a <code>uint32</code> length, the spelling (<code>&lt;iri&gt;</code>), and <code>dimension</code> little-endian <code>float32</code> values, then a CRC-32C of everything before it. <code>OVEC1</code> is the same without the checksum (what <code>scripts/embed-terms</code> writes). Records name terms by spelling, so a file survives a dictionary that numbers terms differently. Vectors are normalized when read.</p><h2 id="what-it-is-not">What it is not</h2><p>It is not a reasoner. Only <code>rdfs:subClassOf</code> is read; <code>subPropertyOf</code>, <code>domain</code>, <code>range</code>, and OWL restrictions are not interpreted. Labels are rebuilt, not updated, when the hierarchy changes. The vectors live in memory and the approximate indexes are rebuilt, not updated, when they change. Vector search is single-threaded.</p>
+<nav class="pager" aria-label="Pages"><a class="prev" href="config.html"><span>Previous</span>Settings</a><a class="next" href="formats.html"><span>Next</span>File formats</a></nav>
+</main>
+</div>
+<footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
+<script src="search.js"></script>
+</body>
+</html>
