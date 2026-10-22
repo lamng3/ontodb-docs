@@ -183,3 +183,9 @@ pre.out { min-height: 8.5em; max-height: 20em; overflow: auto; white-space: pre;
   nav.site a.pill { padding: 3px 10px; white-space: nowrap; font-size: 14px; }
 }
 body:not(:has(.layout)) .nav-button { display: none; }
+/* Previous and next */
+.pager { display: flex; justify-content: space-between; gap: 16px; margin: 40px 0 0; padding-top: 18px; border-top: 1px solid var(--border); }
+.pager a { display: block; border: 1px solid var(--border); border-radius: 12px; padding: 10px 16px; text-decoration: none; color: var(--fg); min-width: 0; max-width: 48%; }
+.pager a:hover { border-color: var(--primary-50); background: var(--primary-5); }
+.pager a span { display: block; font-size: 12px; color: var(--subtle); }
+.pager .next { margin-left: auto; text-align: right; }

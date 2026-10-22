@@ -344,6 +344,9 @@ def main():
         print("wrote", out.name)
     (ROOT / "search-index.json").write_text(json.dumps(index))
     print("pages", len(rendered))
+    import normalize
+
+    normalize.run(ROOT)
 
 
 if __name__ == "__main__":

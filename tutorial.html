@@ -65,6 +65,7 @@ wal: ok (0 records, 0 bytes)
 replay: matches the live database (15 triples)
 invariants: ok (no duplicate triples, every id in the dictionary)
 verify: ok</code></pre><p>The checkpoint wrote a snapshot and emptied the log, so the next open loads the snapshot instead of replaying every record. <code>\verify</code> read both files back, rebuilt the database from them, and found it identical to the one in memory.</p><h2 id="next">Next</h2><ul><li><a href="shell.html">Shell reference</a> for every command.</li><li><a href="sparql.html">SPARQL reference</a> for what queries can say.</li><li><a href="persistence.html">Persistent databases</a> for what happens on a crash.</li></ul>
+<nav class="pager" aria-label="Pages"><a class="prev" href="install.html"><span>Previous</span>Installation</a><a class="next" href="shell.html"><span>Next</span>Shell reference</a></nav>
 </main>
 </div>
 <footer class="site">OntoDB Manual. OntoDB is a database management system for ontologies: RDF in, SPARQL queries, a write-ahead log, and recovery.</footer>
