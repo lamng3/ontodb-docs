@@ -15,7 +15,7 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="site">
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
-  <nav class="site">
+  <nav class="site" aria-label="Site">
     <a href="install.html">Install</a>
     <a href="tutorial.html">Tutorial</a>
     <a href="sparql.html">SPARQL</a>
@@ -25,20 +25,20 @@
 </header>
 <input id="nav-toggle" class="nav-toggle" type="checkbox">
 <div class="layout">
-<nav class="nav">
+<nav class="nav" aria-label="Manual pages">
 <a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html">Installation</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html" aria-current="page">Settings</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><a href="code-design.html">Code design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
 </nav>
 <main id="content">
 <p class="kicker">Using OntoDB</p>
 <h1>Settings</h1>
 <p class="lede">\set prints the settings and \set knob value changes one. Settings last for the shell process.</p>
-<nav class="toc"><strong>On this page</strong><ol><li><a href="#settings">Settings</a></li><li><a href="#timing">Timing</a></li><li><a href="#statistics">Statistics</a></li></ol></nav>
+<nav class="toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#settings">Settings</a></li><li><a href="#timing">Timing</a></li><li><a href="#statistics">Statistics</a></li></ol></nav>
 <h2 id="settings">Settings</h2><pre><code>OntoDB&gt; \set
 backend mem
 pool_size 64
 lru_k 2
 join auto
-isolation rc</code></pre><table><thead><tr><th>Knob</th><th>Values</th><th>Default</th><th>Effect today</th></tr></thead><tbody><tr><td><code>backend</code></td><td><code>mem</code>, <code>indexed</code></td><td><code>mem</code></td><td><code>indexed</code> moves the triples onto pages and B+ trees in a temporary file; <code>mem</code> moves them back. A persistent database stays on <code>mem</code> until PLAN 8</td></tr><tr><td><code>pool_size</code></td><td>frames</td><td><code>64</code></td><td>Frames in the indexed backend&#x27;s pool, read when the backend is switched on</td></tr><tr><td><code>lru_k</code></td><td>positive integer</td><td><code>2</code></td><td>The indexed backend&#x27;s LRU-K <code>k</code>, read when the backend is switched on</td></tr><tr><td><code>join</code></td><td><code>auto</code>, <code>nlj</code>, <code>inlj</code>, <code>hash</code></td><td><code>auto</code></td><td>Join operator. <code>auto</code> lets the optimizer choose per join; the others force one operator everywhere</td></tr><tr><td><code>isolation</code></td><td><code>ru</code>, <code>rc</code>, <code>rr</code>, <code>ser</code></td><td><code>rc</code></td><td>Stored for transactions, which are being built</td></tr></tbody></table><p>A setting that is accepted prints <code>ok</code>. An unknown knob or value prints an error and changes nothing.</p><h2 id="timing">Timing</h2><p><code>\timing on</code> prints <code>time: N ms</code> after each statement&#x27;s result. <code>\timing off</code> stops it.</p><h2 id="statistics">Statistics</h2><pre><code>OntoDB&gt; \stats
+isolation rc</code></pre><table><thead><tr><th scope="col">Knob</th><th scope="col">Values</th><th scope="col">Default</th><th scope="col">Effect today</th></tr></thead><tbody><tr><td><code>backend</code></td><td><code>mem</code>, <code>indexed</code></td><td><code>mem</code></td><td><code>indexed</code> moves the triples onto pages and B+ trees in a temporary file; <code>mem</code> moves them back. A persistent database stays on <code>mem</code> until PLAN 8</td></tr><tr><td><code>pool_size</code></td><td>frames</td><td><code>64</code></td><td>Frames in the indexed backend&#x27;s pool, read when the backend is switched on</td></tr><tr><td><code>lru_k</code></td><td>positive integer</td><td><code>2</code></td><td>The indexed backend&#x27;s LRU-K <code>k</code>, read when the backend is switched on</td></tr><tr><td><code>join</code></td><td><code>auto</code>, <code>nlj</code>, <code>inlj</code>, <code>hash</code></td><td><code>auto</code></td><td>Join operator. <code>auto</code> lets the optimizer choose per join; the others force one operator everywhere</td></tr><tr><td><code>isolation</code></td><td><code>ru</code>, <code>rc</code>, <code>rr</code>, <code>ser</code></td><td><code>rc</code></td><td>Stored for transactions, which are being built</td></tr></tbody></table><p>A setting that is accepted prints <code>ok</code>. An unknown knob or value prints an error and changes nothing.</p><h2 id="timing">Timing</h2><p><code>\timing on</code> prints <code>time: N ms</code> after each statement&#x27;s result. <code>\timing off</code> stops it.</p><h2 id="statistics">Statistics</h2><pre><code>OntoDB&gt; \stats
 page reads: 0
 page writes: 0
 buffer hits: 0

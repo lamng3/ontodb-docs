@@ -15,7 +15,7 @@
 <a class="skip" href="#content">Skip to content</a>
 <header class="site">
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
-  <nav class="site">
+  <nav class="site" aria-label="Site">
     <a href="install.html">Install</a>
     <a href="tutorial.html">Tutorial</a>
     <a href="sparql.html">SPARQL</a>
@@ -25,18 +25,18 @@
 </header>
 <input id="nav-toggle" class="nav-toggle" type="checkbox">
 <div class="layout">
-<nav class="nav">
+<nav class="nav" aria-label="Manual pages">
 <a class="brand-desk" href="index.html">OntoDB Manual</a><input class="search" id="q" type="search" placeholder="Search the manual" autocomplete="off"><ul id="results" hidden></ul><p class="nav-part">Getting started</p><a href="index.html">Introduction</a><a href="install.html" aria-current="page">Installation</a><a href="tutorial.html">Tutorial</a><p class="nav-part">Using OntoDB</p><a href="shell.html">Shell reference</a><a href="sparql.html">SPARQL reference</a><a href="data.html">Loading data</a><a href="persistence.html">Persistent databases</a><a href="config.html">Settings</a><p class="nav-part">Reference</p><a href="formats.html">File formats</a><a href="troubleshooting.html">Messages and troubleshooting</a><p class="nav-part">Internals</p><a href="query-engine.html">Query engine</a><a href="optimizer.html">Optimizer</a><a href="dictionary.html">Dictionary</a><a href="indexes.html">Triple indexes</a><a href="b-plus-tree.html">B+ tree</a><a href="buffer-pool.html">Buffer pool</a><a href="concurrency.html">Concurrency</a><a href="recovery.html">WAL and ARIES</a><a href="durability.html">Disk persistence design</a><a href="code-design.html">Code design</a><p class="nav-part">Project</p><a href="development.html">Development</a><a href="next.html">Roadmap</a><a href="research.html">Benchmarks and writeups</a>
 </nav>
 <main id="content">
 <p class="kicker">Getting started</p>
 <h1>Installation</h1>
 <p class="lede">OntoDB is C++20 built with CMake and Ninja. It needs raptor2 to parse RDF and downloads GoogleTest at configure time.</p>
-<nav class="toc"><strong>On this page</strong><ol><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#build">Build</a></li><li><a href="#check-the-build">Check the build</a></li><li><a href="#run">Run</a></li></ol></nav>
-<h2 id="prerequisites">Prerequisites</h2><table><thead><tr><th>Tool</th><th>Version</th></tr></thead><tbody><tr><td>A C++20 compiler</td><td>Clang 14 or newer</td></tr><tr><td>CMake</td><td>3.21 or newer</td></tr><tr><td>Ninja</td><td>any recent version</td></tr><tr><td>raptor2</td><td>2.0 (RDF parsing)</td></tr><tr><td>pkg-config</td><td>any</td></tr></tbody></table><p>macOS (Homebrew):</p><pre><code>brew install pkgconf raptor cmake ninja</code></pre><p>Ubuntu:</p><pre><code>sudo apt-get update
+<nav class="toc" aria-label="On this page"><strong>On this page</strong><ol><li><a href="#prerequisites">Prerequisites</a></li><li><a href="#build">Build</a></li><li><a href="#check-the-build">Check the build</a></li><li><a href="#run">Run</a></li></ol></nav>
+<h2 id="prerequisites">Prerequisites</h2><table><thead><tr><th scope="col">Tool</th><th scope="col">Version</th></tr></thead><tbody><tr><td>A C++20 compiler</td><td>Clang 14 or newer</td></tr><tr><td>CMake</td><td>3.21 or newer</td></tr><tr><td>Ninja</td><td>any recent version</td></tr><tr><td>raptor2</td><td>2.0 (RDF parsing)</td></tr><tr><td>pkg-config</td><td>any</td></tr></tbody></table><p>macOS (Homebrew):</p><pre><code>brew install pkgconf raptor cmake ninja</code></pre><p>Ubuntu:</p><pre><code>sudo apt-get update
 sudo apt-get install -y clang cmake ninja-build pkg-config libraptor2-dev</code></pre><h2 id="build">Build</h2><pre><code>git clone https://github.com/lamng3/OntoDB.git
 cd OntoDB
-cmake --preset dev &amp;&amp; cmake --build --preset dev</code></pre><p>This produces two programs in <code>build/dev/</code>: <code>ontodb</code>, the shell, and <code>ontodb_test</code>, the test suite.</p><table><thead><tr><th>Preset</th><th>Build</th><th>Use it for</th></tr></thead><tbody><tr><td><code>dev</code></td><td>Debug with AddressSanitizer and UndefinedBehaviorSanitizer</td><td>Everyday work</td></tr><tr><td><code>tsan</code></td><td>Debug with ThreadSanitizer</td><td>Anything concurrent</td></tr><tr><td><code>release</code></td><td>Optimized</td><td>Benchmarks</td></tr></tbody></table><h2 id="check-the-build">Check the build</h2><pre><code>./build/dev/ontodb_test</code></pre><p>Every enabled test should pass. Tests for features that are not built yet are disabled and reported as such; see <a href="development.html">Development</a>.</p><h2 id="run">Run</h2><pre><code>./build/dev/ontodb            # an in-memory database that keeps nothing
+cmake --preset dev &amp;&amp; cmake --build --preset dev</code></pre><p>This produces two programs in <code>build/dev/</code>: <code>ontodb</code>, the shell, and <code>ontodb_test</code>, the test suite.</p><table><thead><tr><th scope="col">Preset</th><th scope="col">Build</th><th scope="col">Use it for</th></tr></thead><tbody><tr><td><code>dev</code></td><td>Debug with AddressSanitizer and UndefinedBehaviorSanitizer</td><td>Everyday work</td></tr><tr><td><code>tsan</code></td><td>Debug with ThreadSanitizer</td><td>Anything concurrent</td></tr><tr><td><code>release</code></td><td>Optimized</td><td>Benchmarks</td></tr></tbody></table><h2 id="check-the-build">Check the build</h2><pre><code>./build/dev/ontodb_test</code></pre><p>Every enabled test should pass. Tests for features that are not built yet are disabled and reported as such; see <a href="development.html">Development</a>.</p><h2 id="run">Run</h2><pre><code>./build/dev/ontodb            # an in-memory database that keeps nothing
 ./build/dev/ontodb mydb       # a persistent database in the directory mydb
 ./build/dev/ontodb --strict mydb</code></pre><p><code>--strict</code> refuses to open a database whose log is damaged, instead of recovering the valid part. See <a href="persistence.html#recovery-on-open">Recovery on open</a>.</p>
 <nav class="pager" aria-label="Pages"><a class="prev" href="index.html"><span>Previous</span>Introduction</a><a class="next" href="tutorial.html"><span>Next</span>Tutorial</a></nav>

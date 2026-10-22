@@ -16,7 +16,7 @@
 <input id="nav-toggle" class="nav-toggle" type="checkbox">
 <header class="site">
   <a class="logo" href="index.html"><span class="logo-mark">O</span><span>OntoDB</span></a>
-  <nav class="site">
+  <nav class="site" aria-label="Site">
     <a href="install.html">Install</a>
     <a href="tutorial.html">Tutorial</a>
     <a href="sparql.html">SPARQL</a>
@@ -44,7 +44,7 @@
     <div class="tabs" id="tabs" role="tablist"></div>
     <p class="q" id="question"></p>
     <pre class="sparql" id="sparql"></pre>
-    <div class="actions"><button class="btn solid" id="run">Run</button><button class="btn" id="explain">Explain analyze</button></div>
+    <div class="actions"><button type="button" class="btn solid" id="run">Run</button><button type="button" class="btn" id="explain">Explain analyze</button></div>
     <pre class="out" id="out" aria-live="polite">Press Run.</pre>
     <p class="note">Each query ran in the real shell on the Pizza ontology (loaded 27 triples). The page shows what the shell printed, with IRI prefixes shortened. <code>\explain analyze</code> prints each plan node with its estimated and actual rows.</p>
   </div>

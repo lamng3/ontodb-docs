@@ -26,14 +26,43 @@ def text_of(fragment: str) -> str:
 
 
 def slug(title: str) -> str:
-    return re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-") or "section"
+    s = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-") or "section"
+    return "s-" + s if s[0].isdigit() else s  # an id must start with a letter
 
 
 def nav_pages(page: str) -> list[tuple[str, str]]:
-    nav = re.search(r'<nav class="nav">(.*?)</nav>', page, re.S)
+    nav = re.search(r'<nav class="nav"[^>]*>(.*?)</nav>', page, re.S)
     if not nav:
         return []
     return [(h, text_of(t)) for h, t in re.findall(r'<a href="([\w-]+\.html)"[^>]*>(.*?)</a>', nav.group(1), re.S) if "brand-desk" not in t]
+
+
+def tidy(page: str) -> str:
+    """Markup fixes every page gets: labelled landmarks, table scopes and bodies, valid ids, button types."""
+    for cls, label in (("site", "Site"), ("nav", "Manual pages"), ("toc", "On this page")):
+        page = re.sub(rf'<nav class="{cls}"(?![^>]*aria-label)', f'<nav class="{cls}" aria-label="{label}"', page)
+    # a callout is a note, not a landmark
+    page = re.sub(r'<aside class="callout([^"]*)">(.*?)</aside>', r'<div class="callout\1" role="note">\2</div>', page, flags=re.S)
+    page = re.sub(r'<th(?=[\s>])(?![^>]*\bscope=)([^>]*)>', r'<th scope="col"\1>', page)
+    page = re.sub(r"<button(?![^>]*\btype=)", '<button type="button"', page)
+    page = re.sub(r'<div(?![^>]*\brole=)([^>]*\baria-label="[^"]*"[^>]*)>', r'<div role="group"\1>', page)
+    # ids must start with a letter: "1-the-log" becomes "s-1-the-log", and links to it follow
+    for m in set(re.findall(r'\bid="(\d[^"]*)"', page)):
+        page = page.replace(f'id="{m}"', f'id="s-{m}"').replace(f'href="#{m}"', f'href="#s-{m}"')
+    # a table whose rows are not in a body gets one (the first row of header cells becomes the head)
+    def wrap(m):
+        table = m.group(0)
+        if "<tbody" in table:
+            return table
+        head = re.match(r"(<table[^>]*>)\s*(<thead>.*?</thead>)?(.*)(</table>)", table, re.S)
+        open_, thead, rows, close = head.groups()
+        if not thead:
+            first = re.match(r"\s*(<tr>(?:\s*<th[^>]*>.*?</th>)+\s*</tr>)(.*)", rows, re.S)
+            if first:
+                thead, rows = "<thead>" + first.group(1) + "</thead>", first.group(2)
+        return f"{open_}{thead or ''}<tbody>{rows}</tbody>{close}"
+
+    return re.sub(r"<table[^>]*>.*?</table>", wrap, page, flags=re.S)
 
 
 def run(root) -> None:
@@ -50,7 +79,9 @@ def run(root) -> None:
         main = re.search(r"<main[^>]*id=\"content\"[^>]*>(.*?)</main>", page, re.S)
         if not main:
             continue
-        has_nav = '<nav class="nav">' in page
+        page = tidy(page)
+        f.write_text(page)
+        has_nav = '<nav class="nav"' in page
         if has_nav:
             page = fix_content_page(page, f.name, order)
             f.write_text(page)
@@ -67,7 +98,7 @@ def fix_content_page(page: str, name: str, order: list[tuple[str, str]]) -> str:
     page = re.sub(r"<title>(.*?) - (.*?)</title>", r"<title>\1 — \2</title>", page, count=1)
     # search
     if 'id="q"' not in page:
-        page = re.sub(r'(<nav class="nav">\s*(?:<a class="brand-desk"[^>]*>.*?</a>)?)', lambda m: m.group(1) + SEARCH, page, count=1, flags=re.S)
+        page = re.sub(r'(<nav class="nav"[^>]*>\s*(?:<a class="brand-desk"[^>]*>.*?</a>)?)', lambda m: m.group(1) + SEARCH, page, count=1, flags=re.S)
     if "search.js" not in page:
         page = page.replace("</body>", '<script src="search.js"></script>\n</body>')
     # sections get ids, and an "On this page" list when there are enough of them
