@@ -230,3 +230,4 @@ body:not(:has(.layout)) .nav-button { display: none; }
 
 .btn.solid:hover:not(:disabled) { background: var(--primary); color: var(--bg); filter: brightness(1.12); }
 .btn.solid:disabled { opacity: 0.5; }
+main:has(.pg) { max-width: none; }
