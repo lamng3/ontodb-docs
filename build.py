@@ -207,6 +207,7 @@ HOME = """<section class="hero">
     <div class="actions">
       <a class="btn solid" href="install.html">Get started</a>
       <a class="btn" href="playground.html">Playground</a>
+      <a class="btn" href="showcase/">Showcase</a>
       <a class="btn" href="sparql.html">SPARQL</a>
     </div>
   </div>

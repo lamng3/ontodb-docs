@@ -15,3 +15,7 @@ The site is static HTML. `python3 build.py` regenerates the pages from `content/
 `playground.html` runs OntoDB itself: `ontodb_wasm.js` and `ontodb_wasm.wasm` are built from the `web/` directory of the ontodb repository (`web/build.sh`, which needs emsdk) and copied here. `data/go-slice.*` comes from `scripts/web-slice` in that repository. After a new build, bump `V` in `playground.js`, because browsers cache these files.
 
 `btree-scan.js` and `intervals.js` hold the algorithms behind the two step-through demos on the B+ tree and semantic-search pages. `node btree-scan.test.mjs` and `node intervals.test.mjs` check them against brute force on random inputs; the `-ui.js` files only draw.
+
+## The showcase
+
+`showcase/index.html` is a copy of `showcase/index.html` in the ontodb repository: one LUBM query traced page by page, plans, a crash and restart, hierarchy search and the benchmarks, all from the shell's own output. Rebuild it there (`python3 showcase/record.py && python3 showcase/build.py`) and copy it here.
