@@ -181,6 +181,7 @@ HEADER = """<header class="site">
   <nav class="site">
     <a href="install.html">Install</a>
     <a href="playground.html">Playground</a>
+    <a href="showcase/">Showcase</a>
     <a href="sparql.html">SPARQL</a>
     <label class="nav-button" for="nav-toggle">Menu</label>
     <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
@@ -300,6 +301,7 @@ def page_html(meta, body_html, toc, pages):
   <nav class="site">
     <a href="install.html">Install</a>
     <a href="playground.html">Playground</a>
+    <a href="showcase/">Showcase</a>
     <a href="sparql.html">SPARQL</a>
     <label class="nav-button" for="nav-toggle">Menu</label>
     <a href="https://github.com/lamng3/OntoDB" class="pill">GitHub ↗</a>
