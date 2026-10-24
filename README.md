@@ -8,7 +8,7 @@ The site is static HTML. `python3 build.py` regenerates the pages from `content/
 
 ## Shared structure
 
-`normalize.py` (a copy of the one in `memcommit-docs`) runs at the end of the build. It gives every content page a search box, an "On this page" list, previous and next links, and one title format, and writes `search-index.json`. It is called by `build.py`.
+`normalize.py` (shared by the manuals) runs at the end of the build. It gives every content page a search box, an "On this page" list, previous and next links, and one title format, and writes `search-index.json`. It is called by `build.py`.
 
 ## The playground and the visualizations
 
